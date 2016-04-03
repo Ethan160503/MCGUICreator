@@ -3,9 +3,10 @@ package com.techno_wizard.mcguicreator.gui;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * Created by Ethan on 4/1/2016.
+ * Table model representing a player inventory
  */
 public class InventoryTableModel extends AbstractTableModel {
+    @Override
     public int getRowCount() {
         return 0;
     }

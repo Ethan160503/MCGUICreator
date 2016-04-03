@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class MCGUICreator {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("MainMenu");
+        JFrame frame = new JFrame();
         frame.setContentPane(new MainMenu().getRootPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

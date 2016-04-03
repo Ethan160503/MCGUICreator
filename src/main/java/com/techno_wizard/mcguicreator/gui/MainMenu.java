@@ -3,8 +3,6 @@ package com.techno_wizard.mcguicreator.gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -37,6 +35,10 @@ public class MainMenu extends JFrame {
     private JEditorPane editorPane1;
     private JCheckBox showFormattedTextCheckBoxLore;
     private JCheckBox showFormattedTextCheckBoxDetails;
+    private JEditorPane stackNameEditor;
+    private JLabel stackItemCountLabel;
+    private JTextField stackNotes;
+    private JCheckBox enableEnchantmentNotVisibleCheckBox;
 
     private ColorButtonManager colorButtonManager;
 
@@ -49,7 +51,11 @@ public class MainMenu extends JFrame {
         }
         pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        //test val
         inventoryTable.getModel().setValueAt(resizeIcon(new ImageIcon(getClass().getResource("/itemimages/Poisonous_potato.png"))), 0, 0);
+
+
         inventoryTable.setRowHeight(75);
 
         // initalize color buttons
@@ -62,9 +68,6 @@ public class MainMenu extends JFrame {
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
-
-
-        setVisible(true);
     }
 
     /**
