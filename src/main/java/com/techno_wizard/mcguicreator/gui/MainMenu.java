@@ -176,6 +176,7 @@ public class MainMenu extends JFrame {
                 int row = inventoryTableModel.getActiveItemStackRow();
                 int column = inventoryTableModel.getActiveItemStackColumb();
                 inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row,column),row,column);
+                inventoryTableModel.fireTableCellUpdated(row,column);
             }
         });
 
