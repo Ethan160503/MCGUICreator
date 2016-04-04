@@ -3,6 +3,9 @@ package com.techno_wizard.mcguicreator.gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -42,6 +45,8 @@ public class MainMenu extends JFrame {
 
     private ColorButtonManager colorButtonManager;
 
+    private JComboBox stackType;
+
     public MainMenu() {
         setName("MC GUI Creator");
         try {
@@ -68,6 +73,100 @@ public class MainMenu extends JFrame {
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
+
+        //initialize the slots
+        initSlots();
+        initMaterials();
+    }
+
+
+    /**
+     * inits the materials
+     */
+    public void initMaterials(){
+        for(Material mat : Material.values()) {
+            stackType.addItem(mat.getName());
+        }
+    }
+    /**
+     * Inits the slots for the inventory
+     */
+    public void initSlots(){
+
+        //Getting the current slot
+        inventoryTable.addMouseListener(new MouseListener() {
+
+            int lastXClick=-1;
+            int lastYClick=-1;
+
+            @Override            public void mouseClicked(MouseEvent e) {action(e);            }
+            @Override            public void mousePressed(MouseEvent e) {action(e);             }
+            @Override            public void mouseReleased(MouseEvent e) {action(e);             }
+            @Override            public void mouseEntered(MouseEvent e) {             }
+            @Override            public void mouseExited(MouseEvent e) {             }
+
+            public void action(MouseEvent e){
+                int xSlot = e.getX() / 65;
+                int ySlot = e.getY() / 70;
+                //Make sure the user does not click on the same slot twice
+                if(lastXClick==xSlot&&lastYClick==ySlot)
+                    return;
+                lastYClick =ySlot;
+                lastXClick =xSlot;
+
+                //Make sure it's not out of bounds
+                if(xSlot >= 9 || ySlot >=6)
+                    return;
+
+                //Save the previous slot
+                Slot currentSlot = Slot.getCurrentSlot();
+                if(currentSlot!=null){
+                    currentSlot.getItemStack().setName(stackNameEditor.getText());
+                    for(Material m : Material.values()){
+                        if(m.getName().equals((String)stackType.getSelectedItem())){
+                            currentSlot.getItemStack().setMaterial(m);
+                            break;
+                        }
+                    }
+                    currentSlot.getItemStack().setLore(editorPane1.getText());
+                }
+                //Load the new slot
+                Slot nextSlot = Slot.setCurrentSlot(Slot.getSlotAt(xSlot, ySlot));
+                stackNameEditor.setText(nextSlot.getItemStack().getName());
+                for(int i = 0 ; i<stackType.getItemCount();i++){
+                    if((stackType.getItemAt(i)).equals(nextSlot.getItemStack().getMaterial().getName())){
+                        stackType.setSelectedIndex(i);
+                        break;
+                    }
+                }
+                editorPane1.setText(nextSlot.getItemStack().getLore());
+            }
+
+        });
+        stackType.addMouseListener(new MouseListener() {
+            @Override            public void mouseClicked(MouseEvent e) {action(e);            }
+            @Override            public void mousePressed(MouseEvent e) {action(e);            }
+            @Override            public void mouseReleased(MouseEvent e) {action(e);            }
+            @Override            public void mouseEntered(MouseEvent e) {action(e);            }
+            @Override            public void mouseExited(MouseEvent e) {action(e);            }
+            public void action(MouseEvent e){
+                //Load the new slot
+                Slot nextSlot = Slot.getCurrentSlot();
+                for(Material mm :Material.values()){
+                    if(mm.getName().equals(stackType.getSelectedItem())){
+                        nextSlot.getItemStack().setMaterial(mm);
+                        break;
+                    }
+                }
+
+                inventoryTable.getModel().setValueAt(resizeIcon(nextSlot.getItemStack().getMaterial().getImage()), nextSlot.y, nextSlot.x);
+
+                //Makes sure all the slots have the correct icon.
+                for(Slot slots : Slot.getSlots())
+                    inventoryTable.getModel().setValueAt(resizeIcon(slots.getItemStack().getMaterial().getImage()), slots.y, slots.x);
+            }
+        });
+
     }
 
     /**

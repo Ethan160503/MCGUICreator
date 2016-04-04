@@ -16,8 +16,9 @@ public class ItemStack {
     private boolean isEnchanted;
     private String notes;
 
-    public ItemStack(Material material) {
+    public ItemStack(Material material){
         this.material = material;
+        this.icon = material.getImage();
     }
 
     public Material getMaterial() {
