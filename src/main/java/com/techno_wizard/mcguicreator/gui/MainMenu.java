@@ -47,6 +47,8 @@ public class MainMenu extends JFrame {
 
     private JComboBox stackType;
 
+    private InventoryTableModel inventoryTableModel;
+
     public MainMenu() {
         setName("MC GUI Creator");
         try {
@@ -57,8 +59,13 @@ public class MainMenu extends JFrame {
         pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+
+        //set the tabel model
+        inventoryTableModel = new InventoryTableModel();
+        inventoryTable.setModel(inventoryTableModel);
+
         //test val
-        inventoryTable.getModel().setValueAt(resizeIcon(new ImageIcon(getClass().getResource("/itemimages/Poisonous_potato.png"))), 0, 0);
+        //inventoryTable.getModel().setValueAt(resizeIcon(new ImageIcon(getClass().getResource("/itemimages/Poisonous_potato.png"))), 0, 0);
 
 
         inventoryTable.setRowHeight(75);
@@ -73,6 +80,7 @@ public class MainMenu extends JFrame {
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
+
 
         //initialize the slots
         initSlots();
@@ -106,40 +114,47 @@ public class MainMenu extends JFrame {
             @Override            public void mouseExited(MouseEvent e) {             }
 
             public void action(MouseEvent e){
-                int xSlot = e.getX() / 65;
-                int ySlot = e.getY() / 70;
+                //TODO: Find better way to get which slot was selected
+                int column = e.getX() / (inventoryTable.getWidth()/9);
+                int row = e.getY() / (inventoryTable.getHeight()/4);
                 //Make sure the user does not click on the same slot twice
-                if(lastXClick==xSlot&&lastYClick==ySlot)
+                if(lastXClick==column&&lastYClick==row)
                     return;
-                lastYClick =ySlot;
-                lastXClick =xSlot;
 
                 //Make sure it's not out of bounds
-                if(xSlot >= 9 || ySlot >=6)
+                if(column >= 9 || row >=6)
                     return;
 
-                //Save the previous slot
-                Slot currentSlot = Slot.getCurrentSlot();
-                if(currentSlot!=null){
-                    currentSlot.getItemStack().setName(stackNameEditor.getText());
-                    for(Material m : Material.values()){
-                        if(m.getName().equals((String)stackType.getSelectedItem())){
-                            currentSlot.getItemStack().setMaterial(m);
+                //Save the previous Itemstack
+                if(lastXClick >=0 && lastYClick>=0) {
+                    ItemStack oldItemstack = inventoryTableModel.getItemStackAt(lastYClick, lastXClick);
+                    oldItemstack.setName(stackNameEditor.getText());
+                    for (Material m : Material.values()) {
+                        if (m.getName().equals((String) stackType.getSelectedItem())) {
+                            oldItemstack.setMaterial(m);
                             break;
                         }
                     }
-                    currentSlot.getItemStack().setLore(editorPane1.getText());
+                    oldItemstack.setLore(editorPane1.getText());
                 }
+
+                //Set lastSlot equal to the current slot
+                lastYClick =row;
+                lastXClick =column;
+                System.out.println(lastXClick+" "+lastYClick);
+
                 //Load the new slot
-                Slot nextSlot = Slot.setCurrentSlot(Slot.getSlotAt(xSlot, ySlot));
-                stackNameEditor.setText(nextSlot.getItemStack().getName());
+                ItemStack nextItemStack = inventoryTableModel.getItemStackAt(row, column);
+                stackNameEditor.setText(nextItemStack.getName());
                 for(int i = 0 ; i<stackType.getItemCount();i++){
-                    if((stackType.getItemAt(i)).equals(nextSlot.getItemStack().getMaterial().getName())){
+                    if((stackType.getItemAt(i)).equals(nextItemStack.getMaterial().getName())){
                         stackType.setSelectedIndex(i);
                         break;
                     }
                 }
-                editorPane1.setText(nextSlot.getItemStack().getLore());
+                editorPane1.setText(nextItemStack.getLore());
+                inventoryTableModel.setActiveItemStack(row,column);
+               // inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row,column),row,column);
             }
 
         });
@@ -151,19 +166,16 @@ public class MainMenu extends JFrame {
             @Override            public void mouseExited(MouseEvent e) {action(e);            }
             public void action(MouseEvent e){
                 //Load the new slot
-                Slot nextSlot = Slot.getCurrentSlot();
+                ItemStack is = inventoryTableModel.getActiveItemstack();
                 for(Material mm :Material.values()){
                     if(mm.getName().equals(stackType.getSelectedItem())){
-                        nextSlot.getItemStack().setMaterial(mm);
+                        is.setMaterial(mm);
                         break;
                     }
                 }
-
-                inventoryTable.getModel().setValueAt(resizeIcon(nextSlot.getItemStack().getMaterial().getImage()), nextSlot.y, nextSlot.x);
-
-                //Makes sure all the slots have the correct icon.
-                for(Slot slots : Slot.getSlots())
-                    inventoryTable.getModel().setValueAt(resizeIcon(slots.getItemStack().getMaterial().getImage()), slots.y, slots.x);
+                int row = inventoryTableModel.getActiveItemStackRow();
+                int column = inventoryTableModel.getActiveItemStackColumb();
+                inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row,column),row,column);
             }
         });
 
@@ -227,15 +239,5 @@ public class MainMenu extends JFrame {
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    /**
-     * resizes the icons to fit correctly inside of the jtable cells
-     * @param original original image
-     * @return shrunk image
-     */
-    private ImageIcon resizeIcon(ImageIcon original) {
-        Image img = original.getImage();
-        Image newimg = img.getScaledInstance(75, 75,  java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(newimg);
-    }
 
 }

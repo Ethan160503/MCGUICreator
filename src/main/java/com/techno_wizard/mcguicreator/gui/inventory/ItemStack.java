@@ -27,6 +27,7 @@ public class ItemStack {
 
     public void setMaterial(Material material) {
         this.material = material;
+        this.icon = ItemUtil.resizeIcon(material.getImage());
     }
 
     public String getName() {
@@ -76,6 +77,7 @@ public class ItemStack {
     public void setIcon(ImageIcon icon) {
         this.icon = icon;
     }
+
 
     public ImageIcon getInventoryIcon() {
         //TODO process (shrink and add number/enchantment indicator?)
