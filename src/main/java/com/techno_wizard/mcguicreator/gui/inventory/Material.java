@@ -7,7 +7,10 @@ import java.awt.image.BufferedImage;
  * Created by Ethan on 4/3/2016.
  */
 public enum Material {
-    AIR("Null","Air"),POISONOUS_POTATO("/itemimages/Poisonous_potato.png","Poisonous_Potato"),POTATO("/itemimages/Potato.png","Potato"),WOOD_SWORD("/itemimages/Wood_sword.png","Wood_word");
+    AIR("Null","Air"),
+    POISONOUS_POTATO("/itemimages/Poisonous_potato.png","Poisonous_Potato"),
+    POTATO("/itemimages/Potato.png","Potato"),
+    WOOD_SWORD("/itemimages/Wood_sword.png","Wood_sword");
 
     private ImageIcon image;
     private String name;
