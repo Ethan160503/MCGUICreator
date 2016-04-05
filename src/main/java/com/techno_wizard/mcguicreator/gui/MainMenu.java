@@ -3,6 +3,7 @@ package com.techno_wizard.mcguicreator.gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
@@ -101,7 +102,17 @@ public class MainMenu extends JFrame {
      */
     public void initSlots(){
 
-        //Getting the current slot
+        MouseListener tableClickListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = inventoryTable.rowAtPoint(e.getPoint());//get mouse-selected row
+                int col = inventoryTable.columnAtPoint(e.getPoint());//get mouse-selected col
+
+            }
+        };
+        inventoryTable.addMouseListener(tableClickListener);
+
+        /*//Getting the current slot
         inventoryTable.addMouseListener(new MouseListener() {
 
             int lastXClick=-1;
@@ -154,7 +165,7 @@ public class MainMenu extends JFrame {
                 editorPane1.setText(nextItemStack.getLore());
                 inventoryTableModel.setActiveItemStack(row,column);
                // inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row,column),row,column);
-            }
+            }*/
 
         });
         stackType.addMouseListener(new MouseListener() {
