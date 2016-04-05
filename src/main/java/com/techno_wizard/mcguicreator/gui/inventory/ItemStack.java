@@ -1,8 +1,9 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Ethan on 4/3/2016.
@@ -40,6 +41,13 @@ public class ItemStack {
 
     public String getLore() {
         return lore;
+    }
+
+    public List<String> getLoreAsList() {
+        if(lore == null)
+            return null;
+        List<String> loreList = Arrays.asList(lore.split("\n"));
+        return loreList;
     }
 
     public void setLore(String lore) {

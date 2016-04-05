@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
  * Created by Ethan on 4/3/2016.
  */
 public enum Material {
-    ACACIA_BOAT("/itemimg/acacia_boat.png","Acaial Boat"),
     AIR("Null","Air"),
+    ACACIA_BOAT("/itemimg/acacia_boat.png","Acaial Boat"),
     APPLE("/itemimg/apple.png","Apple"),
     APPLE_GOLDEN("/itemimg/apple_golden.png","Golden Apple"),
     ARROW("/itemimg/arrow.png","Arrow"),
@@ -104,7 +104,7 @@ public enum Material {
         return durability;
     }
     public String getMaterialEnumName(){
-        return materialName;
+        return "Material."+materialName;
     }
 
     /**
