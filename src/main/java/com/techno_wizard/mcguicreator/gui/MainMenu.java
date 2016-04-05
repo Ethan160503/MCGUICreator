@@ -141,7 +141,6 @@ public class MainMenu extends JFrame {
                 //Set lastSlot equal to the current slot
                 lastYClick =row;
                 lastXClick =column;
-                System.out.println(lastXClick+" "+lastYClick);
 
                 //Load the new slot
                 ItemStack nextItemStack = inventoryTableModel.getItemStackAt(row, column);
