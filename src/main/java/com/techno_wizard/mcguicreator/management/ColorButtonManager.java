@@ -1,4 +1,7 @@
-package com.techno_wizard.mcguicreator.gui;
+package com.techno_wizard.mcguicreator.management;
+
+import com.techno_wizard.mcguicreator.gui.ChatColor;
+import com.techno_wizard.mcguicreator.gui.MainMenu;
 
 import javax.swing.*;
 

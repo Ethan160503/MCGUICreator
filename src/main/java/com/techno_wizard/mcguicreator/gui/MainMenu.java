@@ -8,8 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.datatransfer.*;
 
-import com.techno_wizard.mcguicreator.gui.codecreator.CodeCreator;
+import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.management.ColorButtonManager;
+import com.techno_wizard.mcguicreator.management.InventoryManager;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -49,6 +51,7 @@ public class MainMenu extends JFrame {
     private JComboBox stackType;
 
     private ColorButtonManager colorButtonManager;
+    private InventoryManager invManager;
 
 
 
@@ -65,7 +68,6 @@ public class MainMenu extends JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 
@@ -90,10 +92,11 @@ public class MainMenu extends JFrame {
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
 
-
+        setJMenuBar(initMenuBar());
         //initialize the slots
         initSlots();
         initMaterials();
+        pack();
     }
 
 
@@ -105,81 +108,17 @@ public class MainMenu extends JFrame {
             stackType.addItem(mat.getName());
         }
     }
+
+
     /**
-     * Inits the slots for the inventory
+     * inits the toolbar
      */
-    public void initSlots(){
-
-        MouseListener tableClickListener = new MouseAdapter() {
-            int lastXClick = 0;
-            int lastYClick = 0;
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = inventoryTable.rowAtPoint(e.getPoint());//get mouse-selected row
-                int col = inventoryTable.columnAtPoint(e.getPoint());//get mouse-selected col
-
-                //Make sure the user does not click on the same slot twice
-                if(lastXClick==col&&lastYClick==row)
-                    return;
-
-                //Make sure it's not out of bounds
-                if(col >= 9 || row >=6)
-                    return;
-
-                //Save the previous Itemstack
-                if(lastXClick >=0 && lastYClick>=0) {
-                    ItemStack oldItemstack = inventoryTableModel.getActiveItemstack();
-                    oldItemstack.setName(stackNameEditor.getText());
-                    for (Material m : Material.values()) {
-                        if (m.getName().equals(stackType.getSelectedItem())) {
-                            oldItemstack.setMaterial(m);
-                            break;
-                        }
-                    }
-                    /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
-                    removes them
-                     */
-
-                    oldItemstack.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
-                }
-
-                //Set lastSlot equal to the current slot
-                lastYClick =row;
-                lastXClick =col;
-
-                //Load the new slot
-                ItemStack nextItemStack = inventoryTableModel.getItemStackAt(row, col);
-                stackNameEditor.setText(nextItemStack.getName());
-                for(int i = 0 ; i<stackType.getItemCount();i++){
-                    if((stackType.getItemAt(i)).equals(nextItemStack.getMaterial().getName())){
-                        stackType.setSelectedIndex(i);
-                        break;
-                    }
-                }
-                editorPane1.setText(nextItemStack.getLore());
-                inventoryTableModel.setActiveItemStack(row,col);
-            }
-        };
-        inventoryTable.addMouseListener(tableClickListener);
-
-        stackType.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Load the new slot
-                ItemStack is = inventoryTableModel.getActiveItemstack();
-                for (Material mm : Material.values()) {
-                    if (mm.getName().equals(stackType.getSelectedItem())) {
-                        is.setMaterial(mm);
-                        break;
-                    }
-                }
-                int row = inventoryTableModel.getActiveItemStackRow();
-                int column = inventoryTableModel.getActiveItemStackColumb();
-                inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row, column), row, column);
-                inventoryTableModel.fireTableCellUpdated(row, column);
-            }
-        });
+    private JMenuBar initMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu();
+        JMenuItem fileOpen = new JMenuItem("Open");
+        fileOpen.add
+        fileMenu.add(new JMenuItem())
     }
 
     /**
@@ -257,7 +196,7 @@ public class MainMenu extends JFrame {
         };
         inventoryTable = new JTable(model);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        invManager = new InventoryManager(this);
+
     }
-
-
 }

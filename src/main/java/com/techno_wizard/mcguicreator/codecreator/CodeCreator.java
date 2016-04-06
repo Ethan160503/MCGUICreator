@@ -1,4 +1,4 @@
-package com.techno_wizard.mcguicreator.gui.codecreator;
+package com.techno_wizard.mcguicreator.codecreator;
 
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
