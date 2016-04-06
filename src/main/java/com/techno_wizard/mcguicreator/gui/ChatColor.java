@@ -28,7 +28,7 @@ public enum ChatColor {
     private final char code;
     private final String toString;
 
-    private ChatColor(char code) {
+    ChatColor(char code) {
         this.code = code;
         this.toString = new String(new char[]{'§', code});
     }

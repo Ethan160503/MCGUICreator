@@ -132,7 +132,7 @@ public class MainMenu extends JFrame {
                     ItemStack oldItemstack = inventoryTableModel.getActiveItemstack();
                     oldItemstack.setName(stackNameEditor.getText());
                     for (Material m : Material.values()) {
-                        if (m.getName().equals((String) stackType.getSelectedItem())) {
+                        if (m.getName().equals(stackType.getSelectedItem())) {
                             oldItemstack.setMaterial(m);
                             break;
                         }
