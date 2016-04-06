@@ -46,10 +46,11 @@ public class MainMenu extends JFrame {
     private JLabel stackItemCountLabel;
     private JTextField stackNotes;
     private JCheckBox enableEnchantmentNotVisibleCheckBox;
+    private JComboBox stackType;
 
     private ColorButtonManager colorButtonManager;
 
-    private JComboBox stackType;
+
 
     //Code buttons
     private JButton exportButton;
@@ -68,7 +69,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 
-        //set the tabel model
+        //set the table model
         inventoryTableModel = new InventoryTableModel();
         inventoryTable.setModel(inventoryTableModel);
 
@@ -136,6 +137,10 @@ public class MainMenu extends JFrame {
                             break;
                         }
                     }
+                    /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
+                    removes them
+                     */
+
                     oldItemstack.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
                 }
 
@@ -158,28 +163,23 @@ public class MainMenu extends JFrame {
         };
         inventoryTable.addMouseListener(tableClickListener);
 
-        stackType.addMouseListener(new MouseListener() {
-            @Override            public void mouseClicked(MouseEvent e) {action(e);            }
-            @Override            public void mousePressed(MouseEvent e) {action(e);            }
-            @Override            public void mouseReleased(MouseEvent e) {action(e);            }
-            @Override            public void mouseEntered(MouseEvent e) {action(e);            }
-            @Override            public void mouseExited(MouseEvent e) {action(e);            }
-            public void action(MouseEvent e){
+        stackType.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 //Load the new slot
                 ItemStack is = inventoryTableModel.getActiveItemstack();
-                for(Material mm :Material.values()){
-                    if(mm.getName().equals(stackType.getSelectedItem())){
+                for (Material mm : Material.values()) {
+                    if (mm.getName().equals(stackType.getSelectedItem())) {
                         is.setMaterial(mm);
                         break;
                     }
                 }
                 int row = inventoryTableModel.getActiveItemStackRow();
                 int column = inventoryTableModel.getActiveItemStackColumb();
-                inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row,column),row,column);
-                inventoryTableModel.fireTableCellUpdated(row,column);
+                inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row, column), row, column);
+                inventoryTableModel.fireTableCellUpdated(row, column);
             }
         });
-
     }
 
     /**
