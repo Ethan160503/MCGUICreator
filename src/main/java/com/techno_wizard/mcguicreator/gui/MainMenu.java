@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.datatransfer.*;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
+import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.management.ColorButtonManager;
 import com.techno_wizard.mcguicreator.management.InventoryManager;
@@ -169,6 +170,24 @@ public class MainMenu extends JFrame {
             }
         };
         copyToClipboardButton.addMouseListener(copyToClipboardListener);
+        //Creating the code for the clipboard.
+
+        MouseListener exportListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //Upddate the active itemstack
+                ItemStack is = inventoryTableModel.getActiveItemstack();
+                is.setName(stackNameEditor.getText());
+                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
+
+                StringBuilder code= new StringBuilder();
+                for(String s : CodeCreator.writecode(inventoryTableModel)){
+                    code.append(s+"\n");
+                }
+                new CodeExporter(code.toString());
+            }
+        };
+        exportButton.addMouseListener(exportListener);
     }
 
     /**
