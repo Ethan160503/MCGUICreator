@@ -12,9 +12,6 @@ import javax.swing.table.AbstractTableModel;
 public class InventoryTableModel extends AbstractTableModel {
     private ItemStack[][] itemStacks;
 
-    private int activeItemStackRow=0;
-    private int activeItemStackColumb=0;
-
     public InventoryTableModel() {
         itemStacks = new ItemStack[9][3];
     }
@@ -31,21 +28,8 @@ public class InventoryTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         return getItemStackAt(rowIndex, columnIndex).getInventoryIcon();
     }
-    public ItemStack getActiveItemstack(){
-        return getItemStackAt(activeItemStackRow,activeItemStackColumb);
-    }
-    public int getActiveItemStackRow(){
-        return this.activeItemStackRow;
-    }
-    public int getActiveItemStackColumb(){
-        return this.activeItemStackColumb;
-    }
-    public void setActiveItemStack(int row,int column){
-        this.activeItemStackColumb = column;
-        this.activeItemStackRow = row;
-    }
 
-    public ItemStack getItemStackAt(int row, int column) {
+    public ItemStack getItemStackAt(int column, int row) {
         //Since the itemstack might not exist yet, lets create a new Itemstack instance at that slot in order to prevent any possible NPEs
         if(itemStacks[column][row]==null)
             itemStacks[column][row] = new ItemStack(Material.AIR);

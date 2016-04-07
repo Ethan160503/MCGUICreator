@@ -111,7 +111,7 @@ public enum Material {
      * This returns the name of each materials. Use this to turn the material into a string.
      * @return
      */
-    public String getName() {
+    public String toString() {
         return name;
     }
 

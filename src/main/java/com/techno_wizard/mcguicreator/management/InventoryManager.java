@@ -17,6 +17,7 @@ public class InventoryManager {
     MainMenu mainMenu;
     JTable table;
     InventoryTableModel model;
+    int selectedX = 0, selectedY = 0;
 
     public InventoryManager(MainMenu mainMenu) {
         this.table = table;
@@ -29,59 +30,40 @@ public class InventoryManager {
     }
 
     /**
+     * returns the currently selected itemstack
+     * @return the currently selected itemstack
+     */
+    public ItemStack getSelectedItemStack() {
+        return model.getItemStackAt(selectedX, selectedY);
+    }
+
+    /**
      * Inits the slots for the inventory
      */
     public void initSlots(){
 
         MouseListener tableClickListener = new MouseAdapter() {
-            int lastXClick = 0;
-            int lastYClick = 0;
-
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = table.rowAtPoint(e.getPoint());//get mouse-selected row
-                int col = table.columnAtPoint(e.getPoint());//get mouse-selected col
+                int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
+                int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
 
                 //Make sure the user does not click on the same slot twice
-                if(lastXClick==col&&lastYClick==row)
+                if(selectedX==clickedX&&selectedY==clickedY)
                     return;
 
                 //Make sure it's not out of bounds
-                if(col >= 9 || row >=6)
+                if(clickedX >= 9 || clickedY >=6)
                     return;
 
                 //Save the previous Itemstack
-                if(lastXClick >=0 && lastYClick>=0) {
-                    ItemStack oldItemstack = model.getActiveItemstack();
-                    oldItemstack.setName(stackNameEditor.getText());
-                    for (Material m : Material.values()) {
-                        if (m.getName().equals(stackType.getSelectedItem())) {
-                            oldItemstack.setMaterial(m);
-                            break;
-                        }
-                    }
-                    /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
-                    removes them
-                     */
-
-                    oldItemstack.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
-                }
+                mainMenu.getEditorManager().saveCurrentItemStack();
 
                 //Set lastSlot equal to the current slot
-                lastYClick =row;
-                lastXClick =col;
+                setActiveItemStack(clickedX, clickedY);
 
                 //Load the new slot
-                ItemStack nextItemStack = inventoryTableModel.getItemStackAt(row, col);
-                stackNameEditor.setText(nextItemStack.getName());
-                for(int i = 0 ; i<stackType.getItemCount();i++){
-                    if((stackType.getItemAt(i)).equals(nextItemStack.getMaterial().getName())){
-                        stackType.setSelectedIndex(i);
-                        break;
-                    }
-                }
-                editorPane1.setText(nextItemStack.getLore());
-                inventoryTableModel.setActiveItemStack(row,col);
+                mainMenu.getEditorManager().loadStack(getSelectedItemStack());
             }
         };
         inventoryTable.addMouseListener(tableClickListener);
@@ -103,5 +85,11 @@ public class InventoryManager {
                 inventoryTableModel.fireTableCellUpdated(row, column);
             }
         });
+    }
+
+    public void setActiveItemStack(int x, int y) {
+        selectedX = x;
+        selectedY = y;
+        model.setActiveItemStack(y, x);
     }
 }

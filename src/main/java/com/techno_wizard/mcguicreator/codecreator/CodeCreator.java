@@ -49,7 +49,7 @@ public class CodeCreator {
         //Setting the slots
         for(int row = 0; row < model.getRowCount();row++){
             for(int col = 0; col<model.getColumnCount();col++){
-                ItemStack is = model.getItemStackAt(row,col);
+                ItemStack is = model.getItemStackAt(col, row);
 
                 //Make sure all itemstacks are real.
                 if(is.getMaterial() == Material.AIR) continue;
