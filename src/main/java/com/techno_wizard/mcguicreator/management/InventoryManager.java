@@ -22,7 +22,7 @@ public class InventoryManager {
     public InventoryManager(MainMenu mainMenu) {
         this.table = table;
         // assert the table model is correct
-        if(!(table.getModel() instanceof InventoryTableModel)) throw new RuntimeException(
+        if (!(table.getModel() instanceof InventoryTableModel)) throw new RuntimeException(
                 new ClassCastException("Table model is not an inventory table model"));
         this.model = (InventoryTableModel) table.getModel();
 
@@ -31,6 +31,7 @@ public class InventoryManager {
 
     /**
      * returns the currently selected itemstack
+     *
      * @return the currently selected itemstack
      */
     public ItemStack getSelectedItemStack() {
@@ -40,7 +41,7 @@ public class InventoryManager {
     /**
      * Inits the slots for the inventory
      */
-    public void initSlots(){
+    public void initSlots() {
 
         MouseListener tableClickListener = new MouseAdapter() {
             @Override
@@ -49,11 +50,11 @@ public class InventoryManager {
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
 
                 //Make sure the user does not click on the same slot twice
-                if(selectedX==clickedX&&selectedY==clickedY)
+                if (selectedX == clickedX && selectedY == clickedY)
                     return;
 
                 //Make sure it's not out of bounds
-                if(clickedX >= 9 || clickedY >=6)
+                if (clickedX >= 9 || clickedY >= 6)
                     return;
 
                 //Save the previous Itemstack

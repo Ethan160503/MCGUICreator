@@ -1,19 +1,21 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.datatransfer.*;
-
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
-import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.management.ColorButtonManager;
 import com.techno_wizard.mcguicreator.management.EditorManager;
 import com.techno_wizard.mcguicreator.management.InventoryManager;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -57,7 +59,6 @@ public class MainMenu extends JFrame {
     private EditorManager editorManager;
 
 
-
     //Code buttons
     private JButton exportButton;
     private JButton copyToClipboardButton;
@@ -91,9 +92,9 @@ public class MainMenu extends JFrame {
         // if one checkbox's state is changed, change the other one's state
         //TODO add text formatting switch
         showFormattedTextCheckBoxLore.addActionListener(e -> showFormattedTextCheckBoxDetails
-                .setSelected(((JCheckBox)e.getSource()).isSelected()));
+                .setSelected(((JCheckBox) e.getSource()).isSelected()));
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
-                .setSelected(((JCheckBox)e.getSource()).isSelected()));
+                .setSelected(((JCheckBox) e.getSource()).isSelected()));
 
         /*setJMenuBar(initMenuBar());
         //initialize the slots
@@ -106,8 +107,8 @@ public class MainMenu extends JFrame {
     /**
      * inits the materials
      */
-    public void initMaterials(){
-        for(Material mat : Material.values()) {
+    public void initMaterials() {
+        for (Material mat : Material.values()) {
             stackType.addItem(mat);
         }
     }
@@ -160,14 +161,14 @@ public class MainMenu extends JFrame {
                 //Upddate the active itemstack
                 ItemStack is = invManager.getActiveItemStack();
                 is.setName(stackNameEditor.getText());
-                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
+                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>", ""));
 
-                StringBuilder code= new StringBuilder();
-                for(String s : CodeCreator.writecode(inventoryTableModel)){
-                    code.append(s+"\n");
+                StringBuilder code = new StringBuilder();
+                for (String s : CodeCreator.writecode(inventoryTableModel)) {
+                    code.append(s + "\n");
                 }
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(new StringSelection(code.toString()),null);
+                clipboard.setContents(new StringSelection(code.toString()), null);
             }
         };
         copyToClipboardButton.addMouseListener(copyToClipboardListener);
@@ -179,11 +180,11 @@ public class MainMenu extends JFrame {
                 //Upddate the active itemstack
                 ItemStack is = invManager.getActiveItemStack();
                 is.setName(stackNameEditor.getText());
-                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
+                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>", ""));
 
-                StringBuilder code= new StringBuilder();
-                for(String s : CodeCreator.writecode(inventoryTableModel)){
-                    code.append(s+"\n");
+                StringBuilder code = new StringBuilder();
+                for (String s : CodeCreator.writecode(inventoryTableModel)) {
+                    code.append(s + "\n");
                 }
                 new CodeExporter(code.toString());
             }
@@ -193,6 +194,7 @@ public class MainMenu extends JFrame {
 
     /**
      * gets the root panel for use in the main() method to init the window
+     *
      * @return
      */
     public JPanel getRootPanel() {
@@ -203,7 +205,7 @@ public class MainMenu extends JFrame {
      * Inits the variables that IDEA doesn't
      */
     private void createUIComponents() {
-        DefaultTableModel model = new DefaultTableModel(6,9) {
+        DefaultTableModel model = new DefaultTableModel(6, 9) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return ImageIcon.class;
@@ -216,7 +218,7 @@ public class MainMenu extends JFrame {
         };
         inventoryTable = new JTable(model);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1,1,64,1));
+        stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
         invManager = new InventoryManager(this);
     }
 

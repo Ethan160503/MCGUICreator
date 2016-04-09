@@ -1,7 +1,6 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class ItemStack {
     private boolean isEnchanted;
     private String notes;
 
-    public ItemStack(Material material){
+    public ItemStack(Material material) {
         this.material = material;
         this.icon = material.getImage();
     }
@@ -43,15 +42,15 @@ public class ItemStack {
         return lore;
     }
 
+    public void setLore(String lore) {
+        this.lore = lore;
+    }
+
     public List<String> getLoreAsList() {
-        if(lore == null)
+        if (lore == null)
             return null;
         List<String> loreList = Arrays.asList(lore.split("\n"));
         return loreList;
-    }
-
-    public void setLore(String lore) {
-        this.lore = lore;
     }
 
     public int getAmount() {

@@ -31,7 +31,7 @@ public class InventoryTableModel extends AbstractTableModel {
 
     public ItemStack getItemStackAt(int column, int row) {
         //Since the itemstack might not exist yet, lets create a new Itemstack instance at that slot in order to prevent any possible NPEs
-        if(itemStacks[column][row]==null)
+        if (itemStacks[column][row] == null)
             itemStacks[column][row] = new ItemStack(Material.AIR);
         return itemStacks[column][row];
     }

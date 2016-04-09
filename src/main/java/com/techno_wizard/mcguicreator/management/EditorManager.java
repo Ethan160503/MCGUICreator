@@ -75,21 +75,21 @@ public class EditorManager {
         ItemStack oldItemstack = mainMenu.getInvManager().getSelectedItemStack();
         //todo revert to unformatted version first
         oldItemstack.setName(stackNameEditor.getText());
-        oldItemstack.setMaterial((Material)materialComboBox.getSelectedItem());
+        oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());
         /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
         removes them
          */
-        oldItemstack.setLore(loreEditor.getText().replaceAll("\\<[^>]*>",""));
+        oldItemstack.setLore(loreEditor.getText().replaceAll("\\<[^>]*>", ""));
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
-        oldItemstack.setAmount((Integer)stackItemCountSpinner.getValue());
+        oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
     }
 
     /**
      * inits the materials
      */
-    public void initMaterialList(){
-        for(Material mat : Material.values()) {
+    public void initMaterialList() {
+        for (Material mat : Material.values()) {
             materialComboBox.addItem(mat);
         }
     }
