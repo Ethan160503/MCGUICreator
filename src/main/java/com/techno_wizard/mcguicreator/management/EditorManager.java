@@ -5,6 +5,8 @@ import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -22,8 +24,7 @@ public class EditorManager {
 
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JSpinner stackItemCountSpinner, JComboBox materialBox,
-                         JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
-                         ) {
+                         JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor) {
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
         this.showFormattedTxtDetails = showFormattedTxtDetails;
@@ -33,6 +34,29 @@ public class EditorManager {
         this.enableEnchantCheckBox = enableEnchantCheckBox;
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
+
+
+    }
+
+    public void initEditors() {
+        materialComboBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mainMenu.getInvManager().updateItemStackIcon((Material) materialComboBox.getSelectedItem());
+                /*//Load the new slot
+                ItemStack is = getActiveItemstack();
+                for (Material mm : Material.values()) {
+                    if (mm.getName().equals(stackType.getSelectedItem())) {
+                        is.setMaterial(mm);
+                        break;
+                    }
+                }
+                int row = selectedY;
+                int column = selectedX;
+                table.setValueAt(table.getValueAt(row, column), row, column);
+                table.fireTableCellUpdated(row, column);*/
+            }
+        });
     }
 
     public void loadStack(ItemStack stack) {

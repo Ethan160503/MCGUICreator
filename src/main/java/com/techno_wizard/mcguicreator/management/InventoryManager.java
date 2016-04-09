@@ -66,30 +66,26 @@ public class InventoryManager {
                 mainMenu.getEditorManager().loadStack(getSelectedItemStack());
             }
         };
-        inventoryTable.addMouseListener(tableClickListener);
 
-        stackType.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Load the new slot
-                ItemStack is = inventoryTableModel.getActiveItemstack();
-                for (Material mm : Material.values()) {
-                    if (mm.getName().equals(stackType.getSelectedItem())) {
-                        is.setMaterial(mm);
-                        break;
-                    }
-                }
-                int row = inventoryTableModel.getActiveItemStackRow();
-                int column = inventoryTableModel.getActiveItemStackColumb();
-                inventoryTableModel.setValueAt(inventoryTableModel.getValueAt(row, column), row, column);
-                inventoryTableModel.fireTableCellUpdated(row, column);
-            }
-        });
+        table.addMouseListener(tableClickListener);
+    }
+
+    public void updateItemStackIcon(Material material) {
+        ItemStack is = getActiveItemStack();
+        is.setMaterial(material);
+
+        int row = selectedY;
+        int column = selectedX;
+        table.setValueAt(table.getValueAt(row, column), row, column);
+        model.fireTableCellUpdated(row, column);
     }
 
     public void setActiveItemStack(int x, int y) {
         selectedX = x;
         selectedY = y;
-        model.setActiveItemStack(y, x);
+    }
+
+    public ItemStack getActiveItemStack() {
+        return model.getItemStackAt(selectedX, selectedY);
     }
 }

@@ -95,9 +95,9 @@ public class MainMenu extends JFrame {
         showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
                 .setSelected(((JCheckBox)e.getSource()).isSelected()));
 
-        setJMenuBar(initMenuBar());
+        /*setJMenuBar(initMenuBar());
         //initialize the slots
-        initSlots();
+        initSlots();*/
         initMaterials();
         pack();
     }
@@ -116,12 +116,10 @@ public class MainMenu extends JFrame {
     /**
      * inits the toolbar
      */
-    private JMenuBar initMenuBar() {
+    private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu();
         JMenuItem fileOpen = new JMenuItem("Open");
-        fileOpen.add
-        fileMenu.add(new JMenuItem())
     }
 
     /**
@@ -155,11 +153,12 @@ public class MainMenu extends JFrame {
         colorButtonManager.setButtonListener(ChatColor.RESET, resetButton);
 
         //Creating the code for the clipboard.
+        //todo delegate to managing class
         MouseListener copyToClipboardListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //Upddate the active itemstack
-                ItemStack is = inventoryTableModel.getActiveItemstack();
+                ItemStack is = invManager.getActiveItemStack();
                 is.setName(stackNameEditor.getText());
                 is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
 
@@ -178,7 +177,7 @@ public class MainMenu extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //Upddate the active itemstack
-                ItemStack is = inventoryTableModel.getActiveItemstack();
+                ItemStack is = invManager.getActiveItemStack();
                 is.setName(stackNameEditor.getText());
                 is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>",""));
 
