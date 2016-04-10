@@ -53,16 +53,11 @@ public class InventoryManager {
                 if(clickedY >=3)
                     clickedY =2;
 
-                updateItemStackIcon(getActiveItemStack().getMaterial());
-
                 //Save the previous Itemstack
                 mainMenu.getEditorManager().saveCurrentItemStack();
 
                 //Set lastSlot equal to the current slot
                 setActiveItemStack(clickedX, clickedY);
-
-
-                updateItemStackIcon(getActiveItemStack().getMaterial());
 
                 //Load the new slot
                 mainMenu.getEditorManager().loadStack(getActiveItemStack());
@@ -72,14 +67,18 @@ public class InventoryManager {
         table.addMouseListener(tableClickListener);
     }
 
-    public void updateItemStackIcon(Material material) {
+    public void updateActiveItemStackIcon(Material material) {
         ItemStack is = getActiveItemStack();
         is.setMaterial(material);
 
         int row = selectedY;
         int column = selectedX;
         table.setValueAt(table.getValueAt(row, column), row, column);
-        model.fireTableCellUpdated(row, column);
+        //todo check if this actually works. IOB is making it impossible to test
+        table.repaint();
+        //todo debug statement
+        System.out.println("refreshed");
+        System.out.println(Thread.currentThread().getStackTrace().toString());
     }
 
     public void setActiveItemStack(int x, int y) {

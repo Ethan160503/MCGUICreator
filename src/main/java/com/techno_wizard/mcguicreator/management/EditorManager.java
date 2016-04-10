@@ -5,6 +5,8 @@ import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,22 +39,10 @@ public class EditorManager {
     }
 
     public void initEditors() {
-        materialComboBox.addMouseListener(new MouseAdapter() {
+        materialComboBox.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                mainMenu.getInvManager().updateItemStackIcon((Material) materialComboBox.getSelectedItem());
-                /*//Load the new slot
-                ItemStack is = getActiveItemstack();
-                for (Material mm : Material.values()) {
-                    if (mm.getName().equals(stackType.getSelectedItem())) {
-                        is.setMaterial(mm);
-                        break;
-                    }
-                }
-                int row = selectedY;
-                int column = selectedX;
-                table.setValueAt(table.getValueAt(row, column), row, column);
-                table.fireTableCellUpdated(row, column);*/
+            public void actionPerformed(ActionEvent e) {
+                mainMenu.getInvManager().updateActiveItemStackIcon((Material) materialComboBox.getSelectedItem());
             }
         });
     }

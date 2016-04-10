@@ -127,21 +127,29 @@ public class CodeCreator {
         List<String> formattedCode = new ArrayList<>();
         String indent = "   ";
         int indentCount = 1;
+        // for each line
         for(int i = 0; i < code.size();i++){
             int prevIndents = indentCount;
+            boolean hasCloseBrace = false;
             if(code.get(i).contains("}") || code.get(i).contains("{")) {
                 for (Character c : code.get(i).toCharArray()) {
                     if (c.equals('{'))
                         indentCount++;
-                    if (c.equals('}'))
+                    if (c.equals('}')) {
                         indentCount--;
+                        hasCloseBrace = true;
+                    }
                 }
             }
-            //Get the correct amount of indents
+            //Get the correct amount of indents and removes one if there is a close brace
             String indents="";
-            for(int j = 0; j < prevIndents;j++){
+            int iterCount = prevIndents;
+            if (hasCloseBrace) iterCount--;
+
+            for(int j = 0; j < iterCount; j++){
                 indents+=indent;
             }
+
             formattedCode.add(indents+ code.get(i));
         }
         return formattedCode;
