@@ -28,6 +28,7 @@ public class ItemStack {
     public void setMaterial(Material material) {
         this.material = material;
         this.icon = ItemUtil.resizeIcon(material.getImage());
+        this.icon = ItemUtil.addAmount(this.icon,this.amount);
     }
 
     public String getName() {
