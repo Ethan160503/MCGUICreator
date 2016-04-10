@@ -5,7 +5,7 @@ Inventory
     Add method of naming inventory (Possibly another tab in the tab window below?)
     Create a proper UI
         Add hoverover for details like MC does
-        Add count of items in stack
+        Add count of items in stack ===---Done
     Data retention
         table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items.
             was planning on creating a MASSIVE json file read through Gson with each item's picture path for easy

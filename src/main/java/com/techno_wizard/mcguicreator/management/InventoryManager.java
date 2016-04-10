@@ -6,6 +6,7 @@ import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -38,6 +39,47 @@ public class InventoryManager {
     public void initSlots() {
 
         MouseListener tableClickListener = new MouseAdapter() {
+            boolean isBeingDragged=false;
+            ItemStack beingDragged = null;
+            long firstPressed=0;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                System.out.println("pressed");
+                int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
+                int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
+                //Make sure it's not out of bounds
+                if (clickedX >= 9)
+                    clickedX = 8;
+                if(clickedY >=3)
+                    clickedY =2;
+                isBeingDragged = true;
+                beingDragged = model.getItemStackAt(clickedX,clickedY);
+                firstPressed = System.currentTimeMillis();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(isBeingDragged&&beingDragged!=null&&System.currentTimeMillis()-firstPressed>2000) {
+                    System.out.println("released");
+                    int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
+                    int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
+                    //Make sure it's not out of bounds
+                    if (clickedX >= 9)
+                        clickedX = 8;
+                    if (clickedY >= 3)
+                        clickedY = 2;
+                    ItemStack curser = getActiveItemStack();
+                    ItemStack slot = model.getItemStackAt(clickedX,clickedY);
+                    ItemStack slotClone = new ItemStack(model.getItemStackAt(clickedX,clickedY));
+
+                    //Update each slot
+                    slot.update(curser.getMaterial(),curser.getLore(),curser.getAmount());
+                    curser.update(slotClone.getMaterial(),slotClone.getLore(),slotClone.getAmount());
+                    isBeingDragged = false;
+                }
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
@@ -61,6 +103,14 @@ public class InventoryManager {
 
                 //Load the new slot
                 mainMenu.getEditorManager().loadStack(getActiveItemStack());
+
+                //Adds hover-over components to the table.
+                ItemStack is = getActiveItemStack();
+                Component c = table.prepareRenderer(table.getCellRenderer(clickedY,clickedX), clickedY, clickedX);
+                if (c instanceof JComponent) {
+                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+"</body></html>");
+                }
+                table.add(c);
             }
         };
 

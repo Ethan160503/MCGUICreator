@@ -30,6 +30,13 @@ public class ItemUtil {
         Image newimg = img.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
+
+    /**
+     * adds the numbers which represent the amount to the icon.
+     * @param original
+     * @param amount
+     * @return
+     */
     public static ImageIcon addAmount(ImageIcon original,int amount){
         BufferedImage bi = new BufferedImage(original.getIconWidth(),original.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = (Graphics2D) bi.getGraphics();
@@ -44,6 +51,13 @@ public class ItemUtil {
         ImageIcon i = new ImageIcon(bi);
         return i;
     }
+
+    /**
+     * Returns a character form the ASCII spritesheet
+     * @param column
+     * @param row
+     * @return
+     */
     public static BufferedImage getCharacter(int column,int row){
         //Starting with 1, the Numbers start at line 3
         //Size of each character (8 x 8)
@@ -56,6 +70,11 @@ public class ItemUtil {
         }
         return null;
     }
+
+    /**
+     * Returns an instance of the Util Class.
+     * @return
+     */
     public static ItemUtil getUtil(){
         return util;
     }
