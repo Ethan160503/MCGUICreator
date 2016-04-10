@@ -75,10 +75,6 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 
-        //set the table model
-        inventoryTableModel = new InventoryTableModel();
-        inventoryTable.setModel(inventoryTableModel);
-
         //test val
         //inventoryTable.getModel().setValueAt(resizeIcon(new ImageIcon(getClass().getResource("/itemimages/Poisonous_potato.png"))), 0, 0);
 
@@ -99,6 +95,10 @@ public class MainMenu extends JFrame {
         /*setJMenuBar(initMenuBar());
         //initialize the slots
         initSlots();*/
+
+        editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,showFormattedTextCheckBoxLore,stackItemCountSpinner,stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1);
+
+
         initMaterials();
         pack();
     }
@@ -216,10 +216,19 @@ public class MainMenu extends JFrame {
                 return false;
             }
         };
+
         inventoryTable = new JTable(model);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //set the table model
+        inventoryTableModel = new InventoryTableModel();
+        inventoryTable.setModel(inventoryTableModel);
+
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
-        invManager = new InventoryManager(this);
+
+
+        invManager = new InventoryManager(this,inventoryTable);
+
     }
 
     public InventoryManager getInvManager() {

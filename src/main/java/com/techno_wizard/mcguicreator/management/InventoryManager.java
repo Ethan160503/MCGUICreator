@@ -19,8 +19,9 @@ public class InventoryManager {
     InventoryTableModel model;
     int selectedX = 0, selectedY = 0;
 
-    public InventoryManager(MainMenu mainMenu) {
+    public InventoryManager(MainMenu mainMenue,JTable table) {
         this.table = table;
+        this.mainMenu = mainMenue;
         // assert the table model is correct
         if (!(table.getModel() instanceof InventoryTableModel)) throw new RuntimeException(
                 new ClassCastException("Table model is not an inventory table model"));
@@ -29,14 +30,7 @@ public class InventoryManager {
         initSlots();
     }
 
-    /**
-     * returns the currently selected itemstack
-     *
-     * @return the currently selected itemstack
-     */
-    public ItemStack getSelectedItemStack() {
-        return model.getItemStackAt(selectedX, selectedY);
-    }
+    //Get Selected Itemstack is exactly the same as getActiveItemStack, just with different names
 
     /**
      * Inits the slots for the inventory
@@ -54,8 +48,12 @@ public class InventoryManager {
                     return;
 
                 //Make sure it's not out of bounds
-                if (clickedX >= 9 || clickedY >= 6)
-                    return;
+                if (clickedX >= 9)
+                    clickedX = 8;
+                if(clickedY >=3)
+                    clickedY =2;
+
+                updateItemStackIcon(getActiveItemStack().getMaterial());
 
                 //Save the previous Itemstack
                 mainMenu.getEditorManager().saveCurrentItemStack();
@@ -63,8 +61,11 @@ public class InventoryManager {
                 //Set lastSlot equal to the current slot
                 setActiveItemStack(clickedX, clickedY);
 
+
+                updateItemStackIcon(getActiveItemStack().getMaterial());
+
                 //Load the new slot
-                mainMenu.getEditorManager().loadStack(getSelectedItemStack());
+                mainMenu.getEditorManager().loadStack(getActiveItemStack());
             }
         };
 
@@ -86,7 +87,7 @@ public class InventoryManager {
         selectedY = y;
     }
 
-    public ItemStack getActiveItemStack() {
+    public ItemStack getActiveItemStack(){
         return model.getItemStackAt(selectedX, selectedY);
     }
 }

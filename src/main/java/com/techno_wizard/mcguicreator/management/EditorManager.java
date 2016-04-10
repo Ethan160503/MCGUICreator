@@ -34,8 +34,6 @@ public class EditorManager {
         this.enableEnchantCheckBox = enableEnchantCheckBox;
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
-
-
     }
 
     public void initEditors() {
@@ -72,7 +70,7 @@ public class EditorManager {
     }
 
     public void saveCurrentItemStack() {
-        ItemStack oldItemstack = mainMenu.getInvManager().getSelectedItemStack();
+        ItemStack oldItemstack = mainMenu.getInvManager().getActiveItemStack();
         //todo revert to unformatted version first
         oldItemstack.setName(stackNameEditor.getText());
         oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());

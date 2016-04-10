@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -9,8 +10,8 @@ import java.awt.image.BufferedImage;
 public enum Material {
     //Items
     AIR("Null", "Air"),
-    ACACIA_BOAT("/itemimg/acacia_boat.png", "Acaial Boat"),
-    ACACIA_STEPS("blockimg/acacia_steps.png", "Acacia Steps", "ACACIA_STEPS", 0),
+    //ACACIA_BOAT("/itemimg/acacia_boat.png", "Acaial Boat"),
+    //ACACIA_STEPS("blockimg/acacia_steps.png", "Acacia Steps", "ACACIA_STEPS", 0),
     APPLE("/itemimg/apple.png", "Apple"),
     APPLE_GOLDEN("/itemimg/apple_golden.png", "Golden Apple"),
     ARROW("/itemimg/arrow.png", "Arrow"),
@@ -55,14 +56,14 @@ public enum Material {
     CLOCK("/itemimg/bow.png", "Bow"),
     COAL("/itemimg/bow.png", "Bow"),
     POISONOUS_POTATO("/itemimg/potato_poisonous.png", "Poisonous Potato"),
-    POTATO("/itemimg/potato.png", "Potato"),
+    POTATO("/itemimg/potato.png", "Potato"),/*
     STONE_STONE("blockimg/stone.png", "Stone", "STONE", 0),
-    STONE_GRANITE("blockimg/stone.png", "Stone", "STONE", 1),
-    STONE_GRANITE_SMOOTH("blockimg/stone.png", "Stone", "STONE", 2),
-    STONE_DIORITE("blockimg/stone.png", "Stone", "STONE", 3),
-    STONE_DIORITE_SMOOTH("blockimg/stone.png", "Stone", "STONE", 4),
-    STONE_ANDERSITE("blockimg/stone.png", "Stone", "STONE", 5),
-    STONE_ANDERSITE_SMOOTH("blockimg/stone.png", "Stone", "STONE", 6),
+    STONE_GRANITE("blockimg/stone.png", "Granite", "STONE", 1),
+    STONE_GRANITE_SMOOTH("blockimg/stone.png", "Smooth Granite", "STONE", 2),
+    STONE_DIORITE("blockimg/stone.png", "Stone", "Diorite", 3),
+    STONE_DIORITE_SMOOTH("blockimg/stone.png", "Smooth Diorite", "STONE", 4),
+    STONE_ANDERSITE("blockimg/stone.png", "Stone", "Anderstite", 5),
+    STONE_ANDERSITE_SMOOTH("blockimg/stone.png", "Smooth Andersite", "STONE", 6),*/
     WOOD_SWORD("/itemimg/wood_sword.png", "Wood sword"),
 
     //Dyes
@@ -81,10 +82,11 @@ public enum Material {
     DYE_BROWN("/itemimg/dye_powder_brown.png", "Brown Dye", "INK_SACK", 12),
     DYE_GREEN("/itemimg/dye_powder_green.png", "Green Dye", "INK_SACK", 13),
     DYE_RED("/itemimg/dye_powder_red.png", "Red Dye", "INK_SACK", 14),
-    DYE_BLACK("/itemimg/dye_powder_black.png", "Black Dye", "INK_SACK", 15),
+    DYE_BLACK("/itemimg/dye_powder_black.png", "Black Dye", "INK_SACK", 15);
 
     //TODO: Put the following blocks in alphabetical order back in the section above
-    ANVIL("blockimg/stone.png", "Anvil"),
+    //TODO: Figure out why the iamges that have the correct path are null
+    /*ANVIL("blockimg/anvil.png", "Anvil"),
     BEACON("blockimg/beacon.png", "Beacon"),
     BEDROCK("blockimg/bedrock.png", "Bedrock"),
     BIRCH_WOOD_STEPS("blockimg/birch_wood_steps.png", "Birch Stairs"),
@@ -186,7 +188,7 @@ public enum Material {
     WOOD_SLAB("blockimg/stone.png", "Wood Slab"),
     WOOD_STEPS("blockimg/stone.png", "Wood Stairs"),
     WOOL_CARPET_WHITE("blockimg/stone.png", "Wool Carpet White"),
-    WOOL_WHITE("blockimg/stone.png", "Wool White");
+    WOOL_WHITE("blockimg/stone.png", "Wool White");*/
 
     private ImageIcon image;
     private String name;
@@ -198,7 +200,12 @@ public enum Material {
         materialName = toString();
         durability = 0;
         if (!name.equals("Air")) {
-            this.image = new ImageIcon(getClass().getResource(imagePath));
+            try {
+                this.image = new ImageIcon(getClass().getResource(imagePath));
+            }catch(Exception e){
+                System.out.println("THE ERROR WAS CAUSED BY MATERIAL "+name);
+                e.printStackTrace();
+            }
         } else {
             image = new ImageIcon(new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB));
         }
@@ -210,7 +217,12 @@ public enum Material {
         this.durability = durability;
         //System.out.println(toString());
         if (!name.equals("Air")) {
-            this.image = new ImageIcon(getClass().getResource(imagePath));
+            try {
+                this.image = new ImageIcon(getClass().getResource(imagePath));
+            }catch(Exception e){
+                System.out.println("THE ERROR WAS CAUSED BY MATERIAL "+name);
+                e.printStackTrace();
+            }
         } else {
             image = new ImageIcon(new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB));
         }

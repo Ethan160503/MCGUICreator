@@ -25,8 +25,9 @@ public class InventoryTableModel extends AbstractTableModel {
         return itemStacks.length;
     }
 
+    //TODO: Make sure all other classes that use this know that the values are reversed
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return getItemStackAt(rowIndex, columnIndex).getInventoryIcon();
+        return getItemStackAt(columnIndex, rowIndex).getInventoryIcon();
     }
 
     public ItemStack getItemStackAt(int column, int row) {
@@ -37,7 +38,7 @@ public class InventoryTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
+    public Class<?> getColumnClass(int columnIndex){
         return ImageIcon.class;
     }
 }
