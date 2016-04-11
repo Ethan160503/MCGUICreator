@@ -1,19 +1,20 @@
 package com.techno_wizard.mcguicreator.management;
 
+import com.techno_wizard.mcguicreator.gui.ChatColor;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Created by Ethan on 4/6/2016.
  */
 public class EditorManager {
+    public static final int STACK_EDITOR_TAB = 0;
+    public static final int LORE_EDITOR_TAB = 1;
+    public static final int INV_EDITOR_TAB = 2;
+
     private MainMenu mainMenu;
     private JEditorPane stackNameEditor;
     private JCheckBox showFormattedTxtDetails;
@@ -23,10 +24,17 @@ public class EditorManager {
     private JCheckBox enableEnchantCheckBox;
     private JTextField notesBox;
     private JEditorPane loreEditor;
+    private JCheckBox showFormattedTxtInv;
+    private JEditorPane inventoryNameEditor;
+    private JTabbedPane editorTabbedPane;
+
+    private boolean textIsFormatted;
 
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
-                         JCheckBox showFormattedTxtLore, JSpinner stackItemCountSpinner, JComboBox materialBox,
-                         JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor) {
+                         JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
+                         JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
+                         JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor) {
+        this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
         this.showFormattedTxtDetails = showFormattedTxtDetails;
@@ -36,14 +44,27 @@ public class EditorManager {
         this.enableEnchantCheckBox = enableEnchantCheckBox;
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
+        this.showFormattedTxtInv = showFormattedTxtInv;
+        this.editorTabbedPane = editorTabbedPane;
+        initEditors();
     }
 
     public void initEditors() {
-        materialComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenu.getInvManager().updateActiveItemStackIcon((Material) materialComboBox.getSelectedItem());
-            }
+        materialComboBox.addActionListener(e ->
+                mainMenu.getInvManager().updateActiveItemStackIcon((Material) materialComboBox.getSelectedItem()));
+        //TODO add text formatting switch
+        showFormattedTxtLore.addActionListener(e -> {
+            showFormattedTxtDetails.setSelected(((JCheckBox) e.getSource()).isSelected());
+            showFormattedTxtInv.setSelected(((JCheckBox) e.getSource()).isSelected());
+        });
+        showFormattedTxtDetails.addActionListener(e -> {
+            showFormattedTxtLore.setSelected(((JCheckBox) e.getSource()).isSelected());
+            showFormattedTxtInv.setSelected(((JCheckBox) e.getSource()).isSelected());
+        });
+        showFormattedTxtInv.addActionListener(e -> {
+            showFormattedTxtLore.setSelected(((JCheckBox) e.getSource()).isSelected());
+            showFormattedTxtDetails.setSelected(((JCheckBox) e.getSource()).isSelected());
+
         });
     }
 
@@ -60,6 +81,7 @@ public class EditorManager {
     }
 
     public void saveCurrentItemStack() {
+        setTextIsFormatted(false);
         ItemStack oldItemstack = mainMenu.getInvManager().getActiveItemStack();
         //todo revert to unformatted version first
         oldItemstack.setName(stackNameEditor.getText());
@@ -71,6 +93,48 @@ public class EditorManager {
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
+    }
+
+    /**
+     * sets the selected editor view
+     * @param textIsFormatted whether or not the text should be formatted
+     */
+    public void setTextIsFormatted(boolean textIsFormatted) {
+        this.textIsFormatted = textIsFormatted;
+    }
+
+    public void setButtonListener(ChatColor color, JButton button) {
+        button.addActionListener(e -> onColorButtonPress(color));
+    }
+
+    /**
+     * @param chatColor
+     */
+    public void onColorButtonPress(ChatColor chatColor) {
+        boolean textWasFormatted = textIsFormatted;
+        // change to original to add color code
+        if (textIsFormatted) setTextIsFormatted(false);
+
+        // add color code
+        switch (editorTabbedPane.getSelectedIndex()) {
+            case STACK_EDITOR_TAB:
+                stackNameEditor.setText(stackNameEditor.getText().concat(chatColor.getColorCode()));
+                break;
+            case LORE_EDITOR_TAB:
+                System.out.println("Operational");
+                loreEditor.setText(loreEditor.getText().concat(chatColor.getColorCode()));
+                break;
+            case INV_EDITOR_TAB:
+                inventoryNameEditor.setText(inventoryNameEditor.getText().concat(chatColor.getColorCode()));
+                break;
+            default:
+                System.out.println("Unknown editor tab: Error");
+        }
+
+        // restore old view
+        if(textWasFormatted) {
+            setTextIsFormatted(true);
+        }
     }
 
     /**

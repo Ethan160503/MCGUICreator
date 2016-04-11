@@ -125,10 +125,8 @@ public class InventoryManager {
         int column = selectedX;
         table.setValueAt(table.getValueAt(row, column), row, column);
         //todo check if this actually works. IOB is making it impossible to test
-        table.repaint();
+        model.fireTableCellUpdated(row, column);
         //todo debug statement
-        System.out.println("refreshed");
-        System.out.println(Thread.currentThread().getStackTrace().toString());
     }
 
     public void setActiveItemStack(int x, int y) {
@@ -138,5 +136,9 @@ public class InventoryManager {
 
     public ItemStack getActiveItemStack(){
         return model.getItemStackAt(selectedX, selectedY);
+    }
+
+    public void onColorPress() {
+
     }
 }
