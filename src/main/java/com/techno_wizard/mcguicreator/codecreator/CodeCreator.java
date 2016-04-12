@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.codecreator;
 
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
@@ -59,13 +60,18 @@ public class CodeCreator {
                 //TODO: Ethan- probably. It would make a lot more sense that way and the output would be more readable. Btw, added a buffer to list for speed
                 String loreName = "itemlore" + ((row * 9) + col);
                 boolean hasLore = createStringList(code, is.getLoreAsList(), loreName);
-                code.add(inventoryName + ".setItem(" + ((row * 9) + col) + ",createItemstack("
-                        + is.getMaterial().getMaterialEnumName() + ","
-                        + is.getAmount() + ","
-                        + "\"" + is.getName()
-                        + "\"," + (hasLore ? loreName : "null")
-                        + ", (short)" + is.getMaterial().getDurability()
-                        + ");");
+                code.add("Itemstack itemstack"+((row * 9) + col)+" = createItemstack("
+                                + is.getMaterial().getMaterialEnumName() + ","
+                                + is.getAmount() + ","
+                                + "\"" + is.getName()
+                                + "\"," + (hasLore ? loreName : "null")
+                                + ", (short)" + is.getMaterial().getDurability()
+                                + ");");
+                for(int i = 0; i < is.getEnchantments().size();i++){
+                    Enchantment en=is.getEnchantments().get(i);
+                    code.add("itemstack"+((row * 9) + col)+".add"+(en.isUnsafe()?"Unsafe":"")+"Enchantment(Enchantment."+en.getBukkitName()+","+en.getPowerLavel()+");");
+                }
+                code.add(inventoryName + ".setItem(" + ((row * 9) + col) + ",itemstack"+((row*9)+col)+");");
             }
         }
         code.add("}");

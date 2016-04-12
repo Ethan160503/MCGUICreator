@@ -16,7 +16,7 @@ public class ItemStack {
     private Material material;
     private String name;
     private String lore;
-    private int amount;
+    private int amount = 1;
     private boolean isEnchanted;
     private List<Enchantment> enchantments = new ArrayList<>();
     private String notes;

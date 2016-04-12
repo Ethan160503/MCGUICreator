@@ -6,7 +6,6 @@ import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
-import com.techno_wizard.mcguicreator.management.ColorButtonManager;
 import com.techno_wizard.mcguicreator.management.EditorManager;
 import com.techno_wizard.mcguicreator.management.InventoryManager;
 
@@ -56,7 +55,6 @@ public class MainMenu extends JFrame {
     private JCheckBox enableEnchantmentNotVisibleCheckBox;
     private JComboBox stackType;
 
-    private ColorButtonManager colorButtonManager;
     private InventoryManager invManager;
     private EditorManager editorManager;
 
@@ -64,6 +62,10 @@ public class MainMenu extends JFrame {
     //Code buttons
     private JButton exportButton;
     private JButton copyToClipboardButton;
+    private JEditorPane inventoryNameEditor;
+    private JCheckBox showFormattedTextCheckBoxInv;
+    private JSpinner inventorySizeSpinner;
+    private JTabbedPane editorTabbedPane;
 
     private JSpinner enchantmentLevel;
     private JComboBox enchantmentType;
@@ -90,22 +92,18 @@ public class MainMenu extends JFrame {
 
         inventoryTable.setRowHeight(75);
 
-        // initalize color buttons
-        colorButtonManager = new ColorButtonManager(this);
+        editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
+                showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
+                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor);
         initButtons();
 
         // if one checkbox's state is changed, change the other one's state
-        //TODO add text formatting switch
-        showFormattedTextCheckBoxLore.addActionListener(e -> showFormattedTextCheckBoxDetails
-                .setSelected(((JCheckBox) e.getSource()).isSelected()));
-        showFormattedTextCheckBoxDetails.addActionListener(e -> showFormattedTextCheckBoxLore
-                .setSelected(((JCheckBox) e.getSource()).isSelected()));
+
 
         /*setJMenuBar(initMenuBar());
         //initialize the slots
         initSlots();*/
 
-        editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,showFormattedTextCheckBoxLore,stackItemCountSpinner,stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1);
 
         //Create the list to store all the enchantments
         enchantmentList.setModel(new DefaultListModel());
@@ -150,28 +148,28 @@ public class MainMenu extends JFrame {
         /* Unfortunately, due to restrictions of IDEA's GUI designer, i cannot set the buttons
            To compensate, the following madness is required. Yay......
         */
-        colorButtonManager.setButtonListener(ChatColor.BLACK, blackButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_BLUE, darkBlueButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_GREEN, darkGreenButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_AQUA, darkAquaButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_RED, darkRedButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_PURPLE, darkPurpleButton);
-        colorButtonManager.setButtonListener(ChatColor.GOLD, goldButton);
-        colorButtonManager.setButtonListener(ChatColor.GRAY, grayButton);
-        colorButtonManager.setButtonListener(ChatColor.DARK_GRAY, darkGrayButton);
-        colorButtonManager.setButtonListener(ChatColor.BLUE, blueButton);
-        colorButtonManager.setButtonListener(ChatColor.GREEN, greenButton);
-        colorButtonManager.setButtonListener(ChatColor.AQUA, aquaButton);
-        colorButtonManager.setButtonListener(ChatColor.RED, redButton);
-        colorButtonManager.setButtonListener(ChatColor.LIGHT_PURPLE, lightPurpleButton);
-        colorButtonManager.setButtonListener(ChatColor.YELLOW, yellowButton);
-        colorButtonManager.setButtonListener(ChatColor.WHITE, whiteButton);
-        colorButtonManager.setButtonListener(ChatColor.MAGIC, magicButton);
-        colorButtonManager.setButtonListener(ChatColor.BOLD, boldButton);
-        colorButtonManager.setButtonListener(ChatColor.STRIKETHROUGH, strikethroughButton);
-        colorButtonManager.setButtonListener(ChatColor.UNDERLINE, underlineButton);
-        colorButtonManager.setButtonListener(ChatColor.ITALIC, italicButton);
-        colorButtonManager.setButtonListener(ChatColor.RESET, resetButton);
+        editorManager.setButtonListener(ChatColor.BLACK, blackButton);
+        editorManager.setButtonListener(ChatColor.DARK_BLUE, darkBlueButton);
+        editorManager.setButtonListener(ChatColor.DARK_GREEN, darkGreenButton);
+        editorManager.setButtonListener(ChatColor.DARK_AQUA, darkAquaButton);
+        editorManager.setButtonListener(ChatColor.DARK_RED, darkRedButton);
+        editorManager.setButtonListener(ChatColor.DARK_PURPLE, darkPurpleButton);
+        editorManager.setButtonListener(ChatColor.GOLD, goldButton);
+        editorManager.setButtonListener(ChatColor.GRAY, grayButton);
+        editorManager.setButtonListener(ChatColor.DARK_GRAY, darkGrayButton);
+        editorManager.setButtonListener(ChatColor.BLUE, blueButton);
+        editorManager.setButtonListener(ChatColor.GREEN, greenButton);
+        editorManager.setButtonListener(ChatColor.AQUA, aquaButton);
+        editorManager.setButtonListener(ChatColor.RED, redButton);
+        editorManager.setButtonListener(ChatColor.LIGHT_PURPLE, lightPurpleButton);
+        editorManager.setButtonListener(ChatColor.YELLOW, yellowButton);
+        editorManager.setButtonListener(ChatColor.WHITE, whiteButton);
+        editorManager.setButtonListener(ChatColor.MAGIC, magicButton);
+        editorManager.setButtonListener(ChatColor.BOLD, boldButton);
+        editorManager.setButtonListener(ChatColor.STRIKETHROUGH, strikethroughButton);
+        editorManager.setButtonListener(ChatColor.UNDERLINE, underlineButton);
+        editorManager.setButtonListener(ChatColor.ITALIC, italicButton);
+        editorManager.setButtonListener(ChatColor.RESET, resetButton);
 
         MouseListener addEnchantmentListener = new MouseAdapter() {
             @Override
@@ -283,11 +281,14 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
+<<<<<<< HEAD
         enchantmentLevel = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
+=======
+        inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+>>>>>>> b5f74badcb7dfc5b19b9373b29440a2caaf9b6ad
 
         invManager = new InventoryManager(this,inventoryTable);
-
     }
 
     public InventoryManager getInvManager() {
