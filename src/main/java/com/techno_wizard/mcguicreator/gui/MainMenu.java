@@ -281,12 +281,8 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
-<<<<<<< HEAD
         enchantmentLevel = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
-
-=======
         inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
->>>>>>> b5f74badcb7dfc5b19b9373b29440a2caaf9b6ad
 
         invManager = new InventoryManager(this,inventoryTable);
     }

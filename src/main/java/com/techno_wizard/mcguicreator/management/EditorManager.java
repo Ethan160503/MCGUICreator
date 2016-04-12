@@ -9,15 +9,8 @@ import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-=======
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
->>>>>>> b5f74badcb7dfc5b19b9373b29440a2caaf9b6ad
 
 /**
  * Created by Ethan on 4/6/2016.
