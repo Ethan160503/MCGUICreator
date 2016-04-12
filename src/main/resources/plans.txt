@@ -2,7 +2,7 @@ Things that need to be done/ plans. Anyone can edit this
 
 Inventory
     Add method of setting size (File toolbar on top?)
-    Add method of naming inventory (Possibly another tab in the tab window below?)
+    Add method of naming inventory (Possibly another tab in the tab window below?) ===---Done
     Create a proper UI
         Add hoverover for details like MC does
         Add count of items in stack ===---Done
@@ -10,22 +10,26 @@ Inventory
         table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items.
             was planning on creating a MASSIVE json file read through Gson with each item's picture path for easy
             updating later
-        need a custom itemstack item that holds the stack item count, name, lore, enchantment data, and other info
+        need a custom itemstack item that holds the stack item count, name, lore, enchantment data, and other info ==---Done
         Inventory needs to be somehow serializable now, because it's better if it is built that way to start with.
     Table needs to be able to drag and drop items around. this might be hard.
 
 Item details
-    Buttons need to add color codes to current open editor (either stack name or lore)
+    Buttons need to add color codes to current open editor (either stack name or lore)===---Done
     Item drop down will have to be able to read the full list of options somehow. Maybe a popup jlist is needed?
-    Show formatted text needs to be able to convert colors to html. for simplicity's sake, no editing when in formatted
-        mode unless we find out that it's easy
+    Show formatted text needs to be able to convert colors to html.
 
 Buttons
-    Need to be a little cleaner. Might not be possible though.
-    Button manager needs to add color codes to active editor. Listeners for this on the button side are totally ready.
+    Button manager needs to add color codes to active editor. Listeners for this on the button side are totally ready.===---Done
 
 Code
     Not even worrying about this yet.
+
+Before Release
+    Add popups when elements are first selected to explain how to use them. For example, when text is formatted, they cannot
+        be typed in because of API restrictions. When the checkbox is checked for the first time, this should be
+        made clear to the user because no one ever reads instructions. Let's be honest.
+
 Later->
     Save files
     Self-generating click listeners

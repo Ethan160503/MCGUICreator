@@ -6,6 +6,9 @@ import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -30,6 +33,10 @@ public class EditorManager {
 
     private boolean textIsFormatted;
 
+    private String stackNamePlain = "";
+    private String inventoryNamePlain = "";
+    private String lorePlain = "";
+
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
@@ -53,19 +60,10 @@ public class EditorManager {
         materialComboBox.addActionListener(e ->
                 mainMenu.getInvManager().updateActiveItemStackIcon((Material) materialComboBox.getSelectedItem()));
         //TODO add text formatting switch
-        showFormattedTxtLore.addActionListener(e -> {
-            showFormattedTxtDetails.setSelected(((JCheckBox) e.getSource()).isSelected());
-            showFormattedTxtInv.setSelected(((JCheckBox) e.getSource()).isSelected());
-        });
-        showFormattedTxtDetails.addActionListener(e -> {
-            showFormattedTxtLore.setSelected(((JCheckBox) e.getSource()).isSelected());
-            showFormattedTxtInv.setSelected(((JCheckBox) e.getSource()).isSelected());
-        });
-        showFormattedTxtInv.addActionListener(e -> {
-            showFormattedTxtLore.setSelected(((JCheckBox) e.getSource()).isSelected());
-            showFormattedTxtDetails.setSelected(((JCheckBox) e.getSource()).isSelected());
-
-        });
+        ActionListener listener = e1 -> setTextIsFormatted(((JCheckBox) e1.getSource()).isSelected());
+        showFormattedTxtLore.addActionListener(listener);
+        showFormattedTxtDetails.addActionListener(listener);
+        showFormattedTxtInv.addActionListener(listener);
     }
 
     public void loadStack(ItemStack stack) {
@@ -89,7 +87,7 @@ public class EditorManager {
         /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
         removes them
          */
-        oldItemstack.setLore(loreEditor.getText().replaceAll("\\<[^>]*>", ""));
+        oldItemstack.setLore(loreEditor.getText());
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
@@ -100,7 +98,44 @@ public class EditorManager {
      * @param textIsFormatted whether or not the text should be formatted
      */
     public void setTextIsFormatted(boolean textIsFormatted) {
+        if((this.textIsFormatted && textIsFormatted) || (!this.textIsFormatted && !textIsFormatted)) return;
+
+        if(!textIsFormatted) {
+            // set text unformatted
+            inventoryNameEditor.setEditable(true);
+            inventoryNameEditor.setContentType("text/plain");
+            inventoryNameEditor.setText(inventoryNamePlain);
+
+            loreEditor.setEditable(true);
+            loreEditor.setContentType("text/plain");
+            loreEditor.setText(lorePlain);
+
+            stackNameEditor.setEditable(true);
+            stackNameEditor.setContentType("text/plain");
+            stackNameEditor.setText(stackNamePlain);
+            System.out.println("Inactive");
+        } else {
+            System.out.println("Active");
+            inventoryNamePlain = inventoryNameEditor.getText();
+            inventoryNameEditor.setContentType("text/html");
+            inventoryNameEditor.setEditable(false);
+            // convert
+
+            lorePlain = loreEditor.getText();
+            loreEditor.setContentType("text/html");
+            loreEditor.setEditable(false);
+            // convert
+
+            stackNamePlain = stackNameEditor.getText();
+            stackNameEditor.setContentType("text/html");
+            stackNameEditor.setEditable(false);
+            //convert
+        }
+
         this.textIsFormatted = textIsFormatted;
+        showFormattedTxtDetails.setSelected(textIsFormatted);
+        showFormattedTxtInv.setSelected(textIsFormatted);
+        showFormattedTxtLore.setSelected(textIsFormatted);
     }
 
     public void setButtonListener(ChatColor color, JButton button) {
