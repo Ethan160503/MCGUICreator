@@ -2,7 +2,9 @@ package com.techno_wizard.mcguicreator.gui;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.management.ColorButtonManager;
 import com.techno_wizard.mcguicreator.management.EditorManager;
@@ -63,6 +65,13 @@ public class MainMenu extends JFrame {
     private JButton exportButton;
     private JButton copyToClipboardButton;
 
+    private JSpinner enchantmentLevel;
+    private JComboBox enchantmentType;
+    public JList enchantmentList;
+    private JButton enchantmentAdd;
+    private JButton enchantmentRemove;
+    private JScrollPane enchantmentScrollPane;
+
     private InventoryTableModel inventoryTableModel;
 
     public MainMenu() {
@@ -98,12 +107,23 @@ public class MainMenu extends JFrame {
 
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,showFormattedTextCheckBoxLore,stackItemCountSpinner,stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1);
 
+        //Create the list to store all the enchantments
+        enchantmentList.setModel(new DefaultListModel());
 
         initMaterials();
+        initEnchantments();
         pack();
     }
 
-
+    /**
+     * inits the enchantments
+     */
+    public void initEnchantments(){
+        this.enchantmentType.addItem("");
+        for(Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values()){
+            this.enchantmentType.addItem(e.getBukkitName());
+        }
+    }
     /**
      * inits the materials
      */
@@ -152,6 +172,44 @@ public class MainMenu extends JFrame {
         colorButtonManager.setButtonListener(ChatColor.UNDERLINE, underlineButton);
         colorButtonManager.setButtonListener(ChatColor.ITALIC, italicButton);
         colorButtonManager.setButtonListener(ChatColor.RESET, resetButton);
+
+        MouseListener addEnchantmentListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!((String)enchantmentType.getSelectedItem()).equals("")&&((int)enchantmentLevel.getValue())!=0){
+                    DefaultListModel listModel = (DefaultListModel) enchantmentList.getModel();
+                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
+                    String enchString = ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel());
+                    boolean containsEnchantment = false;
+                    for(int i = 0 ;i<listModel.size();i++){
+                        if(listModel.getElementAt(i).equals(enchString)){
+                            containsEnchantment = true;
+                            break;
+                        }
+                    }
+                    if(!containsEnchantment) {
+                        getInvManager().getActiveItemStack().addEnchantment(ench);
+                        listModel.addElement(enchString);
+                    }
+                }
+            }
+        };
+        enchantmentAdd.addMouseListener(addEnchantmentListener);
+
+        MouseListener removeEnchantmentListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!((String)enchantmentType.getSelectedItem()).equals("")){
+                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
+                    getInvManager().getActiveItemStack().removeEnchantment(ench);
+                    for(int i = 0; i < ((DefaultListModel)enchantmentList.getModel()).size();i++){
+                        if(((DefaultListModel)enchantmentList.getModel()).getElementAt(i).equals(ench.getBukkitName()+" : "+ItemUtil.getRomanNumerals(ench.getPowerLavel())))
+                            ((DefaultListModel)enchantmentList.getModel()).remove(i);
+                    }
+                }
+            }
+        };
+        enchantmentRemove.addMouseListener(removeEnchantmentListener);
 
         //Creating the code for the clipboard.
         //todo delegate to managing class
@@ -225,6 +283,7 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
+        enchantmentLevel = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
 
         invManager = new InventoryManager(this,inventoryTable);

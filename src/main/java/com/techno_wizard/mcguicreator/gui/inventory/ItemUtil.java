@@ -20,6 +20,38 @@ public class ItemUtil {
     }
 
     /**
+     * returns the Roman Numeral value equal to the integer I (if the values is less than 10).
+     * @param i
+     * @return
+     */
+    public static String getRomanNumerals(int i){
+        if(i==1) return "I";
+        if(i==2) return "II";
+        if(i==3) return "III";
+        if(i==4) return "IV";
+        if(i==5) return "V";
+        if(i==6) return "VI";
+        if(i==7) return "VII";
+        if(i==8) return "VII";
+        if(i==9) return "IX";
+        if(i==10) return "X";
+        return i+"";
+    }
+    public static int getIntegers(String romanNum){
+        if(romanNum.equals("I"))  return 1;
+        if(romanNum.equals("II"))  return 2;
+        if(romanNum.equals("III"))  return 3;
+        if(romanNum.equals("IV"))  return 4;
+        if(romanNum.equals("V"))  return 5;
+        if(romanNum.equals("VI"))  return 6;
+        if(romanNum.equals("VII"))  return 7;
+        if(romanNum.equals("VIII"))  return 8;
+        if(romanNum.equals("IX"))  return 9;
+        if(romanNum.equals("X"))  return 10;
+        return Integer.valueOf(romanNum);
+    }
+
+    /**
      * resizes the icons to fit correctly inside of the jtable cells
      *
      * @param original original image

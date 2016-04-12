@@ -3,7 +3,9 @@ package com.techno_wizard.mcguicreator.gui.inventory;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public class ItemStack {
     private String lore;
     private int amount;
     private boolean isEnchanted;
+    private List<Enchantment> enchantments = new ArrayList<>();
     private String notes;
 
     public ItemStack(Material material) {
@@ -35,6 +38,27 @@ public class ItemStack {
 
     public Material getMaterial() {
         return material;
+    }
+
+    public void addEnchantment(Enchantment e){
+        this.enchantments.add(e);
+    }
+    public void removeEnchantment(Enchantment e){
+        this.enchantments.remove(e);
+
+    }
+    public void removeEnchantmentType(Enchantment.EnchantmentType e){
+        Iterator<Enchantment> iterator = this.enchantments.listIterator();
+        for(Enchantment e2 = iterator.next();iterator.hasNext();e2=iterator.next()){
+            if(e.getBukkitName().equals(e2.getBukkitName()))
+                this.enchantments.remove(e2);
+        }
+    }
+    public List<Enchantment> getEnchantments(){
+        return this.enchantments;
+    }
+    public void setEnchantments(List<Enchantment> e){
+        this.enchantments = e;
     }
 
     public void setMaterial(Material material) {

@@ -2,6 +2,7 @@ package com.techno_wizard.mcguicreator.management;
 
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
@@ -45,7 +46,6 @@ public class InventoryManager {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("pressed");
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
                 //Make sure it's not out of bounds
@@ -56,32 +56,47 @@ public class InventoryManager {
                 isBeingDragged = true;
                 beingDragged = model.getItemStackAt(clickedX,clickedY);
                 firstPressed = System.currentTimeMillis();
+                System.out.println("pressed X,Y ="+clickedX+" "+clickedY);
+                selectNewItemStack(e);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(isBeingDragged&&beingDragged!=null&&System.currentTimeMillis()-firstPressed>2000) {
-                    System.out.println("released");
-                    int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
-                    int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
-                    //Make sure it's not out of bounds
-                    if (clickedX >= 9)
-                        clickedX = 8;
-                    if (clickedY >= 3)
-                        clickedY = 2;
-                    ItemStack curser = getActiveItemStack();
-                    ItemStack slot = model.getItemStackAt(clickedX,clickedY);
-                    ItemStack slotClone = new ItemStack(model.getItemStackAt(clickedX,clickedY));
+                if(isBeingDragged&&beingDragged!=null) {
+                    if(System.currentTimeMillis()-firstPressed>1000) {
+                        int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
+                        int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
+                        //Make sure it's not out of bounds
+                        if (clickedX >= 9)
+                            clickedX = 8;
+                        if (clickedY >= 3)
+                            clickedY = 2;
+                        ItemStack activeItemStack = getActiveItemStack();
+                        ItemStack slot = model.getItemStackAt(clickedX, clickedY);
+                        Material m = slot.getMaterial();
+                        String lore = slot.getLore()+"";
+                        int amount = slot.getAmount();
 
-                    //Update each slot
-                    slot.update(curser.getMaterial(),curser.getLore(),curser.getAmount());
-                    curser.update(slotClone.getMaterial(),slotClone.getLore(),slotClone.getAmount());
+                        //Update each slot
+                        slot.update(activeItemStack.getMaterial(), activeItemStack.getLore(), activeItemStack.getAmount());
+                        activeItemStack.update(m,lore,amount);
+                        mainMenu.getEditorManager().saveItemStack(slot);
+                        mainMenu.getEditorManager().saveItemStack(activeItemStack);
+                        System.out.println("released slot: "+slot.getMaterial().getDisplayName()+" activeItemstack: "+activeItemStack.getMaterial().getDisplayName());
+                    }
                     isBeingDragged = false;
+                    beingDragged = null;
                 }
+                this.selectNewItemStack(e);
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(!isBeingDragged)
+                    selectNewItemStack(e);
+            }
+
+            public void selectNewItemStack(MouseEvent e){
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
 
@@ -108,7 +123,10 @@ public class InventoryManager {
                 ItemStack is = getActiveItemStack();
                 Component c = table.prepareRenderer(table.getCellRenderer(clickedY,clickedX), clickedY, clickedX);
                 if (c instanceof JComponent) {
-                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+"</body></html>");
+                    StringBuilder sb = new StringBuilder();
+                    for(Enchantment ench : is.getEnchantments())
+                       sb.append("<br>"+ench.getBukkitName()+" : "+ench.getPowerLavel());
+                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+sb.toString()+"</body></html>");
                 }
                 table.add(c);
             }
