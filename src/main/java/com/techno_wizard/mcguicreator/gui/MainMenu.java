@@ -88,25 +88,14 @@ public class MainMenu extends JFrame {
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-
-        //test val
-        //inventoryTable.getModel().setValueAt(resizeIcon(new ImageIcon(getClass().getResource("/itemimages/Poisonous_potato.png"))), 0, 0);
-
-
         inventoryTable.setRowHeight(75);
 
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
                 stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor,eventGenerateType);
         initButtons();
-
-        // if one checkbox's state is changed, change the other one's state
-
-
-        /*setJMenuBar(initMenuBar());
-        //initialize the slots
-        initSlots();*/
-
+        // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
+        initMenuBar();
 
         //Create the list to store all the enchantments
         enchantmentList.setModel(new DefaultListModel());
@@ -152,6 +141,17 @@ public class MainMenu extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu();
         JMenuItem fileOpen = new JMenuItem("Open");
+        JMenu fileExport = new JMenu("Export code...");
+        JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
+        JMenuItem exportToPopup = new JMenuItem("Export to popup");
+
+        menuBar.add(fileMenu);
+        fileMenu.add(fileOpen);
+        fileMenu.add(fileExport);
+        fileExport.add(exportToClipboard);
+        fileExport.add(exportToPopup);
+
+        setJMenuBar(menuBar);
     }
 
     /**
