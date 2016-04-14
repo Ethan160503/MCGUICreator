@@ -32,7 +32,6 @@ public class InventoryManager {
         initSlots();
     }
 
-    //Get Selected Itemstack is exactly the same as getActiveItemStack, just with different names
 
     /**
      * Inits the slots for the inventory
@@ -48,12 +47,7 @@ public class InventoryManager {
             public void mousePressed(MouseEvent e) {
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
-                //Make sure it's not out of bounds
-                if (clickedX >= getInventoryTableModel().getColumnCount())
-                    clickedX = getInventoryTableModel().getColumnCount()-1;
-                if(clickedY >=getInventoryTableModel().getRowCount())
-                    clickedY =getInventoryTableModel().getRowCount()-1;
-                if(clickedX<0||clickedY<0)
+                if(outOfBounds(clickedX,clickedY))
                     return;
                 isBeingDragged = true;
                 beingDragged = model.getItemStackAt(clickedX,clickedY);
@@ -66,18 +60,15 @@ public class InventoryManager {
                 if(isBeingDragged&&beingDragged!=null) {
                     if(System.currentTimeMillis()-firstPressed>1000) {
                         int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
-                        int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
-                        //Make sure it's not out of bounds
-                        if (clickedX >= getInventoryTableModel().getColumnCount())
-                            clickedX = getInventoryTableModel().getColumnCount()-1;
-                        if(clickedY >=getInventoryTableModel().getRowCount())
-                            clickedY =getInventoryTableModel().getRowCount()-1;
-                        if(clickedX<0||clickedY<0)
+                        int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col;
+
+                        if(outOfBounds(clickedX,clickedY))
                             return;
+
                         ItemStack activeItemStack = getActiveItemStack();
                         ItemStack slot = model.getItemStackAt(clickedX, clickedY);
                         Material m = slot.getMaterial();
-                        String lore = slot.getLore()+"";
+                        String lore = slot.getLore();
                         int amount = slot.getAmount();
 
                         //Update each slot
@@ -103,15 +94,7 @@ public class InventoryManager {
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
 
                 //Make sure the user does not click on the same slot twice
-                if (selectedX == clickedX && selectedY == clickedY)
-                    return;
-
-                //Make sure it's not out of bounds
-                if (clickedX >= getInventoryTableModel().getColumnCount())
-                    clickedX = getInventoryTableModel().getColumnCount()-1;
-                if(clickedY >=getInventoryTableModel().getRowCount())
-                    clickedY =getInventoryTableModel().getRowCount()-1;
-                if(clickedX<0||clickedY<0)
+                if (selectedX == clickedX && selectedY == clickedY||outOfBounds(clickedX,clickedY))
                     return;
 
                 //Save the previous Itemstack
@@ -165,5 +148,13 @@ public class InventoryManager {
     }
     public InventoryTableModel getInventoryTableModel(){
         return this.model;
+    }
+
+    private boolean outOfBounds(int clickedX,int clickedY){
+
+        //Make sure it's not out of bounds
+        if (clickedX >= getInventoryTableModel().getColumnCount()||clickedY >=getInventoryTableModel().getRowCount()||clickedX<0||clickedY<0)
+            return true;
+        return false;
     }
 }

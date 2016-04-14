@@ -86,13 +86,8 @@ public class EditorManager {
         MouseListener copyToClipboardListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //Upddate the active itemstack
-
+                //Update the active itemstack
                 ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                /*is.setName(stackNameEditor.getText());
-                is.setLore(mainMenu.editorPane1.getText().replaceAll("\\<[^>]*>", ""));*/
-
-
                 StringBuilder code = new StringBuilder();
                 for (String s : CodeCreator.writecode(mainMenu)) {
                     code.append(s + "\n");
@@ -107,10 +102,8 @@ public class EditorManager {
         MouseListener exportListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //Upddate the active itemstack
+                //Update the active itemstack
                 ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                /*is.setName(stackNameEditor.getText());
-                is.setLore(mainMenu.editorPane1.getText().replaceAll("\\<[^>]*>", ""));*/
 
                 StringBuilder code = new StringBuilder();
                 for (String s : CodeCreator.writecode(mainMenu)) {
@@ -150,25 +143,7 @@ public class EditorManager {
     public void saveCurrentItemStack() {
         setTextIsFormatted(false);
         ItemStack oldItemstack = mainMenu.getInvManager().getActiveItemStack();
-        //todo revert to unformatted version first
-        oldItemstack.setName(stackNameEditor.getText());
-        oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());
-        /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
-        removes them
-         */
-        oldItemstack.setLore(loreEditor.getText());
-        oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
-        oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
-        oldItemstack.setNotes(notesBox.getText());
-        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String)(eventGeneratorBox.getSelectedItem())));
-
-        List<Enchantment> enchs = new ArrayList<>();
-        for(int i = 0; i <((DefaultListModel)(mainMenu.enchantmentList.getModel())).size();i++){
-            String s = (String) ((DefaultListModel)mainMenu.enchantmentList.getModel()).getElementAt(i);
-            Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
-            enchs.add(ench);
-        }
-        oldItemstack.setEnchantments(enchs);
+        this.saveItemStack(oldItemstack);
     }
     public void saveItemStack(ItemStack is) {
         ItemStack oldItemstack = is;

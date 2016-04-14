@@ -135,7 +135,6 @@ public class CodeCreator {
         for(int i = 0; i < slots; i++){
             int row = (i)/9;
             int col = i%9;
-            System.out.println("row col "+row+" "+col+" : "+((row*9)+col));
             ItemStack is = mainMenu.getInvManager().getInventoryTableModel().getItemStackAt(col,row);
             if(is.getAutoGenerateType() != AutoGenerateType.NONE) {
                 if(isFirst){
