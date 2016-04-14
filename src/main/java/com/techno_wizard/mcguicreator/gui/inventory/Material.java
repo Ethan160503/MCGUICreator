@@ -1,7 +1,6 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**

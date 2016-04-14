@@ -44,6 +44,8 @@ public class EditorManager {
 
     private JComboBox eventGeneratorBox;
 
+    private JSpinner inventorySizeSpinner;
+
     private boolean textIsFormatted;
 
     private String stackNamePlain = "";
@@ -54,7 +56,7 @@ public class EditorManager {
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor
-                         ,JComboBox eventGeneratorBox) {
+                         ,JComboBox eventGeneratorBox,JSpinner inventorySizeSpinner) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -69,6 +71,7 @@ public class EditorManager {
         this.editorTabbedPane = editorTabbedPane;
 
         this.eventGeneratorBox = eventGeneratorBox;
+        this.inventorySizeSpinner = inventorySizeSpinner;
         initEditors();
     }
 
@@ -114,6 +117,13 @@ public class EditorManager {
         };
         mainMenu.exportButton.addMouseListener(exportListener);
 
+        inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
+        inventorySizeSpinner.addChangeListener(e -> {
+            this.mainMenu.getInventoryTableModel().setInventorySize((int)inventorySizeSpinner.getValue());
+            this.mainMenu.getInventoryTable().setModel(this.mainMenu.getInventoryTableModel());
+            this.mainMenu.getInventoryTable().setRowHeight((95*3)/mainMenu.getInventoryTableModel().getRowCount());
+        }  );
+
     }
 
     public void loadStack(ItemStack stack) {
@@ -147,6 +157,11 @@ public class EditorManager {
     }
     public void saveItemStack(ItemStack is) {
         ItemStack oldItemstack = is;
+
+        //Make sure the itemstack exists;
+        if(oldItemstack == null)
+            return;
+
         //todo revert to unformatted version first
         oldItemstack.setName(stackNameEditor.getText());
         oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());

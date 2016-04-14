@@ -4,7 +4,7 @@ Inventory
     Add method of setting size (File toolbar on top?)
     Add method of naming inventory (Possibly another tab in the tab window below?) ===---Done
     Create a proper UI
-        Add hoverover for details like MC does
+        Add hoverover for details like MC does ===---Semi-Done, may need improvement
         Add count of items in stack ===---Done
     Data retention
         table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items.
@@ -33,4 +33,5 @@ Before Release
 Later->
     Save files
     Self-generating click listeners
+    (Should we remove the plans that have been done?)
 

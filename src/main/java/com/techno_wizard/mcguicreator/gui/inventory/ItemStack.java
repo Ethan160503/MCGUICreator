@@ -1,6 +1,5 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
-import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
 import javax.swing.*;
@@ -158,5 +157,14 @@ public class ItemStack {
     public ImageIcon getInventoryIcon() {
         //TODO process (shrink and add number/enchantment indicator?)
         return icon;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name+";");
+        sb.append(this.getMaterial().toString()+";");
+        sb.append(this.amount+";");
+        return sb.toString();
     }
 }

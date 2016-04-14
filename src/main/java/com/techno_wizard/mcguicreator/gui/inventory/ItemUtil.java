@@ -1,12 +1,10 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.PackedColorModel;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -59,6 +57,11 @@ public class ItemUtil {
      */
     public static ImageIcon resizeIcon(ImageIcon original) {
         Image img = original.getImage();
+        /*
+                TODO: Find way to get the size of both the width and height of each slot
+                Currently, when there are more than 5 slots, the icons get cut off.
+                We need to resize the image to either the width or the height, depending on which is smaller
+        */
         Image newimg = img.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }

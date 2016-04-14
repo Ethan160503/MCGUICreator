@@ -10,6 +10,8 @@ import javax.swing.table.AbstractTableModel;
  * Table model representing a player inventory
  */
 public class InventoryTableModel extends AbstractTableModel {
+
+    private String inventoryName = "Custom Inventory";
     private ItemStack[][] itemStacks;
 
     public InventoryTableModel() {
@@ -20,18 +22,50 @@ public class InventoryTableModel extends AbstractTableModel {
     public int getRowCount() {
         return itemStacks[0].length;
     }
-
     public int getColumnCount() {
         return itemStacks.length;
     }
 
-    //TODO: Make sure all other classes that use this know that the values are reversed
+    /**
+     * Use this to set the inventory size.
+     * @param rows
+     */
+    public void setInventorySize(int rows){
+        ItemStack[][] oldArray = itemStacks;
+        ItemStack[][] newArray = new ItemStack[getColumnCount()][rows];
+        for(int y = 0; y < oldArray[0].length;y++){
+            for(int x = 0; x < oldArray.length;x++){
+                //Make sure the rows exist.
+                if(y >= rows)
+                    continue;
+
+                newArray[x][y] = oldArray[x][y];
+            }
+        }
+        itemStacks = newArray;
+    }
+
+
+
+    public void setInventoryName(String name){this.inventoryName = name;}
+    public String getInventoryName(){return this.inventoryName;}
+
+    /**
+     * returns the object at ROW, COLUMN
+     * NOTE: The row and columns are reversed.
+     * @param rowIndex
+     * @param columnIndex
+     * @return
+     */
     public Object getValueAt(int rowIndex, int columnIndex) {
         return getItemStackAt(columnIndex, rowIndex).getInventoryIcon();
     }
 
     public ItemStack getItemStackAt(int column, int row) {
         //Since the itemstack might not exist yet, lets create a new Itemstack instance at that slot in order to prevent any possible NPEs
+        if(column <0 || row < 0|| column >= this.getColumnCount() || row >= this.getRowCount())
+            return null;
+
         if (itemStacks[column][row] == null)
             itemStacks[column][row] = new ItemStack(Material.AIR);
         return itemStacks[column][row];
@@ -40,5 +74,23 @@ public class InventoryTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex){
         return ImageIcon.class;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inventory{");
+        boolean isFirst = true;
+        for(int y = 0; y < getRowCount();y++){
+            for(int x = 0; x<getColumnCount();x++){
+                if(!isFirst)
+                    sb.append(",");
+                else
+                    isFirst=false;
+                sb.append("Itemstack"+((y*9)+x)+":"+getItemStackAt(x,y).toString());
+            }
+        }
+        sb.append("}");
+        return sb.toString();
     }
 }

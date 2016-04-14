@@ -1,10 +1,7 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
-import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.management.EditorManager;
@@ -12,9 +9,6 @@ import com.techno_wizard.mcguicreator.management.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -88,11 +82,12 @@ public class MainMenu extends JFrame {
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        inventoryTable.setRowHeight(75);
+        inventoryTable.setRowHeight(95);
 
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
-                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor,eventGenerateType);
+                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor,eventGenerateType,inventorySizeSpinner);
+
         initButtons();
         // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
         initMenuBar();
@@ -256,7 +251,6 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
-        enchantmentLevel = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
         inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
 
         invManager = new InventoryManager(this,inventoryTable);
@@ -277,4 +271,5 @@ public class MainMenu extends JFrame {
     public InventoryTableModel getInventoryTableModel(){
         return inventoryTableModel;
     }
+    public JTable getInventoryTable(){return this.inventoryTable;}
 }

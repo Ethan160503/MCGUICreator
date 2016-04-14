@@ -37,7 +37,7 @@ public class CodeCreator {
         code.add("");
         code.add("");
 
-        String inventoryName = "testInventoryName";
+        String inventoryName = mainMenu.getInventoryTableModel().getInventoryName();
 
         //Creating the inventory
         code.add("//------- SECTION 1");
