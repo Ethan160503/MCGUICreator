@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ItemStack {
     private boolean isEnchanted;
     private List<Enchantment> enchantments = new ArrayList<>();
     private String notes;
+    private AutoGenerateType autoGenerateType = AutoGenerateType.NONE;
 
     public ItemStack(Material material) {
         this.material = material;
@@ -33,11 +35,18 @@ public class ItemStack {
         this.name = is.getName();
         this.notes = is.getNotes();
         this.isEnchanted = is.isEnchanted();
+        this.autoGenerateType = is.getAutoGenerateType();
     }
 
 
     public Material getMaterial() {
         return material;
+    }
+    public AutoGenerateType getAutoGenerateType(){
+        return autoGenerateType;
+    }
+    public void setAutoGenerateType(AutoGenerateType autoGenerateType){
+        this.autoGenerateType = autoGenerateType;
     }
 
     public void addEnchantment(Enchantment e){

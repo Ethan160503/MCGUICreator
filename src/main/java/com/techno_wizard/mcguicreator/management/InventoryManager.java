@@ -56,8 +56,7 @@ public class InventoryManager {
                 isBeingDragged = true;
                 beingDragged = model.getItemStackAt(clickedX,clickedY);
                 firstPressed = System.currentTimeMillis();
-                System.out.println("pressed X,Y ="+clickedX+" "+clickedY);
-                selectNewItemStack(e);
+                 selectNewItemStack(e);
             }
 
             @Override
@@ -82,8 +81,7 @@ public class InventoryManager {
                         activeItemStack.update(m,lore,amount);
                         mainMenu.getEditorManager().saveItemStack(slot);
                         mainMenu.getEditorManager().saveItemStack(activeItemStack);
-                        System.out.println("released slot: "+slot.getMaterial().getDisplayName()+" activeItemstack: "+activeItemStack.getMaterial().getDisplayName());
-                    }
+                     }
                     isBeingDragged = false;
                     beingDragged = null;
                 }
@@ -158,5 +156,8 @@ public class InventoryManager {
 
     public void onColorPress() {
 
+    }
+    public InventoryTableModel getInventoryTableModel(){
+        return this.model;
     }
 }

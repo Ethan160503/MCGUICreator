@@ -2,6 +2,7 @@ package com.techno_wizard.mcguicreator.gui;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
+import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
@@ -60,8 +61,8 @@ public class MainMenu extends JFrame {
 
 
     //Code buttons
-    private JButton exportButton;
-    private JButton copyToClipboardButton;
+    public JButton exportButton;
+    public JButton copyToClipboardButton;
     private JEditorPane inventoryNameEditor;
     private JCheckBox showFormattedTextCheckBoxInv;
     private JSpinner inventorySizeSpinner;
@@ -73,6 +74,8 @@ public class MainMenu extends JFrame {
     private JButton enchantmentAdd;
     private JButton enchantmentRemove;
     private JScrollPane enchantmentScrollPane;
+
+    private JComboBox eventGenerateType;
 
     private InventoryTableModel inventoryTableModel;
 
@@ -94,7 +97,7 @@ public class MainMenu extends JFrame {
 
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
-                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor);
+                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor,eventGenerateType);
         initButtons();
 
         // if one checkbox's state is changed, change the other one's state
@@ -109,6 +112,7 @@ public class MainMenu extends JFrame {
         enchantmentList.setModel(new DefaultListModel());
 
         initMaterials();
+        initAutoGenerateTypes();
         initEnchantments();
         pack();
     }
@@ -128,6 +132,15 @@ public class MainMenu extends JFrame {
     public void initMaterials() {
         for (Material mat : Material.values()) {
             stackType.addItem(mat);
+        }
+    }
+
+    /**
+     * inits the AutoGenerate Types
+     */
+    public void initAutoGenerateTypes(){
+        for(AutoGenerateType agt : AutoGenerateType.values()){
+            eventGenerateType.addItem(agt.getName());
         }
     }
 
@@ -208,44 +221,6 @@ public class MainMenu extends JFrame {
             }
         };
         enchantmentRemove.addMouseListener(removeEnchantmentListener);
-
-        //Creating the code for the clipboard.
-        //todo delegate to managing class
-        MouseListener copyToClipboardListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Upddate the active itemstack
-                ItemStack is = invManager.getActiveItemStack();
-                is.setName(stackNameEditor.getText());
-                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>", ""));
-
-                StringBuilder code = new StringBuilder();
-                for (String s : CodeCreator.writecode(inventoryTableModel)) {
-                    code.append(s + "\n");
-                }
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(new StringSelection(code.toString()), null);
-            }
-        };
-        copyToClipboardButton.addMouseListener(copyToClipboardListener);
-        //Creating the code for the clipboard.
-
-        MouseListener exportListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Upddate the active itemstack
-                ItemStack is = invManager.getActiveItemStack();
-                is.setName(stackNameEditor.getText());
-                is.setLore(editorPane1.getText().replaceAll("\\<[^>]*>", ""));
-
-                StringBuilder code = new StringBuilder();
-                for (String s : CodeCreator.writecode(inventoryTableModel)) {
-                    code.append(s + "\n");
-                }
-                new CodeExporter(code.toString());
-            }
-        };
-        exportButton.addMouseListener(exportListener);
     }
 
     /**
@@ -293,5 +268,13 @@ public class MainMenu extends JFrame {
 
     public EditorManager getEditorManager() {
         return editorManager;
+    }
+
+    /**
+     * Use this to get the InventoryTableModelInstance.
+     * @return
+     */
+    public InventoryTableModel getInventoryTableModel(){
+        return inventoryTableModel;
     }
 }

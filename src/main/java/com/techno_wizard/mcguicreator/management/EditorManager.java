@@ -1,14 +1,23 @@
 package com.techno_wizard.mcguicreator.management;
 
+import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.gui.ChatColor;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
+import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +42,8 @@ public class EditorManager {
     private JEditorPane inventoryNameEditor;
     private JTabbedPane editorTabbedPane;
 
+    private JComboBox eventGeneratorBox;
+
     private boolean textIsFormatted;
 
     private String stackNamePlain = "";
@@ -42,7 +53,8 @@ public class EditorManager {
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
-                         JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor) {
+                         JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor
+                         ,JComboBox eventGeneratorBox) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -55,6 +67,8 @@ public class EditorManager {
         this.loreEditor = loreEditor;
         this.showFormattedTxtInv = showFormattedTxtInv;
         this.editorTabbedPane = editorTabbedPane;
+
+        this.eventGeneratorBox = eventGeneratorBox;
         initEditors();
     }
 
@@ -66,6 +80,47 @@ public class EditorManager {
         showFormattedTxtLore.addActionListener(listener);
         showFormattedTxtDetails.addActionListener(listener);
         showFormattedTxtInv.addActionListener(listener);
+
+        //Creating the code for the clipboard.
+        //todo delegate to managing class
+        MouseListener copyToClipboardListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //Upddate the active itemstack
+
+                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                /*is.setName(stackNameEditor.getText());
+                is.setLore(mainMenu.editorPane1.getText().replaceAll("\\<[^>]*>", ""));*/
+
+
+                StringBuilder code = new StringBuilder();
+                for (String s : CodeCreator.writecode(mainMenu)) {
+                    code.append(s + "\n");
+                }
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(new StringSelection(code.toString()), null);
+            }
+        };
+        mainMenu.copyToClipboardButton.addMouseListener(copyToClipboardListener);
+        //Creating the code for the clipboard.
+
+        MouseListener exportListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //Upddate the active itemstack
+                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                /*is.setName(stackNameEditor.getText());
+                is.setLore(mainMenu.editorPane1.getText().replaceAll("\\<[^>]*>", ""));*/
+
+                StringBuilder code = new StringBuilder();
+                for (String s : CodeCreator.writecode(mainMenu)) {
+                    code.append(s + "\n");
+                }
+                new CodeExporter(code.toString());
+            }
+        };
+        mainMenu.exportButton.addMouseListener(exportListener);
+
     }
 
     public void loadStack(ItemStack stack) {
@@ -79,6 +134,14 @@ public class EditorManager {
         enableEnchantCheckBox.setSelected(stack.isEnchanted());
         notesBox.setText(stack.getNotes());
         ((DefaultListModel)mainMenu.enchantmentList.getModel()).clear();
+
+        for(int i =0;i<eventGeneratorBox.getItemCount(); i++) {
+            if (AutoGenerateType.getTypeByName((String) eventGeneratorBox.getItemAt(i)) == stack.getAutoGenerateType()) {
+                this.eventGeneratorBox.setSelectedIndex(i);
+                break;
+            }
+        }
+
         for(Enchantment e : stack.getEnchantments()){
             ((DefaultListModel)mainMenu.enchantmentList.getModel()).addElement(e.getBukkitName()+" : "+ItemUtil.getRomanNumerals(e.getPowerLavel()));
         }
@@ -97,6 +160,8 @@ public class EditorManager {
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
+        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String)(eventGeneratorBox.getSelectedItem())));
+
         List<Enchantment> enchs = new ArrayList<>();
         for(int i = 0; i <((DefaultListModel)(mainMenu.enchantmentList.getModel())).size();i++){
             String s = (String) ((DefaultListModel)mainMenu.enchantmentList.getModel()).getElementAt(i);
@@ -117,6 +182,7 @@ public class EditorManager {
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
+        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String)(eventGeneratorBox.getSelectedItem())));
         List<Enchantment> enchs = new ArrayList<>();
         for(int i = 0; i <((DefaultListModel)mainMenu.enchantmentList.getModel()).size();i++){
             String s = (String) ((DefaultListModel)mainMenu.enchantmentList.getModel()).getElementAt(i);
