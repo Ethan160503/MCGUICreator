@@ -140,11 +140,47 @@ public class MainMenu extends JFrame {
         JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
         JMenuItem exportToPopup = new JMenuItem("Export to popup");
 
+        //TODO: figure out why this does not update.
+        JMenu chatColor = new JMenu("ChatColor");
+        JMenuItem ccBlack = new JMenuItem("Black");
+        ccBlack.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccBlue = new JMenuItem("Blue");
+        ccBlue.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccAqua = new JMenuItem("Aqua");
+        ccAqua.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccCyan = new JMenuItem("Cyan");
+        ccCyan.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccRed = new JMenuItem("Red");
+        ccRed.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccGold = new JMenuItem("Gold");
+        ccGold.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccYellow = new JMenuItem("Yellow");
+        ccYellow.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccGreen = new JMenuItem("Green");
+        ccGreen.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccLime = new JMenuItem("Lime");
+        ccLime.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccGray = new JMenuItem("Gray");
+        ccGray.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccSilver = new JMenuItem("Silver");
+        ccSilver.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+        JMenuItem ccWhite = new JMenuItem("White");
+        ccWhite.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
+
+
         menuBar.add(fileMenu);
         fileMenu.add(fileOpen);
         fileMenu.add(fileExport);
         fileExport.add(exportToClipboard);
         fileExport.add(exportToPopup);
+
+        menuBar.add(chatColor);
+        chatColor.add(ccBlack);
+        chatColor.add(ccBlue);
+        chatColor.add(ccAqua);
+        chatColor.add(ccCyan);
+
+
 
         setJMenuBar(menuBar);
     }
@@ -185,17 +221,17 @@ public class MainMenu extends JFrame {
                 if(!((String)enchantmentType.getSelectedItem()).equals("")&&((int)enchantmentLevel.getValue())!=0){
                     DefaultListModel listModel = (DefaultListModel) enchantmentList.getModel();
                     Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
-                    String enchString = ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel());
+                    String enchString = ench.getBukkitName();
                     boolean containsEnchantment = false;
                     for(int i = 0 ;i<listModel.size();i++){
-                        if(listModel.getElementAt(i).equals(enchString)){
+                        if(((String)listModel.getElementAt(i)).split(" : ")[0].equals(enchString)){
                             containsEnchantment = true;
                             break;
                         }
                     }
                     if(!containsEnchantment) {
                         getInvManager().getActiveItemStack().addEnchantment(ench);
-                        listModel.addElement(enchString);
+                        listModel.addElement(enchString+" : "+ItemUtil.getRomanNumerals(ench.getPowerLavel()));
                     }
                 }
             }

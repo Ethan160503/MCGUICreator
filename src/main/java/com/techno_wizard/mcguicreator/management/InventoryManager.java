@@ -4,6 +4,7 @@ import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
@@ -112,8 +113,8 @@ public class InventoryManager {
                 if (c instanceof JComponent) {
                     StringBuilder sb = new StringBuilder();
                     for(Enchantment ench : is.getEnchantments())
-                       sb.append("<br>"+ench.getBukkitName()+" : "+ench.getPowerLavel());
-                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+sb.toString()+"</body></html>");
+                       sb.append("<br>"+ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel()));
+                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+"<br>"+sb.toString()+"</body></html>");
                 }
                 table.add(c);
             }

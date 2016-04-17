@@ -25,9 +25,6 @@ import java.util.List;
  * Created by Ethan on 4/6/2016.
  */
 public class EditorManager {
-    public static final int STACK_EDITOR_TAB = 0;
-    public static final int LORE_EDITOR_TAB = 1;
-    public static final int INV_EDITOR_TAB = 2;
 
     private MainMenu mainMenu;
     private JEditorPane stackNameEditor;
@@ -52,6 +49,8 @@ public class EditorManager {
     private String inventoryNamePlain = "";
     private String lorePlain = "";
 
+    private  TextEditorManager textEditorManager;
+
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
@@ -72,6 +71,10 @@ public class EditorManager {
 
         this.eventGeneratorBox = eventGeneratorBox;
         this.inventorySizeSpinner = inventorySizeSpinner;
+
+
+        this.textEditorManager = new TextEditorManager(this);
+
         initEditors();
     }
 
@@ -239,21 +242,7 @@ public class EditorManager {
         // change to original to add color code
         if (textIsFormatted) setTextIsFormatted(false);
 
-        // add color code
-        switch (editorTabbedPane.getSelectedIndex()) {
-            case STACK_EDITOR_TAB:
-                stackNameEditor.setText(stackNameEditor.getText().concat(chatColor.getColorCode()));
-                break;
-            case LORE_EDITOR_TAB:
-                System.out.println("Operational");
-                loreEditor.setText(loreEditor.getText().concat(chatColor.getColorCode()));
-                break;
-            case INV_EDITOR_TAB:
-                inventoryNameEditor.setText(inventoryNameEditor.getText().concat(chatColor.getColorCode()));
-                break;
-            default:
-                System.out.println("Unknown editor tab: Error");
-        }
+        this.getTextEditorManager().editSelectedEditor(chatColor.getColorCode());
 
         // restore old view
         if(textWasFormatted) {
@@ -269,4 +258,10 @@ public class EditorManager {
             materialComboBox.addItem(mat);
         }
     }
+    public JEditorPane getInventoryNameEditor(){return inventoryNameEditor;}
+    public JEditorPane getItemStackNameEditor(){return stackNameEditor;}
+    public JEditorPane getItemStackLoreEditor(){return loreEditor;}
+    public JTextField getNotes(){return notesBox;}
+
+    public TextEditorManager getTextEditorManager(){return textEditorManager;}
 }

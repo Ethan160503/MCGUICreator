@@ -3,6 +3,7 @@ package com.techno_wizard.mcguicreator.gui.inventory;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by Ethan on 4/3/2016.
  */
-public class ItemStack {
+public class ItemStack implements Serializable{
     private ImageIcon icon;
     private Material material;
     private String name;
@@ -157,14 +158,5 @@ public class ItemStack {
     public ImageIcon getInventoryIcon() {
         //TODO process (shrink and add number/enchantment indicator?)
         return icon;
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.name+";");
-        sb.append(this.getMaterial().toString()+";");
-        sb.append(this.amount+";");
-        return sb.toString();
     }
 }

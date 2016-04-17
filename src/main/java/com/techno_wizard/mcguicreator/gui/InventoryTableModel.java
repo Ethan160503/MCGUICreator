@@ -5,11 +5,12 @@ import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.io.Serializable;
 
 /**
  * Table model representing a player inventory
  */
-public class InventoryTableModel extends AbstractTableModel {
+public class InventoryTableModel extends AbstractTableModel implements Serializable {
 
     private String inventoryName = "Custom Inventory";
     private ItemStack[][] itemStacks;
@@ -74,23 +75,5 @@ public class InventoryTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex){
         return ImageIcon.class;
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Inventory{");
-        boolean isFirst = true;
-        for(int y = 0; y < getRowCount();y++){
-            for(int x = 0; x<getColumnCount();x++){
-                if(!isFirst)
-                    sb.append(",");
-                else
-                    isFirst=false;
-                sb.append("Itemstack"+((y*9)+x)+":"+getItemStackAt(x,y).toString());
-            }
-        }
-        sb.append("}");
-        return sb.toString();
     }
 }
