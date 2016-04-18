@@ -1,0 +1,9 @@
+{
+  "create inventory": "Inventory $inv$ = Bukkit.createInventory(null, $size$, $name$);",
+  "itemstack": {
+    "create no data" : "ItemStack $stack$ = new ItemStack(Material.$material$, $count$);",
+    "create with data" : "ItemStack $stack$ = new ItemStack(Material.$material$, $count$, $data$)",
+    "meta formatter" : "public ItemStack formatMeta(ItemStack itemstack, String displayName, List<String> lore, List<Enchantment> enchants) {\nItemMeta meta = itemstack.getItemMeta();\nmeta.setDisplayName(displayName);\nfor(Enchantment enchant : enchants) {\nmeta.addEnchant(enchant.getEnchantEnum(), enchant.getLevel(), true);\n}\nmeta.setLore(lore);\nitemstack.setItemMeta(meta);\nreturn itemstack;\n}"
+  }
+
+}
