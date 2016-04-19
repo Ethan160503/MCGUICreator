@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemStack implements Serializable{
     private ImageIcon icon;
     private Material material;
-    private String name;
+    private String name="";
     private String lore;
     private int amount = 1;
     private boolean isEnchanted;
@@ -118,7 +118,7 @@ public class ItemStack implements Serializable{
 
     public List<String> getLoreAsList() {
         if (lore == null)
-            return null;
+            return new ArrayList<String>();
         List<String> loreList = Arrays.asList(lore.split("\n"));
         return loreList;
     }

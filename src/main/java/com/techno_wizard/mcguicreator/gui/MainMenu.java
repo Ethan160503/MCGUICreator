@@ -9,6 +9,7 @@ import com.techno_wizard.mcguicreator.management.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,6 +18,7 @@ import java.awt.event.MouseListener;
  * Created by Ethan on 4/1/2016.
  */
 public class MainMenu extends JFrame {
+
     private JTable inventoryTable;
     private JPanel panel1;
     private JButton blackButton;
@@ -99,6 +101,9 @@ public class MainMenu extends JFrame {
         initAutoGenerateTypes();
         initEnchantments();
         pack();
+
+        //TODO: Fix this
+        new InventoryHoverOverGUI(inventoryTable,panel1,inventoryTableModel);
     }
 
     /**

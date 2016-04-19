@@ -62,4 +62,8 @@ public class Enchantment {
     public boolean isUnsafe(){
         return this.isUnsafe;
     }
+
+    public String getDisplay(){
+        return this.enchantmentName+" : "+ItemUtil.getRomanNumerals(powerLavel);
+    }
 }

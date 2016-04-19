@@ -49,6 +49,16 @@ public class ItemUtil {
         return Integer.valueOf(romanNum);
     }
 
+    public static int getRowAt(int y,int rows){return (y/(300/rows));}
+    public static int getColumnAt(int x,int cols){
+        return (x/(600/cols));
+    }
+    public static int getMaxYAt(int y,int rows){return (y*(300/rows));}
+    public static int getMaxXAt(int x,int cols){
+        return (x*(600/cols));
+    }
+
+
     /**
      * resizes the icons to fit correctly inside of the jtable cells
      *

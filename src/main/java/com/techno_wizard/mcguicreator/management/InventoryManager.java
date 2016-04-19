@@ -107,16 +107,6 @@ public class InventoryManager {
                 //Load the new slot
                 mainMenu.getEditorManager().loadStack(getActiveItemStack());
 
-                //Adds hover-over components to the table.
-                ItemStack is = getActiveItemStack();
-                Component c = table.prepareRenderer(table.getCellRenderer(clickedY,clickedX), clickedY, clickedX);
-                if (c instanceof JComponent) {
-                    StringBuilder sb = new StringBuilder();
-                    for(Enchantment ench : is.getEnchantments())
-                       sb.append("<br>"+ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel()));
-                    table.setToolTipText("<html><body>"+is.getName()+"<br>----------------<br>"+is.getLore()+"<br>"+sb.toString()+"</body></html>");
-                }
-                table.add(c);
             }
         };
 
