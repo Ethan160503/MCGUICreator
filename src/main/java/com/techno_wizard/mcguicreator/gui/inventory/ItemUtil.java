@@ -58,6 +58,38 @@ public class ItemUtil {
         return (x*(600/cols));
     }
 
+    public static Font getMCFont(boolean alt){
+        String type = alt?"alt":"reg";
+        InputStream in = ItemUtil.class.getResourceAsStream("/font/minecraft_"+type+".ttf");
+        Font font=null;
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, in);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(font!= null){
+            UIDefaults defs = UIManager.getLookAndFeelDefaults();
+            for(Iterator i = defs.keySet().iterator(); i.hasNext(); ) {
+                Object keyObject = i.next();
+                if(keyObject instanceof  StringBuffer) {
+                    StringBuffer key = (StringBuffer) keyObject;
+                    if (key.toString().endsWith(".font")) {
+                        Font oldFont = defs.getFont(key.toString());
+                        defs.put(key.toString(), font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
+                        font = oldFont;
+                    }
+                }else if (keyObject instanceof String){
+                    String key = (String) keyObject;
+                    if (key.endsWith(".font")) {
+                        Font oldFont = defs.getFont(key);
+                        defs.put(key, font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
+                        font = oldFont;
+                    }
+                }
+            }
+        }
+        return font;
+    }
 
     /**
      * resizes the icons to fit correctly inside of the jtable cells
@@ -67,12 +99,12 @@ public class ItemUtil {
      */
     public static ImageIcon resizeIcon(ImageIcon original) {
         Image img = original.getImage();
-        /*
-                TODO: Find way to get the size of both the width and height of each slot
-                Currently, when there are more than 5 slots, the icons get cut off.
-                We need to resize the image to either the width or the height, depending on which is smaller
-        */
-        Image newimg = img.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
+            /*
+                    TODO: Find way to get the size of both the width and height of each slot
+                    Currently, when there are more than 5 slots, the icons get cut off.
+                    We need to resize the image to either the width or the height, depending on which is smaller
+            */
+        Image newimg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
 
@@ -89,9 +121,9 @@ public class ItemUtil {
         int number2 = amount%10;
         g.drawImage(original.getImage(),0,0,null);
         if(number1 !=0)
-        g.drawImage(getCharacter(number1,3),42,57,16,16,null);
+            g.drawImage(getCharacter(number1,3),42,57,16,16,null);
         if(number2>1||number1>0)
-        g.drawImage(getCharacter(number2,3),57,57,16,16,null);
+            g.drawImage(getCharacter(number2,3),57,57,16,16,null);
         g.dispose();
         ImageIcon i = new ImageIcon(bi);
         return i;

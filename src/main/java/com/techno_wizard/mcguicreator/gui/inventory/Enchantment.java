@@ -64,6 +64,6 @@ public class Enchantment {
     }
 
     public String getDisplay(){
-        return this.enchantmentName+" : "+ItemUtil.getRomanNumerals(powerLavel);
+        return this.enchantmentName+" : "+ ItemUtil.getRomanNumerals(powerLavel);
     }
 }

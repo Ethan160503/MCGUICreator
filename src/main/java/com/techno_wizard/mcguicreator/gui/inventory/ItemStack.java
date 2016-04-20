@@ -2,7 +2,12 @@ package com.techno_wizard.mcguicreator.gui.inventory;
 
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

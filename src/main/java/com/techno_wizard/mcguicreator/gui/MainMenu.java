@@ -2,6 +2,7 @@ package com.techno_wizard.mcguicreator.gui;
 
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.management.EditorManager;
@@ -9,7 +10,6 @@ import com.techno_wizard.mcguicreator.management.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -236,7 +236,7 @@ public class MainMenu extends JFrame {
                     }
                     if(!containsEnchantment) {
                         getInvManager().getActiveItemStack().addEnchantment(ench);
-                        listModel.addElement(enchString+" : "+ItemUtil.getRomanNumerals(ench.getPowerLavel()));
+                        listModel.addElement(enchString+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel()));
                     }
                 }
             }
@@ -250,7 +250,7 @@ public class MainMenu extends JFrame {
                     Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
                     getInvManager().getActiveItemStack().removeEnchantment(ench);
                     for(int i = 0; i < ((DefaultListModel)enchantmentList.getModel()).size();i++){
-                        if(((DefaultListModel)enchantmentList.getModel()).getElementAt(i).equals(ench.getBukkitName()+" : "+ItemUtil.getRomanNumerals(ench.getPowerLavel())))
+                        if(((DefaultListModel)enchantmentList.getModel()).getElementAt(i).equals(ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel())))
                             ((DefaultListModel)enchantmentList.getModel()).remove(i);
                     }
                 }

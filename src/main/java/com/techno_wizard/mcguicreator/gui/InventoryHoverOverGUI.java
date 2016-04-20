@@ -27,12 +27,16 @@ public class InventoryHoverOverGUI{
     private boolean shouldDraw = true;
     private Thread thread;
 
+    private Font font;
+
     public InventoryHoverOverGUI(JTable j,JPanel panel,InventoryTableModel model){
 
         this.inv = j;
         this.panel = panel;
         this.model = model;
 
+
+        this.font = ItemUtil.getMCFont(false);
 
         MouseMotionListener mouseListener = getMouseListener();
         inv.addMouseMotionListener(mouseListener);
@@ -84,11 +88,14 @@ public class InventoryHoverOverGUI{
                         //Set the dimentions
                         int height = 10 + 12 * (lore.size() + ench.size());
                         int width = 80;
-                        if(is.getName().length()*6>80)
-                            width =is.getName().length()*6;
+                        if(is.getName().length()*8>80)
+                            width =is.getName().length()*8;
                         for(String loreL :lore)
-                            if(loreL.length()*6 > 80)
-                                width = loreL.length()*6;
+                            if(loreL.length()*8 > 80)
+                                width = loreL.length()*8;
+
+                        //Set the font
+                        g.setFont(font);
 
                         //Draw it
                         g.setColor(Color.gray);
@@ -96,6 +103,10 @@ public class InventoryHoverOverGUI{
                         g.setColor(Color.lightGray);
                         g.fillRect(xP, yP+15, width, height);
                         g.setColor(Color.black);
+
+                        //TODO: figure out the size of each char
+                        //TODO: Every place there is a chatcolor, remove it, add the right color, put the text in right spot
+
                         g.drawString(is.getName() + "", xP+2, yP+13);
                         for (int loreLine = 0; loreLine < lore.size(); loreLine++) {
                             g.drawString(lore.get(loreLine), xP+2, yP + 30 + (yOffset * 12));

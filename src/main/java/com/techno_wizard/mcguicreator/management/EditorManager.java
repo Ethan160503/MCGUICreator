@@ -149,7 +149,7 @@ public class EditorManager {
         }
 
         for(Enchantment e : stack.getEnchantments()){
-            ((DefaultListModel)mainMenu.enchantmentList.getModel()).addElement(e.getBukkitName()+" : "+ItemUtil.getRomanNumerals(e.getPowerLavel()));
+            ((DefaultListModel)mainMenu.enchantmentList.getModel()).addElement(e.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(e.getPowerLavel()));
         }
     }
 
