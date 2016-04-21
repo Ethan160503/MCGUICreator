@@ -1,9 +1,20 @@
 {
-  "create inventory": "Inventory $inv$ = Bukkit.createInventory(null, $size$, $name$);",
-  "itemstack": {
+  "inventory" : {
+    "create inventory" : "Inventory $inv$ = Bukkit.createInventory(null, $size$, $name$);",
+    "add stack to slot" : "$inv$.setItem($slot$, $stack$);",
+  }
+  "itemstack" : {
     "create no data" : "ItemStack $stack$ = new ItemStack(Material.$material$, $count$);",
     "create with data" : "ItemStack $stack$ = new ItemStack(Material.$material$, $count$, $data$)",
     "meta formatter" : "public ItemStack formatMeta(ItemStack itemstack, String displayName, List<String> lore, List<Enchantment> enchants) {\nItemMeta meta = itemstack.getItemMeta();\nmeta.setDisplayName(displayName);\nfor(Enchantment enchant : enchants) {\nmeta.addEnchant(enchant.getEnchantEnum(), enchant.getLevel(), true);\n}\nmeta.setLore(lore);\nitemstack.setItemMeta(meta);\nreturn itemstack;\n}"
+    "call formatter" : "formatMeta($stack$, $name$, $loreBuffer$, $enchantments$);"
+  },
+  "lore" : {
+    "create lore buffer" : "List<String> loreBuffer = new ArrayList<>();",
+    "add item to lore buffer" : "loreBuffer.add($lore_line$);",
+    "clear lore buffer" : "lorebuffer.clear();",
+  },
+  "enchantment" : {
+    
   }
-
 }
