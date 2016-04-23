@@ -19,32 +19,46 @@ public class TextEditorManager {
     private EditorManager em;
 
     public TextEditorManager(EditorManager e){
-            this.em = e;
+        this.em = e;
         initListener();
     }
 
     //TODO: Figure out an easy way to know if the person clicked another button/box. We do not want them
     //being able to add chatcolors to the Itemstack's displayname while in the enchantment menu
-    private void initListener(){
+    private void initListener() {
         MouseListener loreListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(ITEMSTACK_LORE_EDITOR);}        };
+            public void mouseClicked(MouseEvent e) {
+                setSelectedEditor(ITEMSTACK_LORE_EDITOR);
+            }
+        };
         em.getItemStackLoreEditor().addMouseListener(loreListener);
 
         MouseListener itemstackNameListener= new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(ITEMSTACK_NAME_EDITOR);}        };
+            public void mouseClicked(MouseEvent e) {
+                setSelectedEditor(ITEMSTACK_NAME_EDITOR);
+            }
+        };
         em.getItemStackNameEditor().addMouseListener(itemstackNameListener);
 
         MouseListener inventoryNameListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(INVENTORY_NAME_EDITOR);}        };
+            public void mouseClicked(MouseEvent e) {setSelectedEditor(INVENTORY_NAME_EDITOR);}
+        };
         em.getItemStackLoreEditor().addMouseListener(inventoryNameListener);
 
         MouseListener notesListener= new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(ITEMSTACK_NOTES);}        };
+            public void mouseClicked(MouseEvent e) {setSelectedEditor(ITEMSTACK_NOTES);}
+        };
+
         em.getNotes().addMouseListener(notesListener);
     }
 
-    public void setSelectedEditor(int selectedEditor){this.selectedEditor = selectedEditor;}
-    public int getSelectedEditor(){return this.selectedEditor;}
+    public void setSelectedEditor(int selectedEditor) {
+        this.selectedEditor = selectedEditor;
+    }
+
+    public int getSelectedEditor() {
+        return this.selectedEditor;
+    }
 
     /**
      * Adds the ChatColor 'colorCode' to the selected editor
@@ -66,4 +80,6 @@ public class TextEditorManager {
                 break;
         }
     }
+
+
 }
