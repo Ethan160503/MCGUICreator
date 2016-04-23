@@ -17,7 +17,7 @@ public class TextEditorManager {
         INVENTORY_NAME
     }
 
-    private ColorEditor selectedEditor = ITEMSTACK_NAME;
+    private ColorEditor selectedEditor = null;
 
     private EditorManager em;
 
@@ -60,7 +60,7 @@ public class TextEditorManager {
     }
 
     public void setSelectedEditor(ColorEditor colorEditor) {
-        this.selectedEditor = selectedEditor;
+        this.selectedEditor = colorEditor;
     }
 
     public ColorEditor getSelectedEditor() {
@@ -72,19 +72,22 @@ public class TextEditorManager {
      * @param colorCode
      */
     public void editSelectedEditor(String colorCode){
-        switch (selectedEditor){
-            case ITEMSTACK_LORE:
-                em.getItemStackLoreEditor().setText(em.getItemStackLoreEditor().getText()+colorCode);
-                break;
-            case ITEMSTACK_NAME:
-                em.getItemStackNameEditor().setText(em.getItemStackNameEditor().getText()+colorCode);
-                break;
-            case INVENTORY_NAME:
-                em.getInventoryNameEditor().setText(em.getInventoryNameEditor().getText()+colorCode);
-                break;
-            case ITEMSTACK_NOTES:
-                em.getNotes().setText(em.getNotes().getText()+colorCode);
-                break;
+        // check is nothing is selected
+        if(selectedEditor != null) {
+            switch (selectedEditor) {
+                case ITEMSTACK_LORE:
+                    em.getItemStackLoreEditor().setText(em.getItemStackLoreEditor().getText() + colorCode);
+                    break;
+                case ITEMSTACK_NAME:
+                    em.getItemStackNameEditor().setText(em.getItemStackNameEditor().getText() + colorCode);
+                    break;
+                case INVENTORY_NAME:
+                    em.getInventoryNameEditor().setText(em.getInventoryNameEditor().getText() + colorCode);
+                    break;
+                case ITEMSTACK_NOTES:
+                    em.getNotes().setText(em.getNotes().getText() + colorCode);
+                    break;
+            }
         }
     }
 
