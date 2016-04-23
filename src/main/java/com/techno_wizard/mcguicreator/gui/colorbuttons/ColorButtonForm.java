@@ -28,4 +28,6 @@ public class ColorButtonForm {
     private JButton underlineButton;
     private JButton italicButton;
     private JButton resetButton;
+
+
 }

@@ -1,20 +1,23 @@
 package com.techno_wizard.mcguicreator.management;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
+
+import static com.techno_wizard.mcguicreator.management.TextEditorManager.ColorEditor.*;
 
 /**
  * Created by Zombie_Striker on 4/17/2016.
  */
 public class TextEditorManager {
 
-    public static final int ITEMSTACK_LORE_EDITOR = 0;
-    public static final int ITEMSTACK_NAME_EDITOR = 1;
-    public static final int INVENTORY_NAME_EDITOR = 2;
-    public static final int ITEMSTACK_NOTES = 3;
+    public enum ColorEditor {
+        ITEMSTACK_LORE,
+        ITEMSTACK_NAME,
+        ITEMSTACK_NOTES,
+        INVENTORY_NAME
+    }
 
-    private int selectedEditor = 0;
+    private ColorEditor selectedEditor = ITEMSTACK_NAME;
 
     private EditorManager em;
 
@@ -26,37 +29,41 @@ public class TextEditorManager {
     //TODO: Figure out an easy way to know if the person clicked another button/box. We do not want them
     //being able to add chatcolors to the Itemstack's displayname while in the enchantment menu
     private void initListener() {
-        MouseListener loreListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                setSelectedEditor(ITEMSTACK_LORE_EDITOR);
+
+        em.getItemStackLoreEditor().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setSelectedEditor(ITEMSTACK_LORE);
             }
-        };
-        em.getItemStackLoreEditor().addMouseListener(loreListener);
+        });
 
-        MouseListener itemstackNameListener= new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                setSelectedEditor(ITEMSTACK_NAME_EDITOR);
+        em.getInventoryNameEditor().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setSelectedEditor(INVENTORY_NAME);
             }
-        };
-        em.getItemStackNameEditor().addMouseListener(itemstackNameListener);
+        });
 
-        MouseListener inventoryNameListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(INVENTORY_NAME_EDITOR);}
-        };
-        em.getItemStackLoreEditor().addMouseListener(inventoryNameListener);
+        em.getItemStackNameEditor().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setSelectedEditor(ITEMSTACK_NAME);
+            }
+        });
 
-        MouseListener notesListener= new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {setSelectedEditor(ITEMSTACK_NOTES);}
-        };
-
-        em.getNotes().addMouseListener(notesListener);
+        em.getNotes().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setSelectedEditor(ITEMSTACK_NOTES);
+            }
+        });
     }
 
-    public void setSelectedEditor(int selectedEditor) {
+    public void setSelectedEditor(ColorEditor colorEditor) {
         this.selectedEditor = selectedEditor;
     }
 
-    public int getSelectedEditor() {
+    public ColorEditor getSelectedEditor() {
         return this.selectedEditor;
     }
 
@@ -66,13 +73,13 @@ public class TextEditorManager {
      */
     public void editSelectedEditor(String colorCode){
         switch (selectedEditor){
-            case ITEMSTACK_LORE_EDITOR:
+            case ITEMSTACK_LORE:
                 em.getItemStackLoreEditor().setText(em.getItemStackLoreEditor().getText()+colorCode);
                 break;
-            case ITEMSTACK_NAME_EDITOR:
+            case ITEMSTACK_NAME:
                 em.getItemStackNameEditor().setText(em.getItemStackNameEditor().getText()+colorCode);
                 break;
-            case INVENTORY_NAME_EDITOR:
+            case INVENTORY_NAME:
                 em.getInventoryNameEditor().setText(em.getInventoryNameEditor().getText()+colorCode);
                 break;
             case ITEMSTACK_NOTES:
