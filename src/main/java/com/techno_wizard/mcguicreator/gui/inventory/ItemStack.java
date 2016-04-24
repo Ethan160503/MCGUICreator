@@ -44,9 +44,15 @@ public class ItemStack implements Serializable{
     }
 
 
-    public Material getMaterial() {
-        return material;
+    public void updateIcon(){
+        this.icon = material.getImage();
+        if(enchantments.size()>0)
+            this.icon = ItemUtil.addEnchantments(icon);
+        this.icon = ItemUtil.resizeIcon(icon);
+        this.icon = ItemUtil.addAmount(this.icon,this.amount);
     }
+
+    public Material getMaterial() {return material;}
     public AutoGenerateType getAutoGenerateType(){
         return autoGenerateType;
     }
@@ -77,8 +83,7 @@ public class ItemStack implements Serializable{
 
     public void setMaterial(Material material) {
         this.material = material;
-        this.icon = ItemUtil.resizeIcon(material.getImage());
-        this.icon = ItemUtil.addAmount(this.icon,this.amount);
+        updateIcon();
     }
 
     /**

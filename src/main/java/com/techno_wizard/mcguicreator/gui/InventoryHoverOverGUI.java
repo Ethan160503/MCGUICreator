@@ -88,11 +88,14 @@ public class InventoryHoverOverGUI{
                         //Set the dimentions
                         int height = 10 + 12 * (lore.size() + ench.size());
                         int width = 80;
-                        if(is.getName().length()*8>80)
-                            width =is.getName().length()*8;
+                        if(is.getName().length()*7>80)
+                            width =is.getName().length()*7;
                         for(String loreL :lore)
-                            if(loreL.length()*8 > 80)
-                                width = loreL.length()*8;
+                            if(loreL.length()*7 > 80)
+                                width = loreL.length()*7;
+                        for(Enchantment e : ench)
+                            if(e.getDisplay().length()*7 > 80)
+                                width = e.getDisplay().length()*7;
 
                         //Set the font
                         g.setFont(font);

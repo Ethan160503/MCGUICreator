@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -131,6 +134,26 @@ public class ItemUtil {
         return i;
     }
 
+    public static ImageIcon addEnchantments(ImageIcon icon){
+        BufferedImage bi = new BufferedImage(icon.getIconWidth(),icon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) bi.getGraphics();
+        g.drawImage(icon.getImage(),0,0,null);
+        try {
+            BufferedImage glow = ImageIO.read(ItemUtil.class.getResourceAsStream("/extraimg/enchantment.png"));
+            for(int y = 0; y < bi.getHeight();y++){
+                for(int x = 0; x < bi.getWidth();x++){
+                    if(bi.getAlphaRaster().getPixel(x,y,new float[10])[0]>0)
+                     g.drawImage(glow,x,y,null);
+                }
+                System.out.println("");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        g.dispose();
+        return new ImageIcon(bi);
+    }
+
     /**
      * Returns a character form the ASCII spritesheet
      * @param column
@@ -157,4 +180,5 @@ public class ItemUtil {
     public static ItemUtil getUtil(){
         return util;
     }
+
 }
