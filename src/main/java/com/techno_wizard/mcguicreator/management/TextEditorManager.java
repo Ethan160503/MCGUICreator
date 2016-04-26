@@ -1,6 +1,5 @@
 package com.techno_wizard.mcguicreator.management;
 
-import java.awt.*;
 import java.awt.event.*;
 
 import static com.techno_wizard.mcguicreator.management.TextEditorManager.ColorEditor.*;
@@ -18,7 +17,6 @@ public class TextEditorManager {
     }
 
     private ColorEditor selectedEditor = null;
-
     private EditorManager em;
 
     public TextEditorManager(EditorManager e){
@@ -90,6 +88,4 @@ public class TextEditorManager {
             }
         }
     }
-
-
 }

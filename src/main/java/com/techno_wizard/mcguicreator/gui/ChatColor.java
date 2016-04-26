@@ -48,6 +48,13 @@ public enum ChatColor {
         this.toString = new String(new char[]{'§', code});
     }
 
+    public static ChatColor getChatColor(char c){
+        for(ChatColor color:ChatColor.values())
+            if(color.getChar()==c)
+                return color;
+        return ChatColor.RESET;
+    }
+
     public char getChar() {
         return this.code;
     }

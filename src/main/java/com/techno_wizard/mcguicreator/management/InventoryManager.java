@@ -2,13 +2,12 @@ package com.techno_wizard.mcguicreator.management;
 
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.util.*;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -47,38 +46,51 @@ public class InventoryManager {
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
                 if(outOfBounds(clickedX,clickedY))
                     return;
+                selectNewItemStack(e);
                 isBeingDragged = true;
-                beingDragged = model.getItemStackAt(clickedX,clickedY);
+                beingDragged = getActiveItemStack();
                 firstPressed = System.currentTimeMillis();
-                 selectNewItemStack(e);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(isBeingDragged&&beingDragged!=null) {
-                    if(System.currentTimeMillis()-firstPressed>1000) {
-                        int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
-                        int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col;
+                    int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
+                    int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col;
 
-                        if(outOfBounds(clickedX,clickedY))
-                            return;
+                    if(outOfBounds(clickedX,clickedY))
+                        return;
+                    if(System.currentTimeMillis()-firstPressed>100) {
+
+                        ItemStack slot = beingDragged;
+
+                        mainMenu.getEditorManager().saveCurrentItemStack();
+
+                        setActiveItemStack(clickedX, clickedY);
+                        mainMenu.getEditorManager().loadStack(getActiveItemStack());
 
                         ItemStack activeItemStack = getActiveItemStack();
-                        ItemStack slot = model.getItemStackAt(clickedX, clickedY);
-                        Material m = slot.getMaterial();
-                        String lore = slot.getLore();
-                        int amount = slot.getAmount();
+
+                        Material m = activeItemStack.getMaterial();
+                        String lore = activeItemStack.getLore();
+                        int amount = activeItemStack.getAmount();
+                        String name = activeItemStack.getName();
+                        List<Enchantment> ench = new ArrayList<>(activeItemStack.getEnchantments());
+                        String notes = activeItemStack.getNotes();
+                        AutoGenerateType autogen = activeItemStack.getAutoGenerateType();
 
                         //Update each slot
-                        slot.update(activeItemStack.getMaterial(), activeItemStack.getLore(), activeItemStack.getAmount());
-                        activeItemStack.update(m,lore,amount);
-                        mainMenu.getEditorManager().saveItemStack(slot);
-                        mainMenu.getEditorManager().saveItemStack(activeItemStack);
-                     }
+                        activeItemStack.update(slot.getMaterial(), slot.getLore(), slot.getAmount(),slot.getName(),slot.getEnchantments(),slot.getNotes(),slot.getAutoGenerateType());
+                        slot.update(m,lore,amount,name,ench,notes,autogen);
+                        mainMenu.getEditorManager().loadStack(getActiveItemStack());
+
+                    }else{
+                        selectNewItemStack(e);
+                    }
                     isBeingDragged = false;
                     beingDragged = null;
+
                 }
-                this.selectNewItemStack(e);
             }
 
             @Override

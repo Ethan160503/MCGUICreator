@@ -63,9 +63,9 @@ public class ItemUtil {
         return (x*(600/cols));
     }
 
-    public static Font getMCFont(boolean alt){
+    public static void getMCFont(boolean alt){
         String type = alt?"alt":"reg";
-        InputStream in = ItemUtil.class.getResourceAsStream("/font/minecraft_"+type+".ttf");
+        InputStream in = util.getClass().getResourceAsStream("/font/minecraft_"+type+".ttf");
         Font font=null;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, in);
@@ -81,19 +81,16 @@ public class ItemUtil {
                     if (key.toString().endsWith(".font")) {
                         Font oldFont = defs.getFont(key.toString());
                         defs.put(key.toString(), font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                        font = oldFont;
                     }
                 }else if (keyObject instanceof String){
                     String key = (String) keyObject;
                     if (key.endsWith(".font")) {
                         Font oldFont = defs.getFont(key);
                         defs.put(key, font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                        font = oldFont;
                     }
                 }
             }
         }
-        return font;
     }
 
     /**
@@ -171,6 +168,30 @@ public class ItemUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Returns the size of each character for the minecraft font
+     * @param c
+     * @return the size
+     */
+    public static int getCharSize(char c){
+        switch(c){
+            //TODO:Add more values
+            case 'i':return 4;
+            case 'j':return 4;
+            case 'l':return 4;
+            case '1':return 4;
+            case '!':return 4;
+            case '^':return 4;
+            case '*':return 4;
+            case '.':return 4;
+            case ',':return 4;
+            case '|':return 4;
+            case '\'':return 4;
+            case '"':return 4;
+            default:return 8;
+        }
     }
 
     /**

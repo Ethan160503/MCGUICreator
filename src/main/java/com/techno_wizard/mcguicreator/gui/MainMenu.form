@@ -322,7 +322,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="e4236" class="javax.swing.JSpinner" binding="enchantmentLevel">
+                      <component id="e4236" class="javax.swing.JSpinner" binding="enchantmentLevelSpinner">
                         <constraints>
                           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="80" height="30"/>

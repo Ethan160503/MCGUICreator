@@ -63,15 +63,18 @@ public class ItemStack implements Serializable{
     public void addEnchantment(Enchantment e){
         this.enchantments.add(e);
     }
-    public void removeEnchantment(Enchantment e){
-        this.enchantments.remove(e);
-
+    public void removeEnchantment(Enchantment e, JList enchantmentList){
+        removeEnchantmentType(e.getType(),enchantmentList);
     }
-    public void removeEnchantmentType(Enchantment.EnchantmentType e){
-        Iterator<Enchantment> iterator = this.enchantments.listIterator();
-        for(Enchantment e2 = iterator.next();iterator.hasNext();e2=iterator.next()){
-            if(e.getBukkitName().equals(e2.getBukkitName()))
-                this.enchantments.remove(e2);
+    public void removeEnchantmentType(Enchantment.EnchantmentType e,JList enchantmentList){
+        List<Enchantment> ench = new ArrayList<>(this.enchantments);
+        for(Enchantment e1 : ench){
+            if(e.getBukkitName().equals(e1.getType().getBukkitName()))
+                this.enchantments.remove(e1);
+        }
+        for(int i = 0; i < ((DefaultListModel)enchantmentList.getModel()).size();i++){
+            if(((String)(enchantmentList.getModel()).getElementAt(i)).startsWith(e.getBukkitName().split(" : ")[0]))
+                ((DefaultListModel)enchantmentList.getModel()).remove(i);
         }
     }
     public List<Enchantment> getEnchantments(){
@@ -92,10 +95,14 @@ public class ItemStack implements Serializable{
      * @param lore
      * @param amount
      */
-    public void update(Material m,String lore,int amount){
+    public void update(Material m,String lore,int amount,String name,List<Enchantment> ench,String notes,AutoGenerateType auto){
         this.setAmount(amount);
         this.setLore(lore);
         this.setMaterial(m);
+        this.setName(name);
+        this.setEnchantments(ench);
+        this.setNotes(notes);
+        this.setAutoGenerateType(auto);
     }
     /**
      * Use this to update all the values of an itemstack. This is what we should use to update the itemstack and
@@ -104,10 +111,8 @@ public class ItemStack implements Serializable{
      * @param lore
      * @param amount
      */
-    public void update(String materialName,String lore,int amount){
-        this.setAmount(amount);
-        this.setLore(lore);
-        this.setMaterial(Material.getMaterialByName(materialName));
+    public void update(String materialName,String lore,int amount,String name,List<Enchantment> ench,String note,AutoGenerateType auto){
+        update(Material.getMaterialByName(materialName),lore,amount,name,ench,note,auto);
     }
 
     public String getName() {

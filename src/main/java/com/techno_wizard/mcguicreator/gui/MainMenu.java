@@ -1,18 +1,12 @@
 package com.techno_wizard.mcguicreator.gui;
 
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
-import com.techno_wizard.mcguicreator.management.EditorManager;
-import com.techno_wizard.mcguicreator.management.InventoryManager;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.management.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -57,16 +51,16 @@ public class MainMenu extends JFrame {
 
 
     //Code buttons
-    public JButton exportButton;
-    public JButton copyToClipboardButton;
+    private JButton exportButton;
+    private JButton copyToClipboardButton;
     private JEditorPane inventoryNameEditor;
     private JCheckBox showFormattedTextCheckBoxInv;
     private JSpinner inventorySizeSpinner;
     private JTabbedPane editorTabbedPane;
 
-    private JSpinner enchantmentLevel;
+    private JSpinner enchantmentLevelSpinner;
     private JComboBox enchantmentType;
-    public JList enchantmentList;
+    private JList enchantmentList;
     private JButton enchantmentAdd;
     private JButton enchantmentRemove;
     private JScrollPane enchantmentScrollPane;
@@ -88,14 +82,13 @@ public class MainMenu extends JFrame {
 
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
-                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane, inventoryNameEditor,eventGenerateType,inventorySizeSpinner);
+                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane,
+                inventoryNameEditor,eventGenerateType,inventorySizeSpinner,copyToClipboardButton,exportButton,
+                enchantmentList);
 
         initButtons();
         // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
         initMenuBar();
-
-        //Create the list to store all the enchantments
-        enchantmentList.setModel(new DefaultListModel());
 
         initMaterials();
         initAutoGenerateTypes();
@@ -110,6 +103,8 @@ public class MainMenu extends JFrame {
      * inits the enchantments
      */
     public void initEnchantments(){
+        //Create the list to store all the enchantments
+        enchantmentList.setModel(new DefaultListModel());
         this.enchantmentType.addItem("");
         for(Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values()){
             this.enchantmentType.addItem(e.getBukkitName());
@@ -119,18 +114,16 @@ public class MainMenu extends JFrame {
      * inits the materials
      */
     public void initMaterials() {
-        for (Material mat : Material.values()) {
+        for (Material mat : Material.values())
             stackType.addItem(mat);
-        }
     }
 
     /**
      * inits the AutoGenerate Types
      */
     public void initAutoGenerateTypes(){
-        for(AutoGenerateType agt : AutoGenerateType.values()){
+        for(AutoGenerateType agt : AutoGenerateType.values())
             eventGenerateType.addItem(agt.getName());
-        }
     }
 
 
@@ -147,30 +140,6 @@ public class MainMenu extends JFrame {
 
         //TODO: figure out why this does not update.
         JMenu chatColor = new JMenu("ChatColor");
-        JMenuItem ccBlack = new JMenuItem("Black");
-        ccBlack.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccBlue = new JMenuItem("Blue");
-        ccBlue.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccAqua = new JMenuItem("Aqua");
-        ccAqua.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccCyan = new JMenuItem("Cyan");
-        ccCyan.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccRed = new JMenuItem("Red");
-        ccRed.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccGold = new JMenuItem("Gold");
-        ccGold.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccYellow = new JMenuItem("Yellow");
-        ccYellow.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccGreen = new JMenuItem("Green");
-        ccGreen.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccLime = new JMenuItem("Lime");
-        ccLime.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccGray = new JMenuItem("Gray");
-        ccGray.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccSilver = new JMenuItem("Silver");
-        ccSilver.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
-        JMenuItem ccWhite = new JMenuItem("White");
-        ccWhite.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(ChatColor.BLACK.getColorCode()));
 
 
         menuBar.add(fileMenu);
@@ -180,14 +149,14 @@ public class MainMenu extends JFrame {
         fileExport.add(exportToPopup);
 
         menuBar.add(chatColor);
-        chatColor.add(ccBlack);
-        chatColor.add(ccBlue);
-        chatColor.add(ccAqua);
-        chatColor.add(ccCyan);
+        for(ChatColor c : ChatColor.values()) {
+            JMenuItem color = new JMenuItem(c.toString());
+            color.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(c.getColorCode()));
+            chatColor.add(color);
+        }
 
 
-
-        setJMenuBar(menuBar);
+        this.setJMenuBar(menuBar);
     }
 
     /**
@@ -223,21 +192,12 @@ public class MainMenu extends JFrame {
         MouseListener addEnchantmentListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!((String)enchantmentType.getSelectedItem()).equals("")&&((int)enchantmentLevel.getValue())!=0){
+                if(!(enchantmentType.getSelectedItem()).equals("")&&((int)enchantmentLevelSpinner.getValue())>0){
                     DefaultListModel listModel = (DefaultListModel) enchantmentList.getModel();
-                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
-                    String enchString = ench.getBukkitName();
-                    boolean containsEnchantment = false;
-                    for(int i = 0 ;i<listModel.size();i++){
-                        if(((String)listModel.getElementAt(i)).split(" : ")[0].equals(enchString)){
-                            containsEnchantment = true;
-                            break;
-                        }
-                    }
-                    if(!containsEnchantment) {
-                        getInvManager().getActiveItemStack().addEnchantment(ench);
-                        listModel.addElement(enchString+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel()));
-                    }
+                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevelSpinner.getValue()));
+                    getInvManager().getActiveItemStack().removeEnchantment(ench,enchantmentList);
+                    getInvManager().getActiveItemStack().addEnchantment(ench);
+                    listModel.addElement(ench.getDisplay());
                 }
             }
         };
@@ -246,13 +206,9 @@ public class MainMenu extends JFrame {
         MouseListener removeEnchantmentListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!((String)enchantmentType.getSelectedItem()).equals("")){
-                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevel.getValue()));
-                    getInvManager().getActiveItemStack().removeEnchantment(ench);
-                    for(int i = 0; i < ((DefaultListModel)enchantmentList.getModel()).size();i++){
-                        if(((DefaultListModel)enchantmentList.getModel()).getElementAt(i).equals(ench.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(ench.getPowerLavel())))
-                            ((DefaultListModel)enchantmentList.getModel()).remove(i);
-                    }
+                if(!(enchantmentType.getSelectedItem()).equals("")){
+                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevelSpinner.getValue()));
+                    getInvManager().getActiveItemStack().removeEnchantment(ench,enchantmentList);
                 }
             }
         };
@@ -292,7 +248,9 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
+        stackItemCountSpinner.setValue(3);
         inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+        inventorySizeSpinner.setValue(3);
 
         invManager = new InventoryManager(this,inventoryTable);
     }
