@@ -4,7 +4,7 @@ Inventory
     Add method of setting size (File toolbar on top?)
     Add method of naming inventory (Possibly another tab in the tab window below?) ===---Done
     Create a proper UI
-        Add hoverover for details like MC does ===---Semi-Done, may need improvement
+        Add hoverover for details like MC does ===---Done
         Add count of items in stack ===---Done
     Data retention
         table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items.
@@ -12,7 +12,7 @@ Inventory
             updating later
         need a custom itemstack item that holds the stack item count, name, lore, enchantment data, and other info ==---Done
         Inventory needs to be somehow serializable now, because it's better if it is built that way to start with.
-    Table needs to be able to drag and drop items around. this might be hard.
+    Table needs to be able to drag and drop items around. this might be hard. ==---Done
 
 Item details
     Buttons need to add color codes to current open editor (either stack name or lore)===---Done

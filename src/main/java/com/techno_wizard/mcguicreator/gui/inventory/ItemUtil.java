@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -60,9 +63,9 @@ public class ItemUtil {
         return (x*(600/cols));
     }
 
-    public static Font getMCFont(boolean alt){
+    public static void getMCFont(boolean alt){
         String type = alt?"alt":"reg";
-        InputStream in = ItemUtil.class.getResourceAsStream("/font/minecraft_"+type+".ttf");
+        InputStream in = util.getClass().getResourceAsStream("/font/minecraft_"+type+".ttf");
         Font font=null;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, in);
@@ -78,19 +81,16 @@ public class ItemUtil {
                     if (key.toString().endsWith(".font")) {
                         Font oldFont = defs.getFont(key.toString());
                         defs.put(key.toString(), font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                        font = oldFont;
                     }
                 }else if (keyObject instanceof String){
                     String key = (String) keyObject;
                     if (key.endsWith(".font")) {
                         Font oldFont = defs.getFont(key);
                         defs.put(key, font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                        font = oldFont;
                     }
                 }
             }
         }
-        return font;
     }
 
     /**
@@ -131,6 +131,26 @@ public class ItemUtil {
         return i;
     }
 
+    public static ImageIcon addEnchantments(ImageIcon icon){
+        BufferedImage bi = new BufferedImage(icon.getIconWidth(),icon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) bi.getGraphics();
+        g.drawImage(icon.getImage(),0,0,null);
+        try {
+            BufferedImage glow = ImageIO.read(ItemUtil.class.getResourceAsStream("/extraimg/enchantment.png"));
+            for(int y = 0; y < bi.getHeight();y++){
+                for(int x = 0; x < bi.getWidth();x++){
+                    if(bi.getAlphaRaster().getPixel(x,y,new float[10])[0]>0)
+                     g.drawImage(glow,x,y,null);
+                }
+                System.out.println("");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        g.dispose();
+        return new ImageIcon(bi);
+    }
+
     /**
      * Returns a character form the ASCII spritesheet
      * @param column
@@ -151,10 +171,35 @@ public class ItemUtil {
     }
 
     /**
+     * Returns the size of each character for the minecraft font
+     * @param c
+     * @return the size
+     */
+    public static int getCharSize(char c){
+        switch(c){
+            //TODO:Add more values
+            case 'i':return 4;
+            case 'j':return 4;
+            case 'l':return 4;
+            case '1':return 4;
+            case '!':return 4;
+            case '^':return 4;
+            case '*':return 4;
+            case '.':return 4;
+            case ',':return 4;
+            case '|':return 4;
+            case '\'':return 4;
+            case '"':return 4;
+            default:return 8;
+        }
+    }
+
+    /**
      * Returns an instance of the Util Class.
      * @return
      */
     public static ItemUtil getUtil(){
         return util;
     }
+
 }

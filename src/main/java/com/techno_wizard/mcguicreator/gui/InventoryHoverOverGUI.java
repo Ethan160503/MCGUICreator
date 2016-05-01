@@ -30,13 +30,11 @@ public class InventoryHoverOverGUI{
     private Font font;
 
     public InventoryHoverOverGUI(JTable j,JPanel panel,InventoryTableModel model){
-
         this.inv = j;
         this.panel = panel;
         this.model = model;
-
-
-        this.font = ItemUtil.getMCFont(false);
+        ItemUtil.getMCFont(true);
+       // this.font = ItemUtil.getMCFont(true);
 
         MouseMotionListener mouseListener = getMouseListener();
         inv.addMouseMotionListener(mouseListener);
@@ -85,38 +83,40 @@ public class InventoryHoverOverGUI{
                         List<String> lore = is.getLoreAsList();
                         List<Enchantment> ench = is.getEnchantments();
 
-                        //Set the dimentions
-                        int height = 10 + 12 * (lore.size() + ench.size());
                         int width = 80;
-                        if(is.getName().length()*8>80)
-                            width =is.getName().length()*8;
+                        width = widthFinder(is.getName(),width);
                         for(String loreL :lore)
-                            if(loreL.length()*8 > 80)
-                                width = loreL.length()*8;
+                            width = widthFinder(loreL,width);
+                        for(Enchantment e : ench)
+                            width = widthFinder(e.getDisplay(),width);
 
                         //Set the font
-                        g.setFont(font);
+                        //g.setFont(font);
 
                         //Draw it
-                        g.setColor(Color.gray);
-                        g.fillRect(xP, yP, width, 15);
-                        g.setColor(Color.lightGray);
-                        g.fillRect(xP, yP+15, width, height);
                         g.setColor(Color.black);
+                        g.fillRect(xP, yP, width, 16);
+                        addChatColor(g,is.getName(),16);
+                        //Make sure there is a space between the name and lore
+                        yOffset++;
+                        g.setColor(Color.black);
+                        g.fillRect(xP, yP+(yOffset*16), width, 16);
 
-                        //TODO: figure out the size of each char
-                        //TODO: Every place there is a chatcolor, remove it, add the right color, put the text in right spot
-
-                        g.drawString(is.getName() + "", xP+2, yP+13);
                         for (int loreLine = 0; loreLine < lore.size(); loreLine++) {
-                            g.drawString(lore.get(loreLine), xP+2, yP + 30 + (yOffset * 12));
+                            g.setColor(Color.black);
                             yOffset++;
+                            g.fillRect(xP, yP+(yOffset*16), width, 16);
+                            addChatColor(g,lore.get(loreLine), 16+(yOffset*16));
                         }
                         for (int enchLine = 0; enchLine < ench.size(); enchLine++) {
-                            g.drawString(ench.get(enchLine).getDisplay(), xP+2, yP + 30 + (yOffset * 12));
+                            g.setColor(Color.black);
                             yOffset++;
+                            g.fillRect(xP, yP+(yOffset*16), width, 16);
+                            addChatColor(g,ench.get(enchLine).getDisplay(),16 + (yOffset * 16));
                         }
-                        g.drawRect(xP,yP,width, height+15);
+
+                        g.setColor(new Color(102,0,204));
+                        g.drawRect(xP+1,yP+1,width-2, 16+(yOffset*16)-2);
                         g.dispose();
                         panel.update(g);
                     }
@@ -147,5 +147,36 @@ public class InventoryHoverOverGUI{
                 }
             }
         };
+    }
+
+    public void addChatColor(Graphics g,String message,int yoffset){
+        String[] text = message.split(ChatColor.COLOR_CHAR+"");
+        int offset = 0;
+        for(int i = 0; i < text.length;i++) {
+            if(i==0) {
+                g.setColor(hex2Rgb(ChatColor.RESET.getHex()));
+                text[i]="X"+text[i];
+            }else
+                g.setColor(hex2Rgb(ChatColor.getChatColor(text[i].charAt(0)).getHex()));
+            if(text[i].length() >=2) {
+                g.drawString(text[i].substring(1), xP+4+offset, yP-2+yoffset);
+                for (int charAt = 1; charAt < text[i].length(); charAt++)
+                    offset += ItemUtil.getCharSize(text[i].charAt(charAt));
+            }
+        }
+    }
+    //TODO: Possibly move this to the ChatColor class
+    public static Color hex2Rgb(String colorStr) {
+        return new Color(
+                Integer.valueOf( colorStr.substring( 0, 2 ), 16 ),
+                Integer.valueOf( colorStr.substring( 2, 4 ), 16 ),
+                Integer.valueOf( colorStr.substring( 4, 6 ), 16 ) );
+    }
+
+    private int widthFinder(String s,int base){
+        int offset = 0;
+        for (int charAt = 1; charAt < s.length(); charAt++)
+            offset += ItemUtil.getCharSize(s.charAt(charAt));
+        return offset>base?offset:base;
     }
 }

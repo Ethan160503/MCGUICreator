@@ -1,24 +1,16 @@
 package com.techno_wizard.mcguicreator.management;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
-import com.techno_wizard.mcguicreator.gui.ChatColor;
-import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.awt.datatransfer.*;
+import java.awt.event.*;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -41,18 +33,23 @@ public class EditorManager {
     private JComboBox eventGeneratorBox;
     private JSpinner inventorySizeSpinner;
 
+    private JButton copyToClipboardButton;
+    private JButton exportButton;
+    private JList enchantmentList;
+
     private boolean textIsFormatted;
     private String stackNamePlain = "";
     private String inventoryNamePlain = "";
     private String lorePlain = "";
 
-    private  TextEditorManager textEditorManager;
+    private TextEditorManager textEditorManager;
 
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
-                         JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor
-                         ,JComboBox eventGeneratorBox,JSpinner inventorySizeSpinner) {
+                         JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
+                         JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,JButton copyToClipboardButton,JButton exportButton,
+                         JList enchantmentList) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -65,9 +62,12 @@ public class EditorManager {
         this.loreEditor = loreEditor;
         this.showFormattedTxtInv = showFormattedTxtInv;
         this.editorTabbedPane = editorTabbedPane;
-
         this.eventGeneratorBox = eventGeneratorBox;
         this.inventorySizeSpinner = inventorySizeSpinner;
+
+        this.copyToClipboardButton = copyToClipboardButton;
+        this.exportButton = exportButton;
+        this.enchantmentList = enchantmentList;
 
 
         this.textEditorManager = new TextEditorManager(this);
@@ -99,8 +99,7 @@ public class EditorManager {
                 clipboard.setContents(new StringSelection(code.toString()), null);
             }
         };
-        mainMenu.copyToClipboardButton.addMouseListener(copyToClipboardListener);
-        //Creating the code for the clipboard.
+        copyToClipboardButton.addMouseListener(copyToClipboardListener);
 
         MouseListener exportListener = new MouseAdapter() {
             @Override
@@ -115,12 +114,15 @@ public class EditorManager {
                 new CodeExporter(code.toString());
             }
         };
-        mainMenu.exportButton.addMouseListener(exportListener);
+        exportButton.addMouseListener(exportListener);
 
         inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
-            this.mainMenu.getInventoryTableModel().setInventorySize((int)inventorySizeSpinner.getValue());
+            this.mainMenu.getInventoryTableModel().setInventorySize((int) inventorySizeSpinner.getValue());
             this.mainMenu.getInventoryTable().setModel(this.mainMenu.getInventoryTableModel());
+            this.mainMenu.getInventoryTable().setRowHeight(300 / mainMenu.getInventoryTableModel().getRowCount());
+        });
+
             this.mainMenu.getInventoryTable().setRowHeight((95*3)/mainMenu.getInventoryTableModel().getRowCount());
         }  );
     }
@@ -135,31 +137,27 @@ public class EditorManager {
         stackItemCountSpinner.setValue(stack.getAmount());
         enableEnchantCheckBox.setSelected(stack.isEnchanted());
         notesBox.setText(stack.getNotes());
-        ((DefaultListModel)mainMenu.enchantmentList.getModel()).clear();
+        ((DefaultListModel) enchantmentList.getModel()).clear();
 
-        for(int i =0;i<eventGeneratorBox.getItemCount(); i++) {
+        for (int i = 0; i < eventGeneratorBox.getItemCount(); i++) {
             if (AutoGenerateType.getTypeByName((String) eventGeneratorBox.getItemAt(i)) == stack.getAutoGenerateType()) {
                 this.eventGeneratorBox.setSelectedIndex(i);
                 break;
             }
         }
-
-        for(Enchantment e : stack.getEnchantments()){
-            ((DefaultListModel)mainMenu.enchantmentList.getModel()).addElement(e.getBukkitName()+" : "+ ItemUtil.getRomanNumerals(e.getPowerLavel()));
-        }
+        for (Enchantment e : stack.getEnchantments())
+            ((DefaultListModel) enchantmentList.getModel()).addElement(e.getDisplay());
     }
 
     public void saveCurrentItemStack() {
         setTextIsFormatted(false);
-        ItemStack oldItemstack = mainMenu.getInvManager().getActiveItemStack();
-        this.saveItemStack(oldItemstack);
+        this.saveItemStack(mainMenu.getInvManager().getActiveItemStack());
     }
 
     public void saveItemStack(ItemStack is) {
         ItemStack oldItemstack = is;
-
         //Make sure the itemstack exists;
-        if(oldItemstack == null)
+        if (oldItemstack == null)
             return;
 
         //todo revert to unformatted version first
@@ -172,8 +170,10 @@ public class EditorManager {
         oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
-        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String)(eventGeneratorBox.getSelectedItem())));
+        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
         List<Enchantment> enchs = new ArrayList<>();
+        for (int i = 0; i < ((DefaultListModel) enchantmentList.getModel()).size(); i++) {
+            String s = (String) (enchantmentList.getModel()).getElementAt(i);
         for(int i = 0; i <((DefaultListModel)mainMenu.enchantmentList.getModel()).size();i++){
             String s = (String) mainMenu.enchantmentList.getModel().getElementAt(i);
             Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
@@ -184,12 +184,13 @@ public class EditorManager {
 
     /**
      * sets the selected editor view
+     *
      * @param textIsFormatted whether or not the text should be formatted
      */
     public void setTextIsFormatted(boolean textIsFormatted) {
-        if((this.textIsFormatted && textIsFormatted) || (!this.textIsFormatted && !textIsFormatted)) return;
+        if ((this.textIsFormatted && textIsFormatted) || (!this.textIsFormatted && !textIsFormatted)) return;
 
-        if(!textIsFormatted) {
+        if (!textIsFormatted) {
             // set text unformatted
             inventoryNameEditor.setEditable(true);
             inventoryNameEditor.setContentType("text/plain");
@@ -225,8 +226,8 @@ public class EditorManager {
         showFormattedTxtLore.setSelected(textIsFormatted);
     }
 
-    public void setButtonListener(ChatColor color, JButton button) {
-        button.addActionListener(e -> onColorButtonPress(color));
+    public void setButtonListener(ChatColor color, JButton button){
+        button.addActionListener(e->onColorButtonPress(color));
     }
 
     /**
@@ -240,18 +241,16 @@ public class EditorManager {
         this.getTextEditorManager().editSelectedEditor(chatColor.getColorCode());
 
         // restore old view
-        if(textWasFormatted) {
+        if(textWasFormatted)
             setTextIsFormatted(true);
-        }
     }
 
     /**
      * inits the materials
      */
     public void initMaterialList() {
-        for (Material mat : Material.values()) {
+        for (Material mat : Material.values())
             materialComboBox.addItem(mat);
-        }
     }
 
     public JEditorPane getInventoryNameEditor(){return inventoryNameEditor;}

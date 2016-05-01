@@ -8,12 +8,15 @@ public class Enchantment {
     int powerLavel;
     String enchantmentName;
     boolean isUnsafe;
+    EnchantmentType type;
 
     public Enchantment(EnchantmentType e,int power){
         this.enchantmentName = e.getBukkitName();
         this.powerLavel = power;
         this.isUnsafe = e.isUnsafe(power);
+        this.type = e;
     }
+    public EnchantmentType getType(){return type;}
 
     public enum EnchantmentType{
         //TODO:Sort by alphabetical order.
@@ -33,9 +36,7 @@ public class Enchantment {
 
         int maxPower;
 
-        EnchantmentType(int maxPower){
-            this.maxPower = maxPower;
-        }
+        EnchantmentType(int maxPower){this.maxPower = maxPower;}
         public String getBukkitName(){
             return this.toString();
         }
