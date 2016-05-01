@@ -38,13 +38,10 @@ public class EditorManager {
     private JCheckBox showFormattedTxtInv;
     private JEditorPane inventoryNameEditor;
     private JTabbedPane editorTabbedPane;
-
     private JComboBox eventGeneratorBox;
-
     private JSpinner inventorySizeSpinner;
 
     private boolean textIsFormatted;
-
     private String stackNamePlain = "";
     private String inventoryNamePlain = "";
     private String lorePlain = "";
@@ -126,7 +123,6 @@ public class EditorManager {
             this.mainMenu.getInventoryTable().setModel(this.mainMenu.getInventoryTableModel());
             this.mainMenu.getInventoryTable().setRowHeight((95*3)/mainMenu.getInventoryTableModel().getRowCount());
         }  );
-
     }
 
     public void loadStack(ItemStack stack) {
@@ -158,6 +154,7 @@ public class EditorManager {
         ItemStack oldItemstack = mainMenu.getInvManager().getActiveItemStack();
         this.saveItemStack(oldItemstack);
     }
+
     public void saveItemStack(ItemStack is) {
         ItemStack oldItemstack = is;
 
@@ -178,7 +175,7 @@ public class EditorManager {
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String)(eventGeneratorBox.getSelectedItem())));
         List<Enchantment> enchs = new ArrayList<>();
         for(int i = 0; i <((DefaultListModel)mainMenu.enchantmentList.getModel()).size();i++){
-            String s = (String) ((DefaultListModel)mainMenu.enchantmentList.getModel()).getElementAt(i);
+            String s = (String) mainMenu.enchantmentList.getModel().getElementAt(i);
             Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
             enchs.add(ench);
         }
@@ -205,9 +202,7 @@ public class EditorManager {
             stackNameEditor.setEditable(true);
             stackNameEditor.setContentType("text/plain");
             stackNameEditor.setText(stackNamePlain);
-            System.out.println("Inactive");
         } else {
-            System.out.println("Active");
             inventoryNamePlain = inventoryNameEditor.getText();
             inventoryNameEditor.setContentType("text/html");
             inventoryNameEditor.setEditable(false);
@@ -258,9 +253,13 @@ public class EditorManager {
             materialComboBox.addItem(mat);
         }
     }
+
     public JEditorPane getInventoryNameEditor(){return inventoryNameEditor;}
+
     public JEditorPane getItemStackNameEditor(){return stackNameEditor;}
+
     public JEditorPane getItemStackLoreEditor(){return loreEditor;}
+
     public JTextField getNotes(){return notesBox;}
 
     public TextEditorManager getTextEditorManager(){return textEditorManager;}

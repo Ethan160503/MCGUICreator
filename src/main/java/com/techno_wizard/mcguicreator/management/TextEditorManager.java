@@ -26,8 +26,7 @@ public class TextEditorManager {
         initListener();
     }
 
-    //TODO: Figure out an easy way to know if the person clicked another button/box. We do not want them
-    //being able to add chatcolors to the Itemstack's displayname while in the enchantment menu
+    //todo add tab change listener to deactivate focus. Cannot use lose focus because the buttons fire it
     private void initListener() {
 
         em.getItemStackLoreEditor().addFocusListener(new FocusAdapter() {
