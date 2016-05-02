@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Zomibe_Striker on 4/5/2016.
+ * Created by Zombie_Striker on 4/5/2016.
  */
 public class CodeCreator {
 
