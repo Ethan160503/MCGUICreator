@@ -63,26 +63,29 @@ public class ItemUtil {
         return (x*(600/cols));
     }
 
-    public static void getMCFont(boolean alt){
-        String type = alt?"alt":"reg";
-        InputStream in = util.getClass().getResourceAsStream("/font/minecraft_"+type+".ttf");
+
+    public static Font getMCFont(Font oldFont){
+        InputStream in = util.getClass().getResourceAsStream("/font/minecraft_font.ttf");
         Font font=null;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, in);
         }catch(Exception e){
             e.printStackTrace();
         }
-        if(font!= null){
+        if(font!=null){
+            return font.deriveFont(oldFont.getStyle(), oldFont.getSize2D());
+        }
+        /*if(font!= null) {
             UIDefaults defs = UIManager.getLookAndFeelDefaults();
-            for(Iterator i = defs.keySet().iterator(); i.hasNext(); ) {
+            for (Iterator i = defs.keySet().iterator(); i.hasNext(); ) {
                 Object keyObject = i.next();
-                if(keyObject instanceof  StringBuffer) {
+                if (keyObject instanceof StringBuffer) {
                     StringBuffer key = (StringBuffer) keyObject;
                     if (key.toString().endsWith(".font")) {
                         Font oldFont = defs.getFont(key.toString());
                         defs.put(key.toString(), font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
                     }
-                }else if (keyObject instanceof String){
+                } else if (keyObject instanceof String) {
                     String key = (String) keyObject;
                     if (key.endsWith(".font")) {
                         Font oldFont = defs.getFont(key);
@@ -90,7 +93,8 @@ public class ItemUtil {
                     }
                 }
             }
-        }
+        }*/
+        return oldFont;
     }
 
     /**

@@ -123,8 +123,12 @@ public class EditorManager {
             this.mainMenu.getInventoryTable().setRowHeight(300 / mainMenu.getInventoryTableModel().getRowCount());
         });
 
-            this.mainMenu.getInventoryTable().setRowHeight((95*3)/mainMenu.getInventoryTableModel().getRowCount());
-        }  );
+
+        //Set the font for all the text fields
+        stackNameEditor.setFont(ItemUtil.getMCFont(stackNameEditor.getFont()));
+        loreEditor.setFont(ItemUtil.getMCFont(loreEditor.getFont()));
+        inventoryNameEditor.setFont(ItemUtil.getMCFont(inventoryNameEditor.getFont()));
+        enchantmentList.setFont(ItemUtil.getMCFont(enchantmentList.getFont()));
     }
 
     public void loadStack(ItemStack stack) {
@@ -172,10 +176,8 @@ public class EditorManager {
         oldItemstack.setNotes(notesBox.getText());
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
         List<Enchantment> enchs = new ArrayList<>();
-        for (int i = 0; i < ((DefaultListModel) enchantmentList.getModel()).size(); i++) {
-            String s = (String) (enchantmentList.getModel()).getElementAt(i);
-        for(int i = 0; i <((DefaultListModel)mainMenu.enchantmentList.getModel()).size();i++){
-            String s = (String) mainMenu.enchantmentList.getModel().getElementAt(i);
+        for(int i = 0; i <((DefaultListModel)enchantmentList.getModel()).size();i++){
+            String s = (String) enchantmentList.getModel().getElementAt(i);
             Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
             enchs.add(ench);
         }

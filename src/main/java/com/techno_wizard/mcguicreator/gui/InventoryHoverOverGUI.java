@@ -33,7 +33,6 @@ public class InventoryHoverOverGUI{
         this.inv = j;
         this.panel = panel;
         this.model = model;
-        ItemUtil.getMCFont(true);
        // this.font = ItemUtil.getMCFont(true);
 
         MouseMotionListener mouseListener = getMouseListener();
@@ -91,7 +90,9 @@ public class InventoryHoverOverGUI{
                             width = widthFinder(e.getDisplay(),width);
 
                         //Set the font
-                        //g.setFont(font);
+                        if(font == null)
+                            font = ItemUtil.getMCFont(g.getFont());
+                        g.setFont(font);
 
                         //Draw it
                         g.setColor(Color.black);

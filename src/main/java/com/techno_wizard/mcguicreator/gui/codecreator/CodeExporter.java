@@ -1,5 +1,7 @@
 package com.techno_wizard.mcguicreator.gui.codecreator;
 
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
+
 import javax.swing.*;
 
 /**
@@ -15,6 +17,7 @@ public class CodeExporter extends JFrame {
         this.pack();
         this.setVisible(true);
         this.setName("Exported Code");
+        printedCode.setFont(ItemUtil.getMCFont(printedCode.getFont()));
         printedCode.setText(code);
     }
 

@@ -3,6 +3,7 @@ package com.techno_wizard.mcguicreator.gui;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.management.*;
+import com.techno_wizard.mcguicreator.tutorials.TutorialMenu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -97,6 +98,9 @@ public class MainMenu extends JFrame {
 
         //TODO: Fix this
         new InventoryHoverOverGUI(inventoryTable,panel1,inventoryTableModel);
+
+        //TODO: Add JButton or MenuButton to open menu.
+        new TutorialMenu();
     }
 
     /**
