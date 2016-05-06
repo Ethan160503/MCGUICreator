@@ -3,7 +3,7 @@ package com.techno_wizard.mcguicreator.gui;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.management.*;
-import com.techno_wizard.mcguicreator.tutorials.TutorialMenu;
+import com.techno_wizard.mcguicreator.help.TutorialMenu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -67,6 +67,7 @@ public class MainMenu extends JFrame {
     private JScrollPane enchantmentScrollPane;
 
     private JComboBox eventGenerateType;
+    private JRadioButton closeInvOnClickRButton;
 
     private InventoryTableModel inventoryTableModel;
 
@@ -85,7 +86,7 @@ public class MainMenu extends JFrame {
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
                 stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane,
                 inventoryNameEditor,eventGenerateType,inventorySizeSpinner,copyToClipboardButton,exportButton,
-                enchantmentList);
+                enchantmentList,closeInvOnClickRButton);
 
         initButtons();
         // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.

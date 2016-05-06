@@ -76,4 +76,12 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
     public Class<?> getColumnClass(int columnIndex){
         return ImageIcon.class;
     }
+
+    public boolean rowContainsItemstacks(int row){
+        for(int x =0;x<9;x++){
+            if(getItemStackAt(x,row).getMaterial()!=Material.AIR)
+                return true;
+        }
+        return false;
+    }
 }

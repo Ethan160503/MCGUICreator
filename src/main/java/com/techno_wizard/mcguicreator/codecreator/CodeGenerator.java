@@ -63,6 +63,8 @@ public class CodeGenerator {
      */
     public static String writeRepresentingJava(InventoryTableModel invModel) {
 
+        //Adding this so the program can run
+        return "";
     }
 
     /**
@@ -79,5 +81,7 @@ public class CodeGenerator {
             Integer integer = (Integer) wrapperValue;
             //todo add java constructors to code generation template file
         }
+        //Adding this so the program can run
+        return "";
     }
 }
