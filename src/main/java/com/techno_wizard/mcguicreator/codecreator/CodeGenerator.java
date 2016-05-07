@@ -6,6 +6,8 @@ import org.json.simple.JSONValue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +27,14 @@ public class CodeGenerator {
     }
 
     private CodeGenerator() {
-        try {
-            codeTemplates = (JSONObject) JSONValue.parse(new FileReader("/home/ethan/IdeaProjects/MCGUICreator/target/classes/code_templates.json"));
-        } catch (FileNotFoundException e) {
+        //try {
+            Reader reader = new InputStreamReader(getClass().getResourceAsStream("/text/code_templates.json"));
+            codeTemplates = (JSONObject) JSONValue.parse(reader);
+            //codeTemplates = (JSONObject) JSONValue.parse(new FileReader("/home/ethan/IdeaProjects/MCGUICreator/target/classes/code_templates.json"));
+        /*} catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Code templates file failed to load");
-        }
+        }*/
     }
 
     /**

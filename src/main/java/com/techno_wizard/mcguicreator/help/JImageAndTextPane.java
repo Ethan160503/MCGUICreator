@@ -36,14 +36,14 @@ public class JImageAndTextPane extends JEditorPane {
     }
 
 
-    public BufferedImage[] getImages(int tutorialID,int imageCount){
-        BufferedImage[] bia = new BufferedImage[imageCount];
-        for(int i = 0;i<imageCount;i++){
+    public BufferedImage[] loadImages(int tutorialID){
+        BufferedImage[] bia = new BufferedImage[10];
+        for(int i = 0;i<10;i++){
             try {
                 BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tutorial/" + tutorialID + "-" + i + ".png"));
                 bia[i] = image;
             }catch(Exception e){
-                e.printStackTrace();
+                break;
             }
         }
         return bia;

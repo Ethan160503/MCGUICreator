@@ -5,20 +5,28 @@
     <constraints>
       <xy x="20" y="20" width="826" height="733"/>
     </constraints>
-    <properties/>
+    <properties>
+      <enabled value="true"/>
+      <foreground color="-12892848"/>
+    </properties>
     <border type="none"/>
     <children>
       <scrollpane id="17ed7">
         <constraints>
           <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-12892848"/>
+        </properties>
         <border type="none"/>
         <children>
-          <grid id="f4bef" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="f4bef" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints/>
-            <properties/>
+            <properties>
+              <enabled value="false"/>
+              <foreground color="-12892848"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="9ef15" class="javax.swing.JButton" binding="basicsButton">
@@ -29,20 +37,12 @@
                   <text value="Basics"/>
                 </properties>
               </component>
-              <component id="358bb" class="javax.swing.JButton" binding="movingItemstacksButton" default-binding="true">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Moving Itemstacks"/>
-                </properties>
-              </component>
-              <component id="a2a42" class="javax.swing.JButton" binding="addingColorsButton" default-binding="true">
+              <component id="358bb" class="javax.swing.JButton" binding="exportButton">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Adding Colors"/>
+                  <text value="Exporting your inventory"/>
                 </properties>
               </component>
               <component id="825ef" class="javax.swing.JButton" binding="howToEditTheButton" default-binding="true">
@@ -55,12 +55,12 @@
               </component>
               <vspacer id="a5dde">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="1add5" class="javax.swing.JButton" binding="advancedItemstackEditingButton" default-binding="true">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Advanced Itemstack Editing"/>
