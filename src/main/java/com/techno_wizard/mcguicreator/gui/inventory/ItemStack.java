@@ -27,6 +27,7 @@ public class ItemStack implements Serializable{
     private List<Enchantment> enchantments = new ArrayList<>();
     private String notes;
     private AutoGenerateType autoGenerateType = AutoGenerateType.NONE;
+    private boolean closeInvOnClick = false;
 
     public ItemStack(Material material) {
         this.material = material;
@@ -59,6 +60,8 @@ public class ItemStack implements Serializable{
     public void setAutoGenerateType(AutoGenerateType autoGenerateType){
         this.autoGenerateType = autoGenerateType;
     }
+    public void setCloseInvOnClick(boolean b){closeInvOnClick = b;}
+    public boolean getCloseInvOnClick(){return closeInvOnClick;}
 
     public void addEnchantment(Enchantment e){
         this.enchantments.add(e);
@@ -95,7 +98,7 @@ public class ItemStack implements Serializable{
      * @param lore
      * @param amount
      */
-    public void update(Material m,String lore,int amount,String name,List<Enchantment> ench,String notes,AutoGenerateType auto){
+    public void update(Material m,String lore,int amount,String name,List<Enchantment> ench,String notes,AutoGenerateType auto,boolean closeInvOnClick){
         this.setAmount(amount);
         this.setLore(lore);
         this.setMaterial(m);
@@ -103,6 +106,7 @@ public class ItemStack implements Serializable{
         this.setEnchantments(ench);
         this.setNotes(notes);
         this.setAutoGenerateType(auto);
+        this.setCloseInvOnClick(closeInvOnClick);
     }
     /**
      * Use this to update all the values of an itemstack. This is what we should use to update the itemstack and
@@ -111,8 +115,8 @@ public class ItemStack implements Serializable{
      * @param lore
      * @param amount
      */
-    public void update(String materialName,String lore,int amount,String name,List<Enchantment> ench,String note,AutoGenerateType auto){
-        update(Material.getMaterialByName(materialName),lore,amount,name,ench,note,auto);
+    public void update(String materialName,String lore,int amount,String name,List<Enchantment> ench,String note,AutoGenerateType auto,boolean closeInvOnClick){
+        update(Material.getMaterialByName(materialName),lore,amount,name,ench,note,auto,closeInvOnClick);
     }
 
     public String getName() {

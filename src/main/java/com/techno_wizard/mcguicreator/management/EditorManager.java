@@ -5,6 +5,8 @@ import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.help.WarningPopUp;
+import com.techno_wizard.mcguicreator.help.WarningResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +34,7 @@ public class EditorManager {
     private JTabbedPane editorTabbedPane;
     private JComboBox eventGeneratorBox;
     private JSpinner inventorySizeSpinner;
+    private JRadioButton closeInvOnClick;
 
     private JButton copyToClipboardButton;
     private JButton exportButton;
@@ -49,7 +52,7 @@ public class EditorManager {
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
                          JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,JButton copyToClipboardButton,JButton exportButton,
-                         JList enchantmentList) {
+                         JList enchantmentList,JRadioButton closeInvOnClick) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -64,6 +67,7 @@ public class EditorManager {
         this.editorTabbedPane = editorTabbedPane;
         this.eventGeneratorBox = eventGeneratorBox;
         this.inventorySizeSpinner = inventorySizeSpinner;
+        this.closeInvOnClick = closeInvOnClick;
 
         this.copyToClipboardButton = copyToClipboardButton;
         this.exportButton = exportButton;
@@ -118,9 +122,30 @@ public class EditorManager {
 
         inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
-            this.mainMenu.getInventoryTableModel().setInventorySize((int) inventorySizeSpinner.getValue());
-            this.mainMenu.getInventoryTable().setModel(this.mainMenu.getInventoryTableModel());
-            this.mainMenu.getInventoryTable().setRowHeight(300 / mainMenu.getInventoryTableModel().getRowCount());
+            if((int) inventorySizeSpinner.getValue() < mainMenu.getInventoryTable().getRowCount()) {
+                boolean isDeletingItemstacks = false;
+                for (int rows = (int) inventorySizeSpinner.getValue(); rows < mainMenu.getInventoryTable().getRowCount(); rows++) {
+                    if (mainMenu.getInventoryTableModel().rowContainsItemstacks(rows)) {
+                       WarningPopUp wpu = new WarningPopUp("A row you are deleting contains an itemstack.", new WarningResult() {
+                            @Override
+                            public void onActivate() {
+                                updateInventorySize();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
+                            }
+                        });
+                        isDeletingItemstacks = true;
+                        break;
+                    }
+                }
+                if(!isDeletingItemstacks)
+                    updateInventorySize();
+            }else
+                updateInventorySize();
+
         });
 
 
@@ -141,6 +166,7 @@ public class EditorManager {
         stackItemCountSpinner.setValue(stack.getAmount());
         enableEnchantCheckBox.setSelected(stack.isEnchanted());
         notesBox.setText(stack.getNotes());
+        closeInvOnClick.setSelected(stack.getCloseInvOnClick());
         ((DefaultListModel) enchantmentList.getModel()).clear();
 
         for (int i = 0; i < eventGeneratorBox.getItemCount(); i++) {
@@ -175,6 +201,7 @@ public class EditorManager {
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
+        oldItemstack.setCloseInvOnClick(closeInvOnClick.isSelected());
         List<Enchantment> enchs = new ArrayList<>();
         for(int i = 0; i <((DefaultListModel)enchantmentList.getModel()).size();i++){
             String s = (String) enchantmentList.getModel().getElementAt(i);
@@ -264,4 +291,10 @@ public class EditorManager {
     public JTextField getNotes(){return notesBox;}
 
     public TextEditorManager getTextEditorManager(){return textEditorManager;}
+
+    public void updateInventorySize(){
+        mainMenu.getInventoryTableModel().setInventorySize((int) inventorySizeSpinner.getValue());
+        mainMenu.getInventoryTable().setModel(mainMenu.getInventoryTableModel());
+        mainMenu.getInventoryTable().setRowHeight(300 / mainMenu.getInventoryTableModel().getRowCount());
+    }
 }

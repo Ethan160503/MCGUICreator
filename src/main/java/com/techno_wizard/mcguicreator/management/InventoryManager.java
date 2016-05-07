@@ -78,10 +78,11 @@ public class InventoryManager {
                         List<Enchantment> ench = new ArrayList<>(activeItemStack.getEnchantments());
                         String notes = activeItemStack.getNotes();
                         AutoGenerateType autogen = activeItemStack.getAutoGenerateType();
+                        boolean close = activeItemStack.getCloseInvOnClick();
 
                         //Update each slot
-                        activeItemStack.update(slot.getMaterial(), slot.getLore(), slot.getAmount(),slot.getName(),slot.getEnchantments(),slot.getNotes(),slot.getAutoGenerateType());
-                        slot.update(m,lore,amount,name,ench,notes,autogen);
+                        activeItemStack.update(slot.getMaterial(), slot.getLore(), slot.getAmount(),slot.getName(),slot.getEnchantments(),slot.getNotes(),slot.getAutoGenerateType(),slot.getCloseInvOnClick());
+                        slot.update(m,lore,amount,name,ench,notes,autogen,close);
                         mainMenu.getEditorManager().loadStack(getActiveItemStack());
 
                     }else{
