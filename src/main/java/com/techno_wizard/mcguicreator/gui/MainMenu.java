@@ -16,7 +16,7 @@ public class MainMenu extends JFrame {
 
     private JTable inventoryTable;
     private JPanel panel1;
-    private JButton blackButton;
+    /*private JButton blackButton;
     private JButton darkRedButton;
     private JButton darkPurpleButton;
     private JButton darkBlueButton;
@@ -37,7 +37,7 @@ public class MainMenu extends JFrame {
     private JButton magicButton;
     private JButton underlineButton;
     private JButton italicButton;
-    private JButton resetButton;
+    private JButton resetButton;*/
     private JEditorPane editorPane1;
     private JCheckBox showFormattedTextCheckBoxLore;
     private JCheckBox showFormattedTextCheckBoxDetails;
@@ -52,8 +52,8 @@ public class MainMenu extends JFrame {
 
 
     //Code buttons
-    private JButton exportButton;
-    private JButton copyToClipboardButton;
+    /*private JButton exportButton;
+    private JButton copyToClipboardButton;*/
     private JEditorPane inventoryNameEditor;
     private JCheckBox showFormattedTextCheckBoxInv;
     private JSpinner inventorySizeSpinner;
@@ -80,13 +80,13 @@ public class MainMenu extends JFrame {
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        inventoryTable.setRowHeight(95);
-
         editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
                 stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane,
-                inventoryNameEditor,eventGenerateType,inventorySizeSpinner,copyToClipboardButton,exportButton,
+                inventoryNameEditor,eventGenerateType,inventorySizeSpinner,
                 enchantmentList,closeInvOnClickRButton);
+
+        editorManager.updateInventorySize();
 
         initButtons();
         // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
@@ -97,11 +97,7 @@ public class MainMenu extends JFrame {
         initEnchantments();
         pack();
 
-        //TODO: Fix this
         new InventoryHoverOverGUI(inventoryTable,panel1,inventoryTableModel);
-
-        //TODO: Add JButton or MenuButton to open menu.
-        new TutorialMenu();
     }
 
     /**
@@ -143,22 +139,12 @@ public class MainMenu extends JFrame {
         JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
         JMenuItem exportToPopup = new JMenuItem("Export to popup");
 
-        //TODO: figure out why this does not update.
-        JMenu chatColor = new JMenu("ChatColor");
-
 
         menuBar.add(fileMenu);
         fileMenu.add(fileOpen);
         fileMenu.add(fileExport);
         fileExport.add(exportToClipboard);
         fileExport.add(exportToPopup);
-
-        menuBar.add(chatColor);
-        for(ChatColor c : ChatColor.values()) {
-            JMenuItem color = new JMenuItem(c.toString());
-            color.addActionListener(e -> getEditorManager().getTextEditorManager().editSelectedEditor(c.getColorCode()));
-            chatColor.add(color);
-        }
 
 
         this.setJMenuBar(menuBar);
@@ -171,7 +157,7 @@ public class MainMenu extends JFrame {
         /* Unfortunately, due to restrictions of IDEA's GUI designer, i cannot set the buttons
            To compensate, the following madness is required. Yay......
         */
-        editorManager.setButtonListener(ChatColor.BLACK, blackButton);
+       /* editorManager.setButtonListener(ChatColor.BLACK, blackButton);
         editorManager.setButtonListener(ChatColor.DARK_BLUE, darkBlueButton);
         editorManager.setButtonListener(ChatColor.DARK_GREEN, darkGreenButton);
         editorManager.setButtonListener(ChatColor.DARK_AQUA, darkAquaButton);
@@ -192,7 +178,7 @@ public class MainMenu extends JFrame {
         editorManager.setButtonListener(ChatColor.STRIKETHROUGH, strikethroughButton);
         editorManager.setButtonListener(ChatColor.UNDERLINE, underlineButton);
         editorManager.setButtonListener(ChatColor.ITALIC, italicButton);
-        editorManager.setButtonListener(ChatColor.RESET, resetButton);
+        editorManager.setButtonListener(ChatColor.RESET, resetButton);*/
 
         MouseListener addEnchantmentListener = new MouseAdapter() {
             @Override
@@ -253,8 +239,8 @@ public class MainMenu extends JFrame {
         inventoryTable.setModel(inventoryTableModel);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
-        stackItemCountSpinner.setValue(3);
-        inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+        stackItemCountSpinner.setValue(1);
+        inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 9, 1));
         inventorySizeSpinner.setValue(3);
 
         invManager = new InventoryManager(this,inventoryTable);
@@ -275,5 +261,6 @@ public class MainMenu extends JFrame {
     public InventoryTableModel getInventoryTableModel(){
         return inventoryTableModel;
     }
+    public JPanel getInventoryGUI(){return this.panel1;}
     public JTable getInventoryTable(){return this.inventoryTable;}
 }

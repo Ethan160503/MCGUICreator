@@ -36,8 +36,8 @@ public class EditorManager {
     private JSpinner inventorySizeSpinner;
     private JRadioButton closeInvOnClick;
 
-    private JButton copyToClipboardButton;
-    private JButton exportButton;
+    /*private JButton copyToClipboardButton;
+    private JButton exportButton;*/
     private JList enchantmentList;
 
     private boolean textIsFormatted;
@@ -51,7 +51,7 @@ public class EditorManager {
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
-                         JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,JButton copyToClipboardButton,JButton exportButton,
+                         JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,
                          JList enchantmentList,JRadioButton closeInvOnClick) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
@@ -69,8 +69,8 @@ public class EditorManager {
         this.inventorySizeSpinner = inventorySizeSpinner;
         this.closeInvOnClick = closeInvOnClick;
 
-        this.copyToClipboardButton = copyToClipboardButton;
-        this.exportButton = exportButton;
+        /*this.copyToClipboardButton = copyToClipboardButton;
+        this.exportButton = exportButton;*/
         this.enchantmentList = enchantmentList;
 
 
@@ -90,7 +90,7 @@ public class EditorManager {
 
         //Creating the code for the clipboard.
         //todo delegate to managing class
-        MouseListener copyToClipboardListener = new MouseAdapter() {
+       /* MouseListener copyToClipboardListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //Update the active itemstack
@@ -118,31 +118,33 @@ public class EditorManager {
                 new CodeExporter(code.toString());
             }
         };
-        exportButton.addMouseListener(exportListener);
+        exportButton.addMouseListener(exportListener);*/
 
         inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
             if((int) inventorySizeSpinner.getValue() < mainMenu.getInventoryTable().getRowCount()) {
                 boolean isDeletingItemstacks = false;
-                for (int rows = (int) inventorySizeSpinner.getValue(); rows < mainMenu.getInventoryTable().getRowCount(); rows++) {
-                    if (mainMenu.getInventoryTableModel().rowContainsItemstacks(rows)) {
-                       WarningPopUp wpu = new WarningPopUp("A row you are deleting contains an itemstack.", new WarningResult() {
-                            @Override
-                            public void onActivate() {
-                                updateInventorySize();
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
-                            }
-                        });
-                        isDeletingItemstacks = true;
-                        break;
+                if((int) inventorySizeSpinner.getValue() > 6) {
+                    inventorySizeSpinner.setValue(6);
+                }else if((int) inventorySizeSpinner.getValue() > 0) {
+                    for (int rows = (int) inventorySizeSpinner.getValue(); rows < mainMenu.getInventoryTable().getRowCount(); rows++) {
+                        if (mainMenu.getInventoryTableModel().rowContainsItemstacks(rows)) {
+                            WarningPopUp wpu = new WarningPopUp("A row you are deleting contains an itemstack.", new WarningResult() {
+                                @Override
+                                public void onActivate() {
+                                    updateInventorySize();
+                                }
+                                @Override
+                                public void onCancel() {inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());}
+                            });
+                            isDeletingItemstacks = true;
+                            break;
+                        }
                     }
-                }
-                if(!isDeletingItemstacks)
-                    updateInventorySize();
+                    if (!isDeletingItemstacks)
+                        updateInventorySize();
+                }else
+                    inventorySizeSpinner.setValue(1);
             }else
                 updateInventorySize();
 
@@ -294,7 +296,7 @@ public class EditorManager {
 
     public void updateInventorySize(){
         mainMenu.getInventoryTableModel().setInventorySize((int) inventorySizeSpinner.getValue());
+        mainMenu.getInventoryTable().setRowHeight(90);
         mainMenu.getInventoryTable().setModel(mainMenu.getInventoryTableModel());
-        mainMenu.getInventoryTable().setRowHeight(300 / mainMenu.getInventoryTableModel().getRowCount());
     }
 }
