@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Ethan on 4/3/2016.
  */
-public class ItemStack implements Serializable{
+public class ItemStack implements Serializable {
     private ImageIcon icon;
     private Material material;
     private String name="";

@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
+import com.techno_wizard.mcguicreator.codecreator.CodeGenerator;
 import com.techno_wizard.mcguicreator.gui.ChatColor;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
@@ -85,10 +86,11 @@ public class MCGUICreator {
             //Update the active itemstack
             ItemStack is = mainMenu.getInvManager().getActiveItemStack();
             StringBuilder code = new StringBuilder();
-            for (String s : CodeCreator.writecode(mainMenu)) {
+            /*for (String s : CodeCreator.writecode(mainMenu)) {
                 code.append(s + "\n");
-            }
-            new CodeExporter(code.toString());
+            }*/
+            String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInventoryTableModel());
+            new CodeExporter(output);
         });
     }
 

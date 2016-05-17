@@ -1,5 +1,6 @@
 package com.techno_wizard.mcguicreator.management;
 
+import javax.swing.text.BadLocationException;
 import java.awt.event.*;
 
 import static com.techno_wizard.mcguicreator.management.TextEditorManager.ColorEditor.*;
@@ -68,9 +69,10 @@ public class TextEditorManager {
      * Adds the ChatColor 'colorCode' to the selected editor
      * @param colorCode
      */
-    public void editSelectedEditor(String colorCode){
+    public void editSelectedEditor(String colorCode) {
         // check is nothing is selected
         if(selectedEditor != null) {
+
             switch (selectedEditor) {
                 case ITEMSTACK_LORE:
                     em.getItemStackLoreEditor().setText(em.getItemStackLoreEditor().getText() + colorCode);
