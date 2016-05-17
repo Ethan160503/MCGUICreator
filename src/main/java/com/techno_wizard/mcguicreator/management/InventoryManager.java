@@ -158,4 +158,10 @@ public class InventoryManager {
             return true;
         return false;
     }
+
+    public void transferData(InventoryTableModel itm){
+        this.getInventoryTableModel().setInventoryName(itm.getInventoryName());
+        this.getInventoryTableModel().setItemStacks(itm.getItemstacks());
+        mainMenu.getEditorManager().updateInventorySize(itm.getRowCount());
+    }
 }

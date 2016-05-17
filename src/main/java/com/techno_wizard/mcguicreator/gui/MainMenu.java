@@ -3,7 +3,6 @@ package com.techno_wizard.mcguicreator.gui;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.management.*;
-import com.techno_wizard.mcguicreator.help.TutorialMenu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -73,6 +72,7 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         setName("MC GUI Creator");
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
@@ -86,7 +86,7 @@ public class MainMenu extends JFrame {
                 inventoryNameEditor,eventGenerateType,inventorySizeSpinner,
                 enchantmentList,closeInvOnClickRButton);
 
-        editorManager.updateInventorySize();
+        editorManager.updateInventorySize(3);
 
         initButtons();
         // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
@@ -254,13 +254,6 @@ public class MainMenu extends JFrame {
         return editorManager;
     }
 
-    /**
-     * Use this to get the InventoryTableModelInstance.
-     * @return
-     */
-    public InventoryTableModel getInventoryTableModel(){
-        return inventoryTableModel;
-    }
     public JPanel getInventoryGUI(){return this.panel1;}
     public JTable getInventoryTable(){return this.inventoryTable;}
 }

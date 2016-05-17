@@ -84,4 +84,6 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
         }
         return false;
     }
+    public ItemStack[][] getItemstacks(){return this.itemStacks;}
+    public void setItemStacks(ItemStack[][] is){this.itemStacks = is;}
 }

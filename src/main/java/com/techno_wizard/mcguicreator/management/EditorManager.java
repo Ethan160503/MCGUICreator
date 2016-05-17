@@ -120,7 +120,7 @@ public class EditorManager {
         };
         exportButton.addMouseListener(exportListener);*/
 
-        inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());
+        inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
             if((int) inventorySizeSpinner.getValue() < mainMenu.getInventoryTable().getRowCount()) {
                 boolean isDeletingItemstacks = false;
@@ -128,25 +128,25 @@ public class EditorManager {
                     inventorySizeSpinner.setValue(6);
                 }else if((int) inventorySizeSpinner.getValue() > 0) {
                     for (int rows = (int) inventorySizeSpinner.getValue(); rows < mainMenu.getInventoryTable().getRowCount(); rows++) {
-                        if (mainMenu.getInventoryTableModel().rowContainsItemstacks(rows)) {
+                        if (mainMenu.getInvManager().getInventoryTableModel().rowContainsItemstacks(rows)) {
                             WarningPopUp wpu = new WarningPopUp("A row you are deleting contains an itemstack.", new WarningResult() {
                                 @Override
                                 public void onActivate() {
-                                    updateInventorySize();
+                                    updateInventorySize((int) inventorySizeSpinner.getValue());
                                 }
                                 @Override
-                                public void onCancel() {inventorySizeSpinner.setValue(mainMenu.getInventoryTableModel().getRowCount());}
+                                public void onCancel() {inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());}
                             });
                             isDeletingItemstacks = true;
                             break;
                         }
                     }
                     if (!isDeletingItemstacks)
-                        updateInventorySize();
+                        updateInventorySize((int) inventorySizeSpinner.getValue());
                 }else
                     inventorySizeSpinner.setValue(1);
             }else
-                updateInventorySize();
+                updateInventorySize((int) inventorySizeSpinner.getValue());
 
         });
 
@@ -294,9 +294,9 @@ public class EditorManager {
 
     public TextEditorManager getTextEditorManager(){return textEditorManager;}
 
-    public void updateInventorySize(){
-        mainMenu.getInventoryTableModel().setInventorySize((int) inventorySizeSpinner.getValue());
+    public void updateInventorySize(int size){
+        mainMenu.getInvManager().getInventoryTableModel().setInventorySize(size);
         mainMenu.getInventoryTable().setRowHeight(90);
-        mainMenu.getInventoryTable().setModel(mainMenu.getInventoryTableModel());
+        mainMenu.getInventoryTable().setModel(mainMenu.getInvManager().getInventoryTableModel());
     }
 }

@@ -3,6 +3,7 @@ package com.techno_wizard.mcguicreator;
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.codecreator.CodeGenerator;
 import com.techno_wizard.mcguicreator.gui.ChatColor;
+import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
@@ -13,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.*;
 
 
 /**
@@ -44,13 +46,16 @@ public class MCGUICreator {
 
         JMenu fileMenu = new JMenu("File");
         JMenuItem fileOpen = new JMenuItem("Open");
+        JMenuItem fileSave = new JMenuItem("Save");
         JMenu fileExport = new JMenu("Export code...");
         JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
         JMenuItem exportToPopup = new JMenuItem("Export to popup");
-        addExportActionListener(mainMenu,exportToClipboard,exportToPopup);
+        addActionListener(mainMenu,exportToClipboard,exportToPopup,fileSave,fileOpen);
+
 
         menuBar.add(fileMenu);
         fileMenu.add(fileOpen);
+        fileMenu.add(fileSave);
         fileMenu.add(fileExport);
         fileExport.add(exportToClipboard);
         fileExport.add(exportToPopup);
@@ -70,11 +75,12 @@ public class MCGUICreator {
         JMenuItem helpItem = new JMenuItem("Open Tutorial Window");
         helpItem.addActionListener(e ->new TutorialMenu());
         helpMenu.add(helpItem);
+        menuBar.add(helpMenu);
 
 
         return menuBar;
     }
-    private static void addExportActionListener(MainMenu mainMenu,JMenuItem exportToClipboard,JMenuItem exportToPopup){
+    private static void addActionListener(MainMenu mainMenu,JMenuItem exportToClipboard,JMenuItem exportToPopup,JMenuItem fileSave,JMenuItem fileOpen){
         exportToClipboard.addActionListener(e -> { ItemStack is = mainMenu.getInvManager().getActiveItemStack();
             StringBuilder code = new StringBuilder();
             for (String s : CodeCreator.writecode(mainMenu)) {
@@ -83,14 +89,70 @@ public class MCGUICreator {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(new StringSelection(code.toString()), null);});
         exportToPopup.addActionListener(e -> {
-            //Update the active itemstack
             ItemStack is = mainMenu.getInvManager().getActiveItemStack();
             StringBuilder code = new StringBuilder();
-            /*for (String s : CodeCreator.writecode(mainMenu)) {
-                code.append(s + "\n");
-            }*/
-            String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInventoryTableModel());
+            String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
             new CodeExporter(output);
+        });
+
+        fileSave.addActionListener(e -> {
+
+            //TODO: Do we want to use another file type?
+            String fileType = ".txt";
+
+            JFileChooser chooser = new JFileChooser();
+            mainMenu.add(chooser);
+
+            chooser.setSelectedFile(new File("Inventory"));
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Save to...");
+            chooser.setAcceptAllFileFilterUsed(false);
+
+            if (chooser.showOpenDialog(mainMenu) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File out = new File(chooser.getSelectedFile()+fileType);
+                    if(!out.exists())
+                        out.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(out);
+                    ObjectOutputStream ous = new ObjectOutputStream(fos);
+                    ous.writeObject(mainMenu.getInvManager().getInventoryTableModel());
+                    ous.close();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+                mainMenu.remove(chooser);
+            }else {
+                System.out.println("Save option not approved!");
+                mainMenu.remove(chooser);
+            }
+        });
+
+        fileOpen.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            mainMenu.add(chooser);
+
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Open...");
+            chooser.setAcceptAllFileFilterUsed(false);
+
+            if (chooser.showOpenDialog(mainMenu) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File open = chooser.getSelectedFile();
+                    if(open.exists()) {
+                        FileInputStream fis = new FileInputStream(open);
+                        ObjectInputStream ois = new ObjectInputStream(fis);
+                        InventoryTableModel itm = (InventoryTableModel) ois.readObject();
+                        mainMenu.getInvManager().transferData(itm);
+                        ois.close();
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+                mainMenu.remove(chooser);
+            }else {
+                System.out.println("Option not approved!");
+                mainMenu.remove(chooser);
+            }
         });
     }
 

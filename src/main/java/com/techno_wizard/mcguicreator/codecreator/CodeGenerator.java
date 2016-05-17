@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class CodeGenerator {
 
-    private CodeGenerator instance;
+    private static CodeGenerator instance;
     private MainMenu mainMenu;
     private JSONObject codeTemplates;
 
@@ -36,7 +36,7 @@ public class CodeGenerator {
     private Pattern openBracketPattern;
     private Pattern closeBracketPattern;
 
-
+    //instance needs to be static in order to use this
     public static CodeGenerator getInstance() {
         if (instance == null)
             instance = new CodeGenerator();
@@ -136,15 +136,15 @@ public class CodeGenerator {
 
             buffer.addLine((String) comments.get("init comment"));
             buffer.addLine(((String) extra.get("class constructor"))
-                    .replace("$count$",mainMenu.getInventoryTableModel().getRowCount()*9+"")
-                    .replace("$name$",mainMenu.getInventoryTableModel().getInventoryName())
+                    .replace("$count$",mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9+"")
+                    .replace("$name$",mainMenu.getInvManager().getInventoryTableModel().getInventoryName())
                     .replace("$inv$","inventoryInstance")
-                    .replace("$classname$",mainMenu.getInventoryTableModel().getInventoryName().replace(" ","")+"Inventory")
+                    .replace("$classname$",mainMenu.getInvManager().getInventoryTableModel().getInventoryName().replace(" ","")+"Inventory")
             );
 
             buffer.addLine((String) extra.get("init inv"));
-            for(int slot = 0; slot < mainMenu.getInventoryTableModel().getRowCount()*9;slot++){
-                if(mainMenu.getInventoryTableModel().getItemStackAt(slot%9,slot/9).getMaterial() != Material.AIR){
+            for(int slot = 0; slot < mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9;slot++){
+                if(mainMenu.getInvManager().getInventoryTableModel().getItemStackAt(slot%9,slot/9).getMaterial() != Material.AIR){
                     addItemstackToInv(buffer,slot);
                 }
             }
@@ -238,3 +238,4 @@ public class CodeGenerator {
             );
         }
     }
+}

@@ -1,9 +1,11 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
+import java.io.Serializable;
+
 /**
  * Created by Zombie_Striker on 4/11/2016.
  */
-public class Enchantment {
+public class Enchantment implements Serializable{
 
     int powerLavel;
     String enchantmentName;
