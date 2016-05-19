@@ -104,18 +104,28 @@ public class CodeGenerator {
 
 
                 int lineIndentMovement = openCount - closeCount;
-                String totalIndent = "";
-                if (lineIndentMovement < 0) {
-                    for(int i = 0; runningIndentCount - lineIndentMovement > i; i++) {
-                        totalIndent += INDENT;
-                    }
-                    sb.append(totalIndent + next + "\n");
-                } else if (lineIndentMovement >= 0) {
-                    for (int i = 0; runningIndentCount > i; i++) {
-                        totalIndent += INDENT;
-                    }
-                    sb.append(totalIndent + next + "\n");
+                String shownIndent = "";
+                // init the indent
+                for (int i = 0; i < runningIndentCount; i++) {
+                    shownIndent += INDENT;
                 }
+
+                // edit it for the current line
+                if (lineIndentMovement < 0) {
+                    // it's losing indents on this line
+                     if(runningIndentCount + lineIndentMovement <= 0) {
+                         // everything was cleared
+                         shownIndent = "";
+                     } else {
+                         // not everything was cleared
+                         /*
+                         Take the first index, then go to the last index (total char) and add the
+                         negative line indent of the line multiplied by 4
+                          */
+                         shownIndent = shownIndent.substring(0, (runningIndentCount * 4) + (lineIndentMovement * 4));
+                     }
+                }
+                sb.append(shownIndent + next + "\n");
                 runningIndentCount += lineIndentMovement;
                 if (runningIndentCount < 0)
                     runningIndentCount = 0;
@@ -236,13 +246,15 @@ public class CodeGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("Testing:");
+        /*System.out.println("Testing:");
         CodeBuffer buffer = CodeGenerator.getInstance().new CodeBuffer();
-        buffer.addLine("{");
+        buffer.addLine("{{");
 
         ItemStack stack = new ItemStack(Material.BED);
         getInstance().addItemstackToInv(stack, buffer, 1);
-        System.out.println(buffer.getFormattedOutput());
         buffer.addLine("}");
+        buffer.addLine("}}");
+        System.out.println(buffer.getFormattedOutput());*/
+
     }
 }
