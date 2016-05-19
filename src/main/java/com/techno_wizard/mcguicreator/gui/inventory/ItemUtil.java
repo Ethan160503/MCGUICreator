@@ -1,6 +1,8 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 
+import sun.awt.IconInfo;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -204,6 +206,29 @@ public class ItemUtil {
      */
     public static ItemUtil getUtil(){
         return util;
+    }
+
+    public static ImageIcon tintImage(ImageIcon icon, Color tint){
+        //Turn the icon into a BufferdImage
+        BufferedImage bi = new BufferedImage(icon.getIconWidth(),icon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
+        Graphics gr = bi.createGraphics();
+        icon.paintIcon(null, gr, 0,0);
+        gr.dispose();
+
+        BufferedImage tintBi = new BufferedImage(bi.getWidth(),bi.getHeight(),BufferedImage.TYPE_INT_ARGB);
+        for(int y = 0; y < bi.getHeight();y++){
+            for(int x = 0; x <  bi.getWidth();x++){
+                Color oldColor = new Color(bi.getRGB(x,y));
+                if(oldColor.getRed()==0&&oldColor.getGreen()==0&&oldColor.getBlue()==0)
+                    continue;
+                double r = ((double)oldColor.getRed()/255)*tint.getRed();
+                double g = ((double)oldColor.getGreen()/255)*tint.getGreen();
+                double b = ((double)oldColor.getBlue()/255)*tint.getBlue();
+                Color tintColor = new Color((int)(r),(int)(g),(int)(b));
+                tintBi.setRGB(x,y,tintColor.getRGB());
+            }
+        }
+        return new ImageIcon(tintBi);
     }
 
 }
