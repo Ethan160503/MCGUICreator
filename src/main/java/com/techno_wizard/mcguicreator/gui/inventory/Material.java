@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -170,9 +171,6 @@ public enum Material {
     SNOW_LAYER("/blockimg/snow_layer.png", "Snow Layer"),
     SPONGE("/blockimg/sponge.png", "Sponge"),
     SPRUCE_WOOD_STEPS("/blockimg/spruce_wood_steps.png", "Spruce Wood Stairs"),//may be something diffeent
-    STAINED_CLAY("/blockimg/stained_clay.png", "Stained Clay"),
-    STAINED_GLASS("/blockimg/stained_glass.png", "Stained Glass"),
-    STAINED_GLASS_PANE("/blockimg/stained_glass_pane.png", "Stained Glass Pane"),
     STICKY_PISTON("/blockimg/sticky_piston.png", "Sticky Piston"),
     STONE_BRICK("/blockimg/stone_brick.png", "Stone Brick"),//may be called something different
     STONE_BRICK_STEPS("/blockimg/stone_brick_steps.png", "Stone Brick Stairs"),
@@ -186,8 +184,92 @@ public enum Material {
     WOOD_FENCE("/blockimg/wood_fence.png", "Wood Fence"),
     WOOD_SLAB("/blockimg/wood_slab.png", "Wood Slab"),
     WOOD_STEPS("/blockimg/wood_steps.png", "Wood Stairs"),
-    WOOL_CARPET_WHITE("/blockimg/wool_carpet_white.png", "Wool Carpet White"),
-    WOOL_WHITE("/blockimg/wool_white.png", "Wool White");
+
+    STAINED_CLAY("/blockimg/stained_clay.png", "Stained Clay"),
+    STAINED_CLAY_WHITE("/blockimg/stained_clay.png", "Stained Clay White","WOOL",0),
+    STAINED_CLAY_ORANGE("/blockimg/stained_clay.png", "Stained Clay Orange","WOOL",1,new Color(224,140,84)),
+    STAINED_CLAY_MAGENTA("/blockimg/stained_clay.png", "Stained Clay Magenta","WOOL",2,new Color(140,75,200)),
+    STAINED_CLAY_LIGHT_BLUE("/blockimg/stained_clay.png", "Stained Clay Light Blue","WOOL",3,new Color(100,130,200)),
+    STAINED_CLAY_YELLOW("/blockimg/stained_clay.png", "Stained Clay Yellow","WOOL",4,new Color(180,170,41)),
+    STAINED_CLAY_LIGHT_GREEN("/blockimg/stained_clay.png", "Stained Clay Lime","WOOL",5,new Color(66,180,58)),
+    STAINED_CLAY_PINK("/blockimg/stained_clay.png", "Stained Clay Pink","WOOL",6,new Color(216,154,170)),
+    STAINED_CLAY_GRAY("/blockimg/stained_clay.png", "Stained Clay Light Gray","WOOL",7,new Color(70,70,70)),
+    STAINED_CLAY_LIGHT_GRAY("/blockimg/stained_clay.png", "Stained Clay Gray","WOOL",8,new Color(170,180,180)),
+    STAINED_CLAY_CYAN("/blockimg/stained_clay.png", "Stained Clay Cyan","WOOL",9,new Color(44,100,130)),
+    STAINED_CLAY_LIGHT_PURPLE("/blockimg/stained_clay.png", "Stained Clay Light Purple","WOOL",10,new Color(200,100,200)),
+    STAINED_CLAY_BLUE("/blockimg/stained_clay.png", "Stained Clay Blue","WOOL",11,new Color(45,55,141)),
+    STAINED_CLAY_BROWN("/blockimg/stained_clay.png", "Stained Clay Brown","WOOL",12,new Color(80,50,30)),
+    STAINED_CLAY_GREEN("/blockimg/stained_clay.png", "Stained Clay Green","WOOL",13,new Color(0,200,0)),
+    STAINED_CLAY_RED("/blockimg/stained_clay.png", "Stained Clay Red","WOOL",14,new Color(156,50,50)),
+    STAINED_CLAY_BLACK("/blockimg/stained_clay.png", "Stained Clay Black","WOOL",15,new Color(20,20,20)),
+
+    STAINED_GLASS_PANE_WHITE("/blockimg/stained_glass_pane.png", "Stained Glass Pane White","WOOL",0),
+    STAINED_GLASS_PANE_ORANGE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Orange","WOOL",1,new Color(224,140,84)),
+    STAINED_GLASS_PANE_MAGENTA("/blockimg/stained_glass_pane.png", "Stained Glass Pane Magenta","WOOL",2,new Color(140,75,200)),
+    STAINED_GLASS_PANE_LIGHT_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Blue","WOOL",3,new Color(100,130,200)),
+    STAINED_GLASS_PANE_YELLOW("/blockimg/stained_glass_pane.png", "Stained Glass Pane Yellow","WOOL",4,new Color(180,170,41)),
+    STAINED_GLASS_PANE_LIGHT_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Lime","WOOL",5,new Color(66,180,58)),
+    STAINED_GLASS_PANE_PINK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Pink","WOOL",6,new Color(216,154,170)),
+    STAINED_GLASS_PANE_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Gray","WOOL",7,new Color(70,70,70)),
+    STAINED_GLASS_PANE_LIGHT_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Gray","WOOL",8,new Color(170,180,180)),
+    STAINED_GLASS_PANE_CYAN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Cyan","WOOL",9,new Color(44,100,130)),
+    STAINED_GLASS_PANE_LIGHT_PURPLE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Purple","WOOL",10,new Color(200,100,200)),
+    STAINED_GLASS_PANE_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Blue","WOOL",11,new Color(45,55,141)),
+    STAINED_GLASS_PANE_BROWN("/blockimg/stained_glass_pane.png","Stained Glass Pane Brown","WOOL",12,new Color(80,50,30)),
+    STAINED_GLASS_PANE_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Green","WOOL",13,new Color(0,200,0)),
+    STAINED_GLASS_PANE_RED("/blockimg/stained_glass_pane.png", "Stained Glass Pane Red","WOOL",14,new Color(156,50,50)),
+    STAINED_GLASS_PANE_BLACK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Black","WOOL",15,new Color(20,20,20)),
+
+    STAINED_GLASS_WHITE("/blockimg/stained_glass.png", "Stained Glass White","WOOL",0),
+    STAINED_GLASS_ORANGE("/blockimg/stained_glass.png", "Stained Glass Orange","WOOL",1,new Color(224,140,84)),
+    STAINED_GLASS_MAGENTA("/blockimg/stained_glass.png", "Stained Glass Magenta","WOOL",2,new Color(140,75,200)),
+    STAINED_GLASS_LIGHT_BLUE("/blockimg/stained_glass.png", "Stained Glass Light Blue","WOOL",3,new Color(100,130,200)),
+    STAINED_GLASS_YELLOW("/blockimg/stained_glass.png", "Stained Glass Yellow","WOOL",4,new Color(180,170,41)),
+    STAINED_GLASS_LIGHT_GREEN("/blockimg/stained_glass.png", "Stained Glass  Lime","WOOL",5,new Color(66,180,58)),
+    STAINED_GLASS_PINK("/blockimg/stained_glass.png", "Stained Glass Pink","WOOL",6,new Color(216,154,170)),
+    STAINED_GLASS_GRAY("/blockimg/stained_glass.png", "Stained Glass Light Gray","WOOL",7,new Color(70,70,70)),
+    STAINED_GLASS_LIGHT_GRAY("/blockimg/stained_glass.png", "Stained Glass  Gray","WOOL",8,new Color(170,180,180)),
+    STAINED_GLASS_CYAN("/blockimg/stained_glass.png", "Stained Glass Cyan","WOOL",9,new Color(44,100,130)),
+    STAINED_GLASS_LIGHT_PURPLE("/blockimg/stained_glass.png", "Stained Glass  Light Purple","WOOL",10,new Color(200,100,200)),
+    STAINED_GLASS_BLUE("/blockimg/stained_glass.png", "Stained Glass Blue","WOOL",11,new Color(45,55,141)),
+    STAINED_GLASS_BROWN("/blockimg/stained_glass.png","Stained Glass Brown","WOOL",12,new Color(80,50,30)),
+    STAINED_GLASS_GREEN("/blockimg/stained_glass.png", "Stained Glass Green","WOOL",13,new Color(0,200,0)),
+    STAINED_GLASS_RED("/blockimg/stained_glass.png", "Stained Glass Red","WOOL",14,new Color(156,50,50)),
+    STAINED_GLASS_BLACK("/blockimg/stained_glass.png", "Stained Glass Black","WOOL",15,new Color(20,20,20)),
+
+    WOOL_CARPET_WHITE("/blockimg/wool_carpet.png", "Wool Carpet White","WOOL",0),
+    WOOL_CARPET_ORANGE("/blockimg/wool_carpet.png", "Wool Carpet Orange","WOOL",1,new Color(224,140,84)),
+    WOOL_CARPET_MAGENTA("/blockimg/wool_carpet.png", "Wool Carpet Magenta","WOOL",2,new Color(140,75,200)),
+    WOOL_CARPET_LIGHT_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Light Blue","WOOL",3,new Color(100,130,200)),
+    WOOL_CARPET_YELLOW("/blockimg/wool_carpet.png", "Wool Carpet Yellow","WOOL",4,new Color(180,170,41)),
+    WOOL_CARPET_LIGHT_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Lime","WOOL",5,new Color(66,180,58)),
+    WOOL_CARPET_PINK("/blockimg/wool_carpet.png", "Wool Carpet Pink","WOOL",6,new Color(216,154,170)),
+    WOOL_CARPET_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Light Gray","WOOL",7,new Color(70,70,70)),
+    WOOL_CARPET_LIGHT_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Gray","WOOL",8,new Color(170,180,180)),
+    WOOL_CARPET_CYAN("/blockimg/wool_carpet.png", "Wool Carpet Cyan","WOOL",9,new Color(44,100,130)),
+    WOOL_CARPET_LIGHT_PURPLE("/blockimg/wool_carpet.png", "Wool Carpet Light Purple","WOOL",10,new Color(200,100,200)),
+    WOOL_CARPET_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Blue","WOOL",11,new Color(45,55,141)),
+    WOOL_CARPET_BROWN("/blockimg/wool_carpet.png", "Wool Carpet Brown","WOOL",12,new Color(80,50,30)),
+    WOOL_CARPET_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Green","WOOL",13,new Color(0,200,0)),
+    WOOL_CARPET_RED("/blockimg/wool_carpet.png", "Wool Carpet Red","WOOL",14,new Color(156,50,50)),
+    WOOL_CARPET_BLACK("/blockimg/wool_carpet.png", "Wool Carpet Black","WOOL",15,new Color(20,20,20)),
+
+    WOOL_WHITE("/blockimg/wool.png", "Wool White","WOOL",0),
+    WOOL_ORANGE("/blockimg/wool.png", "Wool Orange","WOOL",1,new Color(224,140,84)),
+    WOOL_MAGENTA("/blockimg/wool.png", "Wool Magenta","WOOL",2,new Color(140,75,200)),
+    WOOL_LIGHT_BLUE("/blockimg/wool.png", "Wool Light Blue","WOOL",3,new Color(100,130,200)),
+    WOOL_YELLOW("/blockimg/wool.png", "Wool Yellow","WOOL",4,new Color(180,170,41)),
+    WOOL_LIGHT_GREEN("/blockimg/wool.png", "Wool Lime","WOOL",5,new Color(66,180,58)),
+    WOOL_PINK("/blockimg/wool.png", "Wool Pink","WOOL",6,new Color(216,154,170)),
+    WOOL_GRAY("/blockimg/wool.png", "Wool Light Gray","WOOL",7,new Color(70,70,70)),
+    WOOL_LIGHT_GRAY("/blockimg/wool.png", "Wool Gray","WOOL",8,new Color(170,180,180)),
+    WOOL_CYAN("/blockimg/wool.png", "Wool Cyan","WOOL",9,new Color(44,100,130)),
+    WOOL_LIGHT_PURPLE("/blockimg/wool.png", "Wool Light Purple","WOOL",10,new Color(200,100,200)),
+    WOOL_BLUE("/blockimg/wool.png", "Wool Blue","WOOL",11,new Color(45,55,141)),
+    WOOL_BROWN("/blockimg/wool.png", "Wool Brown","WOOL",12,new Color(80,50,30)),
+    WOOL_GREEN("/blockimg/wool.png", "Wool Green","WOOL",13,new Color(0,200,0)),
+    WOOL_RED("/blockimg/wool.png", "Wool Red","WOOL",14,new Color(156,50,50)),
+    WOOL_BLACK("/blockimg/wool.png", "Wool Black","WOOL",15,new Color(20,20,20));
 
     private ImageIcon image;
     private String name;
@@ -218,6 +300,22 @@ public enum Material {
         if (!name.equals("Air")) {
             try {
                 this.image = new ImageIcon(getClass().getResource(imagePath));
+            }catch(Exception e){
+                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL "+name);
+                e.printStackTrace();
+            }
+        } else {
+            image = new ImageIcon(new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB));
+        }
+    }
+    Material(String imagePath, String name, String materialName, int durability, Color tint) {
+        this.name = name;
+        this.materialName = materialName;
+        this.durability = durability;
+        //System.out.println(toString());
+        if (!name.equals("Air")) {
+            try {
+                this.image = ItemUtil.tintImage(new ImageIcon(getClass().getResource(imagePath)), tint);
             }catch(Exception e){
                 System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL "+name);
                 e.printStackTrace();
