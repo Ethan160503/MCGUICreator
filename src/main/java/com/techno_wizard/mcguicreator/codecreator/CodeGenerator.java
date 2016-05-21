@@ -35,6 +35,7 @@ public class CodeGenerator {
 
     private Pattern openBracketPattern;
     private Pattern closeBracketPattern;
+    private Pattern colorCodePattern;
 
     //instance needs to be static in order to use this
     public static CodeGenerator getInstance() {
@@ -65,6 +66,7 @@ public class CodeGenerator {
 
         openBracketPattern = Pattern.compile("[{]");
         closeBracketPattern = Pattern.compile("[}]");
+        colorCodePattern = Pattern.compile("[§.]");
     }
 
     /**
@@ -75,7 +77,11 @@ public class CodeGenerator {
         private final static String INDENT = "    ";
 
         public void addLine(String line) {
-            code.add(line);
+            String[] sections = line.split("\\n");
+            for (String section :
+                    sections) {
+                code.add(section);
+            }
         }
 
         public void addEmptyLine() {
@@ -140,24 +146,94 @@ public class CodeGenerator {
     public String writeRepresentingJava(InventoryTableModel invModel){
         CodeBuffer buffer = new CodeBuffer();
 
+        // print the initial notes
         buffer.addLine((String) commentsStringMap.get("init comment"));
+        buffer.addEmptyLine();
+        buffer.addEmptyLine();
+
+
+
         buffer.addLine(((String) extraStringMap.get("class constructor"))
-                .replace("$count$",mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9+"")
-                .replace("$name$",mainMenu.getInvManager().getInventoryTableModel().getInventoryName())
+                .replace("$count$", invModel.getRowCount()*9+"")
+                .replace("$name$", invModel.getInventoryName())
                 .replace("$inv$","inventoryInstance")
-                .replace("$classname$",mainMenu.getInvManager().getInventoryTableModel().getInventoryName().replace(" ","")+"Inventory")
+                .replace("$classname$", invModel.getInventoryName().replace(" ","")+"Inventory")
         );
 
         buffer.addLine((String) extraStringMap.get("init inv"));
-        for(int slot = 0; slot < mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9;slot++){
-            ItemStack toWrite = mainMenu.getInvManager().getInventoryTableModel().getItemStackAt(slot%9,slot/9);
+        // set itemstack var
+        buffer.addLine((String) itemStackStringMap.get("create stack"));
+        // set lore buffer
+        buffer.addLine((String) loreStringMap.get("create lore buffer"));
+        // set enchant buffer
+        buffer.addLine((String) enchantmentStringMap.get("create ench buffer"));
+        for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
+            ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
             if(toWrite.getMaterial() != Material.AIR){
                 addItemstackToInv(toWrite, buffer,slot);
+                buffer.addEmptyLine();
             }
         }
 
         return buffer.getFormattedOutput();
     }
+
+    private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot) {
+
+        // does the item require durability to create?
+        String shouldHaveData = itemStack.getMaterial().getDurability() == 0 ? "create no data" : "create with data";
+        buffer.addLine(replaceFields((String) itemStackStringMap.get(shouldHaveData),
+                "material:" + itemStack.getMaterial().getMaterialEnumName(),
+                "count:" + itemStack.getAmount(),
+                "data:" + itemStack.getMaterial().getDurability(),
+                "stack:" + "itemStackStringMap" + slot));
+
+        /*buffer.addLine(((String) itemStackStringMap.get(shouldHaveData))
+                .replace("$material$", itemStack.getMaterial().getMaterialEnumName()
+                .replace("$count$", itemStack.getAmount() + "")
+                .replace("$data$", itemStack.getMaterial().getDurability() + "")
+                .replace("$stack$", "itemStackStringMap" + slot)
+        ));*/
+
+        // set lore buffer
+        buffer.addLine(((String) loreStringMap.get("create lore buffer"))
+                .replace("$id$", slot + "")
+        );
+
+        // set lore lines
+        for (String lore_line : itemStack.getLoreAsList())
+            buffer.addLine(((String) loreStringMap.get("add item to lore buffer"))
+                    .replace("$id$", slot + "")
+                    .replace("$lore_line$", lore_line)
+            );
+
+        // create enchantment buffer
+        buffer.addLine(((String) enchantmentStringMap.get("create ench buffer"))
+                .replace("$id$", slot + "")
+        );
+
+        // add enchantments
+        for (Enchantment ench : itemStack.getEnchantments())
+            buffer.addLine(((String) enchantmentStringMap.get("add item to ench buffer"))
+                    .replace("$id$", slot + "")
+                    .replace("$ench$", ench.getBukkitName())
+                    .replace("$power$", ench.getPowerLavel() + "")
+            );
+
+        // call metadata formatter
+        buffer.addLine(((String) itemStackStringMap.get("call formatter"))
+                .replace("$stack$", "itemStackStringMap" + slot)
+                .replace("$name$", itemStack.getName())
+                .replace("$loreBuffer$", "loreBuffer" + slot)
+                .replace("$enchantments$", "enchBuffer" + slot)
+
+        );
+
+        // clear buffers
+        buffer.addLine((String) loreStringMap.get("clear lore buffer"));
+        buffer.addLine((String) enchantmentStringMap.get("clear"));
+    }
+
 
     /**
      * Gets java data members' constructors. The following are supported<br>
@@ -209,52 +285,36 @@ public class CodeGenerator {
     }
 
 
-    private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot) {
-
-        String shouldHaveData = itemStack.getMaterial().getDurability() == 0 ? "create no data" : "create with data";
-        buffer.addLine(((String) itemStackStringMap.get(shouldHaveData))
-                .replace("$material$", itemStack.getMaterial().getMaterialEnumName())
-                .replace("$count$", itemStack.getAmount() + "")
-                .replace("$data$", itemStack.getMaterial().getDurability() + "")
-                .replace("$stack$", "itemStackStringMap" + slot)
-        );
-
-        buffer.addLine(((String) loreStringMap.get("create lore buffer"))
-                .replace("$id$", slot + "")
-        );
-        for (String lore_line : itemStack.getLoreAsList())
-            buffer.addLine(((String) loreStringMap.get("add item to lore buffer"))
-                    .replace("$id$", slot + "")
-                    .replace("$lore_line$", lore_line)
-            );
-        buffer.addLine(((String) enchantmentStringMap.get("create ench buffer"))
-                .replace("$id$", slot + "")
-        );
-        for (Enchantment ench : itemStack.getEnchantments())
-            buffer.addLine(((String) enchantmentStringMap.get("add item to ench buffer"))
-                    .replace("$id$", slot + "")
-                    .replace("$ench$", ench.getBukkitName())
-                    .replace("$power$", ench.getPowerLavel() + "")
-            );
-        buffer.addLine(((String) itemStackStringMap.get("call formatter"))
-                .replace("$stack$", "itemStackStringMap" + slot)
-                .replace("$name$", itemStack.getName())
-                .replace("$loreBuffer$", "loreBuffer" + slot)
-                .replace("$enchantments$", "enchBuffer" + slot)
-
-        );
+    /**
+     * Replaces the given fields in a template with the following syntax for field replacement:
+     *<p>"fieldToReplace:toReplaceWith"</p>
+     * @param template The string template
+     * @param args The list of fields to replace with the former syntax
+     * @return The final output
+     */
+    private String replaceFields(String template, String... args) {
+        for (String arg :
+                args) {
+            String[] split = arg.split(":");
+            assert split.length == 2 : "Warning: Invalid replace syntax";
+            template.replace("$" + split[0] + "$", split[1]);
+        }
+        return template;
     }
 
     public static void main(String[] args) {
-        /*System.out.println("Testing:");
-        CodeBuffer buffer = CodeGenerator.getInstance().new CodeBuffer();
-        buffer.addLine("{{");
+        InventoryTableModel model = new InventoryTableModel();
 
-        ItemStack stack = new ItemStack(Material.BED);
-        getInstance().addItemstackToInv(stack, buffer, 1);
-        buffer.addLine("}");
-        buffer.addLine("}}");
-        System.out.println(buffer.getFormattedOutput());*/
+        ItemStack stack = new ItemStack(Material.DYE_GREEN);
+        ItemStack another = new ItemStack(Material.APPLE);
+        another.setLore("Such lore. wow");
+        another.setName("uuhh");
 
+        stack.setLore("This is lore\nSuch lore meta");
+        System.out.println("LOADING");
+
+        model.setValueAt(stack, 0, 0);
+        model.setValueAt(another, 0, 1);
+        System.out.println(getInstance().writeRepresentingJava(model));
     }
 }

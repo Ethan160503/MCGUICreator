@@ -25,6 +25,10 @@ Buttons
 Code
     Not even worrying about this yet.
 
+Warnings before export
+    If an item has no name
+    If 2 items have the same name
+
 Before Release
     Add popups when elements are first selected to explain how to use them. For example, when text is formatted, they cannot
         be typed in because of API restrictions. When the checkbox is checked for the first time, this should be
