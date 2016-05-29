@@ -3,6 +3,7 @@ package com.techno_wizard.mcguicreator.codecreator;
 import com.techno_wizard.mcguicreator.MCGUICreator;
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.Material;
@@ -78,8 +79,7 @@ public class CodeGenerator {
 
         public void addLine(String line) {
             String[] sections = line.split("\\n");
-            for (String section :
-                    sections) {
+            for (String section :sections) {
                 code.add(section);
             }
         }
@@ -146,6 +146,7 @@ public class CodeGenerator {
     public String writeRepresentingJava(InventoryTableModel invModel){
         CodeBuffer buffer = new CodeBuffer();
 
+        buffer.addLine(((String)extraStringMap.get("imports")));
         // print the initial notes
         buffer.addLine((String) commentsStringMap.get("init comment"));
         buffer.addEmptyLine();
@@ -157,7 +158,8 @@ public class CodeGenerator {
                 .replace("$count$", invModel.getRowCount()*9+"")
                 .replace("$name$", invModel.getInventoryName())
                 .replace("$inv$","inventoryInstance")
-                .replace("$classname$", invModel.getInventoryName().replace(" ","")+"Inventory")
+                .replace("$size$",(mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9)+"")
+                .replace("$classname$",mainMenu.getEditorManager().getInventoryNameEditor().getText().replace(" ","")+"Inventory")
         );
 
         buffer.addLine((String) extraStringMap.get("init inv"));
@@ -167,6 +169,7 @@ public class CodeGenerator {
         buffer.addLine((String) loreStringMap.get("create lore buffer"));
         // set enchant buffer
         buffer.addLine((String) enchantmentStringMap.get("create ench buffer"));
+
         for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
             ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
             if(toWrite.getMaterial() != Material.AIR){
@@ -174,8 +177,30 @@ public class CodeGenerator {
                 buffer.addEmptyLine();
             }
         }
+        buffer.addLine("}");//Closing bracket for the intiInv method
+
+        buffer.addLine(((String)extraStringMap.get("listener top"))
+                .replace("$inv$","inventoryInstance")
+        );
+        buffer.addLine("switch(e.getSlot()){");
+        for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
+            ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
+            if(toWrite.getMaterial() != Material.AIR){
+                addItemstackToListener(toWrite, buffer,slot);
+                buffer.addEmptyLine();
+            }
+        }
 
         return buffer.getFormattedOutput();
+    }
+
+
+    private void addItemstackToListener(ItemStack itemstack, CodeBuffer codeBuffer, int slot) {
+        if (itemstack.getAutoGenerateType() != AutoGenerateType.EMPTY) {
+            codeBuffer.addLine("case " + slot + ":");
+            codeBuffer.addLine(itemstack.getAutoGenerateType().getCodeAsString());
+            codeBuffer.addLine("break;");
+        }
     }
 
     private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot) {
@@ -232,6 +257,12 @@ public class CodeGenerator {
         // clear buffers
         buffer.addLine((String) loreStringMap.get("clear lore buffer"));
         buffer.addLine((String) enchantmentStringMap.get("clear"));
+
+        buffer.addLine(((String) inventoryStringMap.get("add stack to slot"))
+                .replace("$stack$", "itemStackStringMap" + slot)
+                .replace("$slot$", slot+"")
+                .replace("$inv$", "inventoryInstance" )
+        );
     }
 
 

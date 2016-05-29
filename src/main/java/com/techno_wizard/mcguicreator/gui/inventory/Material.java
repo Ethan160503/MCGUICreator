@@ -12,61 +12,71 @@ public enum Material {
     AIR("Null", "Air"),
     //ACACIA_BOAT("/itemimg/acacia_boat.png", "Acaial Boat"),
     ACACIA_STEPS("/blockimg/acacia_steps.png", "Acacia Steps", "ACACIA_STEPS", 0),
+    ANVIL("/blockimg/anvil.png", "Anvil"),
     APPLE("/itemimg/apple.png", "Apple"),
     APPLE_GOLDEN("/itemimg/apple_golden.png", "Golden Apple"),
     ARROW("/itemimg/arrow.png", "Arrow"),
     //    BANNER_BASE("Null","Banner "),
 //    BANNER_OVERLAY("Null","Air"),
     BARRIER("/itemimg/barrier.png", "Barrier"),
+    BEACON("/blockimg/beacon.png", "Beacon"),
     BED("/itemimg/bed.png", "Bed"),
+    BEDROCK("/blockimg/bedrock.png", "Bedrock"),
     BEEF_COOKED("/itemimg/beef_cooked.png", "Cooked Beef"),
     BEEF_RAW("/itemimg/beef_raw.png", "Raw Beef"),
     BEETROOT("/itemimg/beetroot.png", "BeetRoot"),
     BEETROOT_SEEDS("/itemimg/beetroot_seeds.png", "Beetroot Seeds"),
     BEETROOT_SOUP("/itemimg/beetroot_soup.png", "Beetroot soup"),
     BIRCH_BOAT("/itemimg/birch_boat.png", "Birch Boat"),
+    BIRCH_WOOD_STEPS("/blockimg/birch_wood_steps.png", "Birch Stairs"),
     BLAZE_POWDER("/itemimg/blaze_powder.png", "Blaze Powder"),
     BLAZE_ROD("/itemimg/blaze_rod.png", "Blaze Rod"),
     BONE("/itemimg/bone.png", "Bone"),
     BOOK_ENCHANTED("/itemimg/book_enchanted.png", "Enchanted Book"),
     BOOK("/itemimg/book_normal.png", "Book"),
+    BOOKSHELF("/blockimg/bookshelf.png", "Bookshelf"),
     BOW("/itemimg/bow.png", "Bow"),
     BOWL("/itemimg/bowl.png", "Empty Bowl"),
     BREAD("/itemimg/bread.png", "Bread"),
     BREWING_STAND("/itemimg/brewing_stand.png", "Brewing Stand"),
     BRICK("/itemimg/brick.png", "Brick"),
+    BRICK_BLOCK("/blockimg/brick_block.png", "Bricks"),//may be called BRICKS
+    BRICK_STEPS("/blockimg/brick_steps.png", "Brick stairs"),
     BUCKET("/itemimg/bucket_empty.png", "Empty Bucket"),
     BUCKET_MILK("/itemimg/bucket_milk.png", "Milk Bucket"),
     BUCKET_WATER("/itemimg/bucket_water.png", "Water Bucket"),
     BUCKET_LAVA("/itemimg/bucket_lava.png", "Lava Bucket"),
-    CAKE("/itemimg/bow.png", "Bow"),
-    CARROT_GOLDEN("/itemimg/bow.png", "Bow"),
-    CARROT_ON_STICK("/itemimg/bow.png", "Bow"),
-    CAULDRON("/itemimg/bow.png", "Bow"),
-    CHAINMAIL_BOOTS("/itemimg/bow.png", "Bow"),
-    CHAINMAIL_CHESTPLATE("/itemimg/bow.png", "Bow"),
-    CHAINMAIL_HELMET("/itemimg/bow.png", "Bow"),
-    CHAINMAIL_LEGGINGS("/itemimg/bow.png", "Bow"),
-    CHARCOAL("/itemimg/bow.png", "Bow"),
-    CHICKEN_COOKED("/itemimg/bow.png", "Bow"),
-    CHICKEN_RAW("/itemimg/bow.png", "Bow"),
-    CHORUS_FRUIT("/itemimg/bow.png", "Bow"),
-    CHORUS_FRUIT_POPPED("/itemimg/bow.png", "Bow"),
-    CLAY_BALL("/itemimg/bow.png", "Bow"),
-    CLOCK("/itemimg/bow.png", "Bow"),
-    COAL("/itemimg/bow.png", "Bow"),
-    POISONOUS_POTATO("/itemimg/potato_poisonous.png", "Poisonous Potato"),
-    POTATO("/itemimg/potato.png", "Potato"),
-    STONE_STONE("/blockimg/stone.png", "Stone", "STONE", 0),
-    STONE_GRANITE("/blockimg/stone.png", "Granite", "STONE", 1),
-    STONE_GRANITE_SMOOTH("/blockimg/stone.png", "Smooth Granite", "STONE", 2),
-    STONE_DIORITE("/blockimg/stone.png", "Stone", "Diorite", 3),
-    STONE_DIORITE_SMOOTH("/blockimg/stone.png", "Smooth Diorite", "STONE", 4),
-    STONE_ANDERSITE("/blockimg/stone.png", "Stone", "Anderstite", 5),
-    STONE_ANDERSITE_SMOOTH("/blockimg/stone.png", "Smooth Andersite", "STONE", 6),
-    WOOD_SWORD("/itemimg/wood_sword.png", "Wood sword"),
-
-    //Dyes
+    CACTUS("/blockimg/cactus.png", "Cactus"),
+    CAKE("/itemimg/cake.png", "Cake"),
+    CARROT_GOLDEN("/itemimg/carrot_golden.png", "Golden Carrot"),
+    CARROT_ON_STICK("/itemimg/carrot_on_a_stick.png", "Carrot On A Stick"),
+    CAULDRON("/itemimg/cauldron.png", "Cauldron"),
+    CHAINMAIL_BOOTS("/itemimg/chainmail_boots.png", "Chainmail Boots"),
+    CHAINMAIL_CHESTPLATE("/itemimg/chainmail_chestplate.png", "ChainMain ChestPlate"),
+    CHAINMAIL_HELMET("/itemimg/chainmail_helmet.png", "Chainmail Helmet"),
+    CHAINMAIL_LEGGINGS("/itemimg/chainmail_leggings.png", "Chainmail Leggings"),
+    CHARCOAL("/itemimg/charcoal.png", "Charcoal"),
+    CHEST("/blockimg/chest.png", "Chest"),
+    CHICKEN_COOKED("/itemimg/chicken_cooked.png", "Cooked Chicken"),
+    CHICKEN_RAW("/itemimg/chicken_raw.png", "Raw Chicken"),
+    CHORUS_FRUIT("/itemimg/chorus_fruit.png", "Chorus Fruit"),
+    CHORUS_FRUIT_POPPED("/itemimg/chorus_fruit_popped.png", "Popped Chorus Fruit"),
+    CLAY_BALL("/itemimg/clay_ball.png", "clay_ball"),
+    CLAY_BLOCK("/blockimg/clay_block.png", "Clay Block"),//may be called CLAY
+    CLOCK("/itemimg/clock.png", "Clock"),
+    COAL("/itemimg/coal.png", "Coal"),
+    COAL_BLOCK("/blockimg/coal_block.png", "Coal Block"),
+    COBBLESTONE_FENCE("/blockimg/cobble_stone_fence.png", "Cobblestone fence"),//may be called something different
+    COBBLESTONE("/blockimg/cobblestone.png", "Cobblestone"),
+    CRAFTING_TABLE("/blockimg/crafting_table.png", "Crafting Table"),//I could not find this in the Material Enum for bukkit
+    DARK_OAK_STEPS("/blockimg/dark_oak_steps.png", "Dark Oak Stairs"),
+    DAYLIGHT_DETECTOR("/blockimg/daylight_detector.png", "Daylight Detector"),//may be called something different
+    DIAMOND_BLOCK("/blockimg/diamond_block.png", "Diamond Block"),
+    DIAMOND_ORE("/blockimg/diamond_ore.png", "Diamond Ore"),
+    DIRT("/blockimg/dirt.png", "Dirt"),
+    DISPENCER("/blockimg/dispencer.png", "Dispencer"),
+    DRAGON_EGG("/blockimg/dragon_egg.png", "Dragon Egg"),
+    DROPPER("/blockimg/dropper.png", "Dropper"),
     DYE_WHITE("/itemimg/dye_powder_white.png", "White Dye", "INK_SACK", 0),
     DYE_ORANGE("/itemimg/dye_powder_orange.png", "Orange Dye", "INK_SACK", 1),
     DYE_MAGENTA("/itemimg/dye_powder_magenta.png", "Magenta Dye", "INK_SACK", 2),
@@ -83,31 +93,6 @@ public enum Material {
     DYE_GREEN("/itemimg/dye_powder_green.png", "Green Dye", "INK_SACK", 13),
     DYE_RED("/itemimg/dye_powder_red.png", "Red Dye", "INK_SACK", 14),
     DYE_BLACK("/itemimg/dye_powder_black.png", "Black Dye", "INK_SACK", 15),
-
-    //TODO: Put the following blocks in alphabetical order back in the section above
-    //TODO: Figure out why the iamges that have the correct path are null
-    ANVIL("/blockimg/anvil.png", "Anvil"),
-    BEACON("/blockimg/beacon.png", "Beacon"),
-    BEDROCK("/blockimg/bedrock.png", "Bedrock"),
-    BIRCH_WOOD_STEPS("/blockimg/birch_wood_steps.png", "Birch Stairs"),
-    BOOKSHELF("/blockimg/bookshelf.png", "Booshelf"),
-    BRICK_BLOCK("/blockimg/brick_block.png", "Bricks"),//may be called BRICKS
-    BRICK_STEPS("/blockimg/brick_steps.png", "Brick stairs"),
-    CACTUS("/blockimg/cactus.png", "Cactus"),
-    CHEST("/blockimg/chest.png", "Chest"),
-    CLAY_BLOCK("/blockimg/clay_block.png", "Clay Block"),//may be called CLAY
-    COAL_BLOCK("/blockimg/coal_block.png", "Coal Block"),
-    COBBLESTONE_FENCE("/blockimg/cobble_stone_fence.png", "Cobblestone fence"),//may be called something different
-    COBBLESTONE("/blockimg/cobblestone.png", "Cobblestone"),
-    CRAFTING_TABLE("/blockimg/crafting_table.png", "Crafting Table"),//I could not find this in the Material Enum for bukkit
-    DARK_OAK_STEPS("/blockimg/dark_oak_steps.png", "Dark Oak Stairs"),
-    DAYLIGHT_DETECTOR("/blockimg/daylight_detector.png", "Daylight Detector"),//may be called something different
-    DIAMOND_BLOCK("/blockimg/diamond_block.png", "Diamond Block"),
-    DIAMOND_ORE("/blockimg/diamond_ore.png", "Diamond Ore"),
-    DIRT("/blockimg/dirt.png", "Dirt"),
-    DISPENCER("/blockimg/dispencer.png", "Dispencer"),
-    DRAGON_EGG("/blockimg/dragon_egg.png", "Dragon Egg"),
-    DROPPER("/blockimg/dropper.png", "Dropper"),
     EMERALD_BLOCK("/blockimg/emerald_block.png", "Emerald Block"),
     EMERALD_ORE("/blockimg/emerald_ore.png", "Emerald Ore"),
     ENCHANTMENT_TABLE("/blockimg/enchantment_table.png", "Enchantment Table"),
@@ -149,6 +134,8 @@ public enum Material {
     OBSIDIAN("/blockimg/obsidian.png", "Obsidian"),
     PACKED_ICE("/blockimg/packed_ice.png", "Packed Ice"),
     PISTON("/blockimg/piston.png", "Piston"),
+    POISONOUS_POTATO("/itemimg/potato_poisonous.png", "Poisonous Potato"),
+    POTATO("/itemimg/potato.png", "Potato"),
     PRISMARINE("/blockimg/prismarine.png", "Prismarine"),
     PUMPKIN("/blockimg/pumpkin.png", "Pumpkin"),
     PUMPKIN_STEM("/blockimg/pumpkin_stem.png", "Pumpkin Stem"),//may be called something differrnt
@@ -169,8 +156,68 @@ public enum Material {
     SLIME_BLOCK("/blockimg/slime_block.png", "Slime Block"),
     SNOW_BLOCK("/blockimg/snow_block.png", "Snow Block"),//may be something different
     SNOW_LAYER("/blockimg/snow_layer.png", "Snow Layer"),
+    STONE_STONE("/blockimg/stone.png", "Stone", "STONE", 0),
+    STONE_GRANITE("/blockimg/stone.png", "Granite", "STONE", 1),
+    STONE_GRANITE_SMOOTH("/blockimg/stone.png", "Smooth Granite", "STONE", 2),
+    STONE_DIORITE("/blockimg/stone.png", "Stone", "Diorite", 3),
+    STONE_DIORITE_SMOOTH("/blockimg/stone.png", "Smooth Diorite", "STONE", 4),
+    STONE_ANDERSITE("/blockimg/stone.png", "Stone", "Anderstite", 5),
+    STONE_ANDERSITE_SMOOTH("/blockimg/stone.png", "Smooth Andersite", "STONE", 6),
     SPONGE("/blockimg/sponge.png", "Sponge"),
     SPRUCE_WOOD_STEPS("/blockimg/spruce_wood_steps.png", "Spruce Wood Stairs"),//may be something diffeent
+
+    STAINED_CLAY("/blockimg/stained_clay.png", "Stained Clay"),
+    STAINED_CLAY_WHITE("/blockimg/stained_clay.png", "Stained Clay White","STAINED_CLAY",0),
+    STAINED_CLAY_ORANGE("/blockimg/stained_clay.png", "Stained Clay Orange","STAINED_CLAY",1,new Color(224,140,84)),
+    STAINED_CLAY_MAGENTA("/blockimg/stained_clay.png", "Stained Clay Magenta","STAINED_CLAY",2,new Color(140,75,200)),
+    STAINED_CLAY_LIGHT_BLUE("/blockimg/stained_clay.png", "Stained Clay Light Blue","STAINED_CLAY",3,new Color(100,130,200)),
+    STAINED_CLAY_YELLOW("/blockimg/stained_clay.png", "Stained Clay Yellow","STAINED_CLAY",4,new Color(180,170,41)),
+    STAINED_CLAY_LIGHT_GREEN("/blockimg/stained_clay.png", "Stained Clay Lime","STAINED_CLAY",5,new Color(66,180,58)),
+    STAINED_CLAY_PINK("/blockimg/stained_clay.png", "Stained Clay Pink","STAINED_CLAY",6,new Color(216,154,170)),
+    STAINED_CLAY_GRAY("/blockimg/stained_clay.png", "Stained Clay Light Gray","STAINED_CLAY",7,new Color(70,70,70)),
+    STAINED_CLAY_LIGHT_GRAY("/blockimg/stained_clay.png", "Stained Clay Gray","STAINED_CLAY",8,new Color(170,180,180)),
+    STAINED_CLAY_CYAN("/blockimg/stained_clay.png", "Stained Clay Cyan","WOOL",9,new Color(44,100,130)),
+    STAINED_CLAY_LIGHT_PURPLE("/blockimg/stained_clay.png", "Stained Clay Light Purple","STAINED_CLAY",10,new Color(200,100,200)),
+    STAINED_CLAY_BLUE("/blockimg/stained_clay.png", "Stained Clay Blue","STAINED_CLAY",11,new Color(45,55,141)),
+    STAINED_CLAY_BROWN("/blockimg/stained_clay.png", "Stained Clay Brown","STAINED_CLAY",12,new Color(80,50,30)),
+    STAINED_CLAY_GREEN("/blockimg/stained_clay.png", "Stained Clay Green","STAINED_CLAY",13,new Color(0,200,0)),
+    STAINED_CLAY_RED("/blockimg/stained_clay.png", "Stained Clay Red","STAINED_CLAY",14,new Color(156,50,50)),
+    STAINED_CLAY_BLACK("/blockimg/stained_clay.png", "Stained Clay Black","STAINED_CLAY",15,new Color(20,20,20)),
+
+    STAINED_GLASS_WHITE("/blockimg/stained_glass.png", "Stained Glass White","STAINED_GLASS",0),
+    STAINED_GLASS_ORANGE("/blockimg/stained_glass.png", "Stained Glass Orange","STAINED_GLASS",1,new Color(224,140,84)),
+    STAINED_GLASS_MAGENTA("/blockimg/stained_glass.png", "Stained Glass Magenta","STAINED_GLASS",2,new Color(140,75,200)),
+    STAINED_GLASS_LIGHT_BLUE("/blockimg/stained_glass.png", "Stained Glass Light Blue","STAINED_GLASS",3,new Color(100,130,200)),
+    STAINED_GLASS_YELLOW("/blockimg/stained_glass.png", "Stained Glass Yellow","STAINED_GLASS",4,new Color(180,170,41)),
+    STAINED_GLASS_LIGHT_GREEN("/blockimg/stained_glass.png", "Stained Glass  Lime","STAINED_GLASS",5,new Color(66,180,58)),
+    STAINED_GLASS_PINK("/blockimg/stained_glass.png", "Stained Glass Pink","STAINED_GLASS",6,new Color(216,154,170)),
+    STAINED_GLASS_GRAY("/blockimg/stained_glass.png", "Stained Glass Light Gray","STAINED_GLASS",7,new Color(70,70,70)),
+    STAINED_GLASS_LIGHT_GRAY("/blockimg/stained_glass.png", "Stained Glass  Gray","STAINED_GLASS",8,new Color(170,180,180)),
+    STAINED_GLASS_CYAN("/blockimg/stained_glass.png", "Stained Glass Cyan","STAINED_GLASS",9,new Color(44,100,130)),
+    STAINED_GLASS_LIGHT_PURPLE("/blockimg/stained_glass.png", "Stained Glass  Light Purple","STAINED_GLASS",10,new Color(200,100,200)),
+    STAINED_GLASS_BLUE("/blockimg/stained_glass.png", "Stained Glass Blue","STAINED_GLASS",11,new Color(45,55,141)),
+    STAINED_GLASS_BROWN("/blockimg/stained_glass.png","Stained Glass Brown","STAINED_GLASS",12,new Color(80,50,30)),
+    STAINED_GLASS_GREEN("/blockimg/stained_glass.png", "Stained Glass Green","STAINED_GLASS",13,new Color(0,200,0)),
+    STAINED_GLASS_RED("/blockimg/stained_glass.png", "Stained Glass Red","STAINED_GLASS",14,new Color(156,50,50)),
+    STAINED_GLASS_BLACK("/blockimg/stained_glass.png", "Stained Glass Black","STAINED_GLASS",15,new Color(20,20,20)),
+
+    STAINED_GLASS_PANE_WHITE("/blockimg/stained_glass_pane.png", "Stained Glass Pane White","STAINED_GLASS_PANE",0),
+    STAINED_GLASS_PANE_ORANGE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Orange","STAINED_GLASS_PANE",1,new Color(224,140,84)),
+    STAINED_GLASS_PANE_MAGENTA("/blockimg/stained_glass_pane.png", "Stained Glass Pane Magenta","STAINED_GLASS_PANE",2,new Color(140,75,200)),
+    STAINED_GLASS_PANE_LIGHT_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Blue","STAINED_GLASS_PANE",3,new Color(100,130,200)),
+    STAINED_GLASS_PANE_YELLOW("/blockimg/stained_glass_pane.png", "Stained Glass Pane Yellow","STAINED_GLASS_PANE",4,new Color(180,170,41)),
+    STAINED_GLASS_PANE_LIGHT_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Lime","STAINED_GLASS_PANE",5,new Color(66,180,58)),
+    STAINED_GLASS_PANE_PINK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Pink","STAINED_GLASS_PANE",6,new Color(216,154,170)),
+    STAINED_GLASS_PANE_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Gray","STAINED_GLASS_PANE",7,new Color(70,70,70)),
+    STAINED_GLASS_PANE_LIGHT_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Gray","STAINED_GLASS_PANE",8,new Color(170,180,180)),
+    STAINED_GLASS_PANE_CYAN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Cyan","STAINED_GLASS_PANE",9,new Color(44,100,130)),
+    STAINED_GLASS_PANE_LIGHT_PURPLE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Purple","STAINED_GLASS_PANE",10,new Color(200,100,200)),
+    STAINED_GLASS_PANE_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Blue","STAINED_GLASS_PANE",11,new Color(45,55,141)),
+    STAINED_GLASS_PANE_BROWN("/blockimg/stained_glass_pane.png","Stained Glass Pane Brown","STAINED_GLASS_PANE",12,new Color(80,50,30)),
+    STAINED_GLASS_PANE_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Green","STAINED_GLASS_PANE",13,new Color(0,200,0)),
+    STAINED_GLASS_PANE_RED("/blockimg/stained_glass_pane.png", "Stained Glass Pane Red","STAINED_GLASS_PANE",14,new Color(156,50,50)),
+    STAINED_GLASS_PANE_BLACK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Black","STAINED_GLASS_PANE",15,new Color(20,20,20)),
+
     STICKY_PISTON("/blockimg/sticky_piston.png", "Sticky Piston"),
     STONE_BRICK("/blockimg/stone_brick.png", "Stone Brick"),//may be called something different
     STONE_BRICK_STEPS("/blockimg/stone_brick_steps.png", "Stone Brick Stairs"),
@@ -180,79 +227,27 @@ public enum Material {
     TRAPPED_CHEST("/blockimg/trapped_chest.png", "Trapped Chest"),
     VINE("/blockimg/vine.png", "Vine"),
     WATERLILLY("/blockimg/waterlilly.png", "Water Lilly"),//may be called something else
+    WOOD_SWORD("/itemimg/wood_sword.png", "Wood sword"),
     WOOD("/blockimg/wood.png", "Wood"),
     WOOD_FENCE("/blockimg/wood_fence.png", "Wood Fence"),
     WOOD_SLAB("/blockimg/wood_slab.png", "Wood Slab"),
     WOOD_STEPS("/blockimg/wood_steps.png", "Wood Stairs"),
-
-    STAINED_CLAY("/blockimg/stained_clay.png", "Stained Clay"),
-    STAINED_CLAY_WHITE("/blockimg/stained_clay.png", "Stained Clay White","WOOL",0),
-    STAINED_CLAY_ORANGE("/blockimg/stained_clay.png", "Stained Clay Orange","WOOL",1,new Color(224,140,84)),
-    STAINED_CLAY_MAGENTA("/blockimg/stained_clay.png", "Stained Clay Magenta","WOOL",2,new Color(140,75,200)),
-    STAINED_CLAY_LIGHT_BLUE("/blockimg/stained_clay.png", "Stained Clay Light Blue","WOOL",3,new Color(100,130,200)),
-    STAINED_CLAY_YELLOW("/blockimg/stained_clay.png", "Stained Clay Yellow","WOOL",4,new Color(180,170,41)),
-    STAINED_CLAY_LIGHT_GREEN("/blockimg/stained_clay.png", "Stained Clay Lime","WOOL",5,new Color(66,180,58)),
-    STAINED_CLAY_PINK("/blockimg/stained_clay.png", "Stained Clay Pink","WOOL",6,new Color(216,154,170)),
-    STAINED_CLAY_GRAY("/blockimg/stained_clay.png", "Stained Clay Light Gray","WOOL",7,new Color(70,70,70)),
-    STAINED_CLAY_LIGHT_GRAY("/blockimg/stained_clay.png", "Stained Clay Gray","WOOL",8,new Color(170,180,180)),
-    STAINED_CLAY_CYAN("/blockimg/stained_clay.png", "Stained Clay Cyan","WOOL",9,new Color(44,100,130)),
-    STAINED_CLAY_LIGHT_PURPLE("/blockimg/stained_clay.png", "Stained Clay Light Purple","WOOL",10,new Color(200,100,200)),
-    STAINED_CLAY_BLUE("/blockimg/stained_clay.png", "Stained Clay Blue","WOOL",11,new Color(45,55,141)),
-    STAINED_CLAY_BROWN("/blockimg/stained_clay.png", "Stained Clay Brown","WOOL",12,new Color(80,50,30)),
-    STAINED_CLAY_GREEN("/blockimg/stained_clay.png", "Stained Clay Green","WOOL",13,new Color(0,200,0)),
-    STAINED_CLAY_RED("/blockimg/stained_clay.png", "Stained Clay Red","WOOL",14,new Color(156,50,50)),
-    STAINED_CLAY_BLACK("/blockimg/stained_clay.png", "Stained Clay Black","WOOL",15,new Color(20,20,20)),
-
-    STAINED_GLASS_PANE_WHITE("/blockimg/stained_glass_pane.png", "Stained Glass Pane White","WOOL",0),
-    STAINED_GLASS_PANE_ORANGE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Orange","WOOL",1,new Color(224,140,84)),
-    STAINED_GLASS_PANE_MAGENTA("/blockimg/stained_glass_pane.png", "Stained Glass Pane Magenta","WOOL",2,new Color(140,75,200)),
-    STAINED_GLASS_PANE_LIGHT_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Blue","WOOL",3,new Color(100,130,200)),
-    STAINED_GLASS_PANE_YELLOW("/blockimg/stained_glass_pane.png", "Stained Glass Pane Yellow","WOOL",4,new Color(180,170,41)),
-    STAINED_GLASS_PANE_LIGHT_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Lime","WOOL",5,new Color(66,180,58)),
-    STAINED_GLASS_PANE_PINK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Pink","WOOL",6,new Color(216,154,170)),
-    STAINED_GLASS_PANE_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Gray","WOOL",7,new Color(70,70,70)),
-    STAINED_GLASS_PANE_LIGHT_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Gray","WOOL",8,new Color(170,180,180)),
-    STAINED_GLASS_PANE_CYAN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Cyan","WOOL",9,new Color(44,100,130)),
-    STAINED_GLASS_PANE_LIGHT_PURPLE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Purple","WOOL",10,new Color(200,100,200)),
-    STAINED_GLASS_PANE_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Blue","WOOL",11,new Color(45,55,141)),
-    STAINED_GLASS_PANE_BROWN("/blockimg/stained_glass_pane.png","Stained Glass Pane Brown","WOOL",12,new Color(80,50,30)),
-    STAINED_GLASS_PANE_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Green","WOOL",13,new Color(0,200,0)),
-    STAINED_GLASS_PANE_RED("/blockimg/stained_glass_pane.png", "Stained Glass Pane Red","WOOL",14,new Color(156,50,50)),
-    STAINED_GLASS_PANE_BLACK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Black","WOOL",15,new Color(20,20,20)),
-
-    STAINED_GLASS_WHITE("/blockimg/stained_glass.png", "Stained Glass White","WOOL",0),
-    STAINED_GLASS_ORANGE("/blockimg/stained_glass.png", "Stained Glass Orange","WOOL",1,new Color(224,140,84)),
-    STAINED_GLASS_MAGENTA("/blockimg/stained_glass.png", "Stained Glass Magenta","WOOL",2,new Color(140,75,200)),
-    STAINED_GLASS_LIGHT_BLUE("/blockimg/stained_glass.png", "Stained Glass Light Blue","WOOL",3,new Color(100,130,200)),
-    STAINED_GLASS_YELLOW("/blockimg/stained_glass.png", "Stained Glass Yellow","WOOL",4,new Color(180,170,41)),
-    STAINED_GLASS_LIGHT_GREEN("/blockimg/stained_glass.png", "Stained Glass  Lime","WOOL",5,new Color(66,180,58)),
-    STAINED_GLASS_PINK("/blockimg/stained_glass.png", "Stained Glass Pink","WOOL",6,new Color(216,154,170)),
-    STAINED_GLASS_GRAY("/blockimg/stained_glass.png", "Stained Glass Light Gray","WOOL",7,new Color(70,70,70)),
-    STAINED_GLASS_LIGHT_GRAY("/blockimg/stained_glass.png", "Stained Glass  Gray","WOOL",8,new Color(170,180,180)),
-    STAINED_GLASS_CYAN("/blockimg/stained_glass.png", "Stained Glass Cyan","WOOL",9,new Color(44,100,130)),
-    STAINED_GLASS_LIGHT_PURPLE("/blockimg/stained_glass.png", "Stained Glass  Light Purple","WOOL",10,new Color(200,100,200)),
-    STAINED_GLASS_BLUE("/blockimg/stained_glass.png", "Stained Glass Blue","WOOL",11,new Color(45,55,141)),
-    STAINED_GLASS_BROWN("/blockimg/stained_glass.png","Stained Glass Brown","WOOL",12,new Color(80,50,30)),
-    STAINED_GLASS_GREEN("/blockimg/stained_glass.png", "Stained Glass Green","WOOL",13,new Color(0,200,0)),
-    STAINED_GLASS_RED("/blockimg/stained_glass.png", "Stained Glass Red","WOOL",14,new Color(156,50,50)),
-    STAINED_GLASS_BLACK("/blockimg/stained_glass.png", "Stained Glass Black","WOOL",15,new Color(20,20,20)),
-
-    WOOL_CARPET_WHITE("/blockimg/wool_carpet.png", "Wool Carpet White","WOOL",0),
-    WOOL_CARPET_ORANGE("/blockimg/wool_carpet.png", "Wool Carpet Orange","WOOL",1,new Color(224,140,84)),
-    WOOL_CARPET_MAGENTA("/blockimg/wool_carpet.png", "Wool Carpet Magenta","WOOL",2,new Color(140,75,200)),
-    WOOL_CARPET_LIGHT_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Light Blue","WOOL",3,new Color(100,130,200)),
-    WOOL_CARPET_YELLOW("/blockimg/wool_carpet.png", "Wool Carpet Yellow","WOOL",4,new Color(180,170,41)),
-    WOOL_CARPET_LIGHT_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Lime","WOOL",5,new Color(66,180,58)),
-    WOOL_CARPET_PINK("/blockimg/wool_carpet.png", "Wool Carpet Pink","WOOL",6,new Color(216,154,170)),
-    WOOL_CARPET_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Light Gray","WOOL",7,new Color(70,70,70)),
-    WOOL_CARPET_LIGHT_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Gray","WOOL",8,new Color(170,180,180)),
-    WOOL_CARPET_CYAN("/blockimg/wool_carpet.png", "Wool Carpet Cyan","WOOL",9,new Color(44,100,130)),
-    WOOL_CARPET_LIGHT_PURPLE("/blockimg/wool_carpet.png", "Wool Carpet Light Purple","WOOL",10,new Color(200,100,200)),
-    WOOL_CARPET_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Blue","WOOL",11,new Color(45,55,141)),
-    WOOL_CARPET_BROWN("/blockimg/wool_carpet.png", "Wool Carpet Brown","WOOL",12,new Color(80,50,30)),
-    WOOL_CARPET_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Green","WOOL",13,new Color(0,200,0)),
-    WOOL_CARPET_RED("/blockimg/wool_carpet.png", "Wool Carpet Red","WOOL",14,new Color(156,50,50)),
-    WOOL_CARPET_BLACK("/blockimg/wool_carpet.png", "Wool Carpet Black","WOOL",15,new Color(20,20,20)),
+    WOOL_CARPET_WHITE("/blockimg/wool_carpet.png", "Wool Carpet White","WOOL_CARPET",0),
+    WOOL_CARPET_ORANGE("/blockimg/wool_carpet.png", "Wool Carpet Orange","WOOL_CARPET",1,new Color(224,140,84)),
+    WOOL_CARPET_MAGENTA("/blockimg/wool_carpet.png", "Wool Carpet Magenta","WOOL_CARPET",2,new Color(140,75,200)),
+    WOOL_CARPET_LIGHT_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Light Blue","WOOL_CARPET",3,new Color(100,130,200)),
+    WOOL_CARPET_YELLOW("/blockimg/wool_carpet.png", "Wool Carpet Yellow","WOOL_CARPET",4,new Color(180,170,41)),
+    WOOL_CARPET_LIGHT_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Lime","WOOL_CARPET",5,new Color(66,180,58)),
+    WOOL_CARPET_PINK("/blockimg/wool_carpet.png", "Wool Carpet Pink","WOOL_CARPET",6,new Color(216,154,170)),
+    WOOL_CARPET_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Light Gray","WOOL_CARPET",7,new Color(70,70,70)),
+    WOOL_CARPET_LIGHT_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Gray","WOOL_CARPET",8,new Color(170,180,180)),
+    WOOL_CARPET_CYAN("/blockimg/wool_carpet.png", "Wool Carpet Cyan","WOOL_CARPET",9,new Color(44,100,130)),
+    WOOL_CARPET_LIGHT_PURPLE("/blockimg/wool_carpet.png", "Wool Carpet Light Purple","WOOL_CARPET",10,new Color(200,100,200)),
+    WOOL_CARPET_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Blue","WOOL_CARPET",11,new Color(45,55,141)),
+    WOOL_CARPET_BROWN("/blockimg/wool_carpet.png", "Wool Carpet Brown","WOOL_CARPET",12,new Color(80,50,30)),
+    WOOL_CARPET_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Green","WOOL_CARPET",13,new Color(0,200,0)),
+    WOOL_CARPET_RED("/blockimg/wool_carpet.png", "Wool Carpet Red","WOOL_CARPET",14,new Color(156,50,50)),
+    WOOL_CARPET_BLACK("/blockimg/wool_carpet.png", "Wool Carpet Black","WOOL_CARPET",15,new Color(20,20,20)),
 
     WOOL_WHITE("/blockimg/wool.png", "Wool White","WOOL",0),
     WOOL_ORANGE("/blockimg/wool.png", "Wool Orange","WOOL",1,new Color(224,140,84)),
@@ -271,6 +266,8 @@ public enum Material {
     WOOL_RED("/blockimg/wool.png", "Wool Red","WOOL",14,new Color(156,50,50)),
     WOOL_BLACK("/blockimg/wool.png", "Wool Black","WOOL",15,new Color(20,20,20));
 
+    //Dyes
+
     private ImageIcon image;
     private String name;
     private String materialName;
@@ -278,7 +275,7 @@ public enum Material {
 
     Material(String imagePath, String name) {
         this.name = name;
-        materialName = toString();
+        materialName = convertNameToEnum(toString());
         durability = 0;
         if (!name.equals("Air")) {
             try {
@@ -294,7 +291,7 @@ public enum Material {
 
     Material(String imagePath, String name, String materialName, int durability) {
         this.name = name;
-        this.materialName = materialName;
+        this.materialName = convertNameToEnum(materialName);
         this.durability = durability;
         //System.out.println(toString());
         if (!name.equals("Air")) {
@@ -310,7 +307,7 @@ public enum Material {
     }
     Material(String imagePath, String name, String materialName, int durability, Color tint) {
         this.name = name;
-        this.materialName = materialName;
+        this.materialName = convertNameToEnum(materialName);
         this.durability = durability;
         //System.out.println(toString());
         if (!name.equals("Air")) {
@@ -356,6 +353,10 @@ public enum Material {
                 return m;
         }
         return null;
+    }
+
+    private String convertNameToEnum(String string){
+        return string.replace(" ","_").toUpperCase();
     }
 
 }
