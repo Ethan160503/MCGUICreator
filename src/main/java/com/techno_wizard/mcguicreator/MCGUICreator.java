@@ -8,13 +8,18 @@ import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.help.TutorialMenu;
+import com.techno_wizard.mcguicreator.help.WarningPopUp;
+import com.techno_wizard.mcguicreator.help.WarningResult;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -81,18 +86,11 @@ public class MCGUICreator {
         return menuBar;
     }
     private static void addActionListener(MainMenu mainMenu,JMenuItem exportToClipboard,JMenuItem exportToPopup,JMenuItem fileSave,JMenuItem fileOpen){
-        exportToClipboard.addActionListener(e -> { ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-            StringBuilder code = new StringBuilder();
-            for (String s : CodeCreator.writecode(mainMenu)) {
-                code.append(s + "\n");
-            }
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(new StringSelection(code.toString()), null);});
+        exportToClipboard.addActionListener(e -> {
+           printCode(false);
+        });
         exportToPopup.addActionListener(e -> {
-            ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-            StringBuilder code = new StringBuilder();
-            String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
-            new CodeExporter(output);
+            printCode(true);
         });
 
         fileSave.addActionListener(e -> {
@@ -155,6 +153,77 @@ public class MCGUICreator {
             }
         });
     }
+    public static void printCode(boolean shouldExport){
+        mainMenu.getEditorManager().saveCurrentItemStack();
+        List<String> names = new ArrayList<>();
+        List<Integer> slotsNoName = new ArrayList<>();
+        List<Integer> slotsSameName = new ArrayList<>();
+        boolean isEmpty = true;
+        for(int index = 0 ; index < getMainMenu().getInvManager().getInventoryTableModel().getRowCount()*9;index++){
+            ItemStack is = getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(index%9,index/9);
+            if(is.getMaterial() != Material.AIR){
+                isEmpty = false;
+                if (is.getName().length() == 0) {
+                    slotsNoName.add(index);
+                } else if (names.contains(is.getName())) {
+                    slotsSameName.add(index);
+                } else {
+                    names.add(is.getName());
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        if(isEmpty) {
+            sb.append("#-The Inventory is empty!");
+        }
+        if(slotsNoName.size()>0) {
+            sb.append("\n#-The following slots have no name.");
+            for (int i : slotsNoName)
+                sb.append("\n -" + i);
+        }
+        if(slotsSameName.size()>0) {
+            sb.append("\n#-The following slots have the same name as an already loaded slot.");
+            for (int i : slotsSameName)
+                sb.append("\n -" + i + " : \" " + getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(i % 9, i / 9).getName()+" \"");
+        }
+        if(slotsSameName.size()>0||slotsNoName.size()>0||isEmpty) {
+            new WarningPopUp(sb.toString(), new WarningResult() {
+                public void onActivate() {
+                    if (shouldExport) {
+                        ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                        StringBuilder code = new StringBuilder();
+                        String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
+                        new CodeExporter(output);
+                    } else {
+                        ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                        StringBuilder code = new StringBuilder();
+                        for (String s : CodeCreator.writecode(mainMenu))
+                            code.append(s + "\n");
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clipboard.setContents(new StringSelection(code.toString()), null);
+                    }
+                }public void onCancel() {}
+            });
+        }else{
+            if (shouldExport) {
+                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                StringBuilder code = new StringBuilder();
+                String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
+                new CodeExporter(output);
+            } else {
+                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
+                StringBuilder code = new StringBuilder();
+                for (String s : CodeCreator.writecode(mainMenu))
+                    code.append(s + "\n");
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(new StringSelection(code.toString()), null);
+            }
+        }
+        names.clear();
+        slotsNoName.clear();
+        slotsSameName.clear();
+    }
+
 
     public static MainMenu getMainMenu(){
         return mainMenu;
