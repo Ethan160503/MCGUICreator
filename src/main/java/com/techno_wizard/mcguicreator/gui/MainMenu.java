@@ -154,32 +154,6 @@ public class MainMenu extends JFrame {
      * inits the button listeners
      */
     private void initButtons() {
-        /* Unfortunately, due to restrictions of IDEA's GUI designer, i cannot set the buttons
-           To compensate, the following madness is required. Yay......
-        */
-       /* editorManager.setButtonListener(ChatColor.BLACK, blackButton);
-        editorManager.setButtonListener(ChatColor.DARK_BLUE, darkBlueButton);
-        editorManager.setButtonListener(ChatColor.DARK_GREEN, darkGreenButton);
-        editorManager.setButtonListener(ChatColor.DARK_AQUA, darkAquaButton);
-        editorManager.setButtonListener(ChatColor.DARK_RED, darkRedButton);
-        editorManager.setButtonListener(ChatColor.DARK_PURPLE, darkPurpleButton);
-        editorManager.setButtonListener(ChatColor.GOLD, goldButton);
-        editorManager.setButtonListener(ChatColor.GRAY, grayButton);
-        editorManager.setButtonListener(ChatColor.DARK_GRAY, darkGrayButton);
-        editorManager.setButtonListener(ChatColor.BLUE, blueButton);
-        editorManager.setButtonListener(ChatColor.GREEN, greenButton);
-        editorManager.setButtonListener(ChatColor.AQUA, aquaButton);
-        editorManager.setButtonListener(ChatColor.RED, redButton);
-        editorManager.setButtonListener(ChatColor.LIGHT_PURPLE, lightPurpleButton);
-        editorManager.setButtonListener(ChatColor.YELLOW, yellowButton);
-        editorManager.setButtonListener(ChatColor.WHITE, whiteButton);
-        editorManager.setButtonListener(ChatColor.MAGIC, magicButton);
-        editorManager.setButtonListener(ChatColor.BOLD, boldButton);
-        editorManager.setButtonListener(ChatColor.STRIKETHROUGH, strikethroughButton);
-        editorManager.setButtonListener(ChatColor.UNDERLINE, underlineButton);
-        editorManager.setButtonListener(ChatColor.ITALIC, italicButton);
-        editorManager.setButtonListener(ChatColor.RESET, resetButton);*/
-
         MouseListener addEnchantmentListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -242,6 +216,7 @@ public class MainMenu extends JFrame {
         stackItemCountSpinner.setValue(1);
         inventorySizeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 9, 1));
         inventorySizeSpinner.setValue(3);
+        enchantmentLevelSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
 
         invManager = new InventoryManager(this,inventoryTable);
     }

@@ -61,8 +61,6 @@ public class CodeCreator {
                 //Make sure all itemstacks are real.
                 if (is.getMaterial() == Material.AIR) continue;
 
-                //TODO:Add better way to write code for lores of itemstacks. Should setting the itemstacks be moved to a new method?
-                //TODO: Ethan- probably. It would make a lot more sense that way and the output would be more readable. Btw, added a buffer to list for speed
                 String loreName = "itemlore" + ((row * 9) + col);
                 boolean hasLore = createStringList(code, is.getLoreAsList(), loreName);
                 code.add("Itemstack itemstack"+((row * 9) + col)+" = createItemstack("
@@ -74,7 +72,7 @@ public class CodeCreator {
                                 + ");");
                 for(int i = 0; i < is.getEnchantments().size();i++){
                     Enchantment en=is.getEnchantments().get(i);
-                    code.add("itemstack"+((row * 9) + col)+".add"+(en.isUnsafe()?"Unsafe":"")+"Enchantment(Enchantment."+en.getBukkitName()+","+en.getPowerLavel()+");");
+                    code.add("itemstack"+((row * 9) + col)+".add"+(en.isUnsafe()?"Unsafe":"")+"Enchantment(Enchantment."+en.getBukkitName()+","+en.getPowerLevel()+");");
                 }
                 code.add(inventoryName + ".setItem(" + ((row * 9) + col) + ",itemstack"+((row*9)+col)+");");
             }

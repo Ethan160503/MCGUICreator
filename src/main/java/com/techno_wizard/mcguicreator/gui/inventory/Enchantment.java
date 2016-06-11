@@ -59,7 +59,7 @@ public class Enchantment implements Serializable{
     public String getBukkitName(){
         return this.enchantmentName;
     }
-    public int getPowerLavel(){
+    public int getPowerLevel(){
         return this.powerLavel;
     }
     public boolean isUnsafe(){

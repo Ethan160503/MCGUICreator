@@ -152,23 +152,20 @@ public class CodeGenerator {
         buffer.addEmptyLine();
         buffer.addEmptyLine();
 
-
-
         buffer.addLine(((String) extraStringMap.get("class constructor"))
                 .replace("$count$", invModel.getRowCount()*9+"")
-                .replace("$name$", invModel.getInventoryName())
+                .replace("$classname$", invModel.getInventoryName().replace(" ", ""))
                 .replace("$inv$","inventoryInstance")
                 .replace("$size$",(mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9)+"")
-                .replace("$classname$",mainMenu.getEditorManager().getInventoryNameEditor().getText().replace(" ","")+"Inventory")
         );
 
         buffer.addLine((String) extraStringMap.get("init inv"));
-        // set itemstack var
-        buffer.addLine((String) itemStackStringMap.get("create stack"));
         // set lore buffer
         buffer.addLine((String) loreStringMap.get("create lore buffer"));
         // set enchant buffer
         buffer.addLine((String) enchantmentStringMap.get("create ench buffer"));
+        // add space before creating stacks
+        buffer.addEmptyLine();
 
         for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
             ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
@@ -191,39 +188,34 @@ public class CodeGenerator {
             }
         }
 
+        // close out brackets. 5 needed.
+        for (int i = 0; i < 5; i++)
+            buffer.addLine("}");
+
         return buffer.getFormattedOutput();
     }
 
 
     private void addItemstackToListener(ItemStack itemstack, CodeBuffer codeBuffer, int slot) {
         if (itemstack.getAutoGenerateType() != AutoGenerateType.EMPTY) {
-            codeBuffer.addLine("case " + slot + ":");
+            codeBuffer.addLine(String.format("case %d: // stack: %s -> %s", slot, itemstack.getName(), itemstack.getNotes()));
             codeBuffer.addLine(itemstack.getAutoGenerateType().getCodeAsString());
             codeBuffer.addLine("break;");
         }
     }
 
     private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot) {
-
+        // set itemstack var
+        buffer.addLine(((String) itemStackStringMap.get("create stack")).replace("$stack$", "stack" + slot));
         // does the item require durability to create?
         String shouldHaveData = itemStack.getMaterial().getDurability() == 0 ? "create no data" : "create with data";
-        buffer.addLine(replaceFields((String) itemStackStringMap.get(shouldHaveData),
-                "material:" + itemStack.getMaterial().getMaterialEnumName(),
-                "count:" + itemStack.getAmount(),
-                "data:" + itemStack.getMaterial().getDurability(),
-                "stack:" + "itemStackStringMap" + slot));
-
-        /*buffer.addLine(((String) itemStackStringMap.get(shouldHaveData))
-                .replace("$material$", itemStack.getMaterial().getMaterialEnumName()
+        buffer.addLine(((String) itemStackStringMap.get(shouldHaveData))
+                .replace("$material$", itemStack.getMaterial().getMaterialEnumName())
                 .replace("$count$", itemStack.getAmount() + "")
                 .replace("$data$", itemStack.getMaterial().getDurability() + "")
-                .replace("$stack$", "itemStackStringMap" + slot)
-        ));*/
-
-        // set lore buffer
-        buffer.addLine(((String) loreStringMap.get("create lore buffer"))
-                .replace("$id$", slot + "")
+                .replace("$stack$", "stack" + slot)
         );
+
 
         // set lore lines
         for (String lore_line : itemStack.getLoreAsList())
@@ -232,25 +224,20 @@ public class CodeGenerator {
                     .replace("$lore_line$", lore_line)
             );
 
-        // create enchantment buffer
-        buffer.addLine(((String) enchantmentStringMap.get("create ench buffer"))
-                .replace("$id$", slot + "")
-        );
-
         // add enchantments
         for (Enchantment ench : itemStack.getEnchantments())
             buffer.addLine(((String) enchantmentStringMap.get("add item to ench buffer"))
                     .replace("$id$", slot + "")
                     .replace("$ench$", ench.getBukkitName())
-                    .replace("$power$", ench.getPowerLavel() + "")
+                    .replace("$power$", ench.getPowerLevel() + "")
             );
 
         // call metadata formatter
         buffer.addLine(((String) itemStackStringMap.get("call formatter"))
-                .replace("$stack$", "itemStackStringMap" + slot)
+                .replace("$stack$", "stack" + slot)
                 .replace("$name$", itemStack.getName())
-                .replace("$loreBuffer$", "loreBuffer" + slot)
-                .replace("$enchantments$", "enchBuffer" + slot)
+                .replace("$loreBuffer$", "loreBuffer")
+                .replace("$enchantments$", "enchBuffer")
 
         );
 
@@ -259,78 +246,13 @@ public class CodeGenerator {
         buffer.addLine((String) enchantmentStringMap.get("clear"));
 
         buffer.addLine(((String) inventoryStringMap.get("add stack to slot"))
-                .replace("$stack$", "itemStackStringMap" + slot)
+                .replace("$stack$", "stack" + slot)
                 .replace("$slot$", slot+"")
                 .replace("$inv$", "inventoryInstance" )
         );
-    }
 
-
-    /**
-     * Gets java data members' constructors. The following are supported<br>
-     * int, double, short, float, String, char
-     *
-     * @param wrapperValue the value to get its constructor of.
-     *
-     * @return java of data member constructor
-     *
-     */
-    private String getJavaMemeberConstructor(Object wrapperValue, String varName) {
-        JSONObject constructors = (JSONObject) codeTemplates.get("java constructors");
-        String template;
-        if(wrapperValue instanceof Integer) {
-            Integer integer = (Integer) wrapperValue;
-            template = (String) constructors.get("int");
-            template.replace("$name$", varName);
-            template.replace("$val$", integer.toString());
-        } else if (wrapperValue instanceof Double) {
-            Double dub = (Double) wrapperValue;
-            template = (String) constructors.get("double");
-            template.replace("$name$", varName);
-            template.replace("$val$", dub.toString());
-        } else if (wrapperValue instanceof Short) {
-            Short shrt = (Short) wrapperValue;
-            template = (String) constructors.get("short");
-            template.replace("$name$", varName);
-            template.replace("$val$", shrt.toString());
-        } else if (wrapperValue instanceof Character) {
-            Character ctr = (Character) wrapperValue;
-            template = (String) constructors.get("char");
-            template.replace("$name$", varName);
-            template.replace("$val$", ctr.toString());
-        } else if (wrapperValue instanceof Float) {
-            Float flot = (Float) wrapperValue;
-            template = (String) constructors.get("float");
-            template.replace("$name$", varName);
-            template.replace("$val$", flot.toString());
-        } else if (wrapperValue instanceof String) {
-            String string = (String) wrapperValue;
-            template = (String) constructors.get("String");
-            template.replace("$name$", varName);
-            template.replace("$val$", string);
-        } else {
-            System.out.println("Error: could not determine java class type");
-            template = "Error";
-        }
-        return template;
-    }
-
-
-    /**
-     * Replaces the given fields in a template with the following syntax for field replacement:
-     *<p>"fieldToReplace:toReplaceWith"</p>
-     * @param template The string template
-     * @param args The list of fields to replace with the former syntax
-     * @return The final output
-     */
-    private String replaceFields(String template, String... args) {
-        for (String arg :
-                args) {
-            String[] split = arg.split(":");
-            assert split.length == 2 : "Warning: Invalid replace syntax";
-            template.replace("$" + split[0] + "$", split[1]);
-        }
-        return template;
+        buffer.addLine("//end stack");
+        buffer.addEmptyLine();
     }
 
     public static void main(String[] args) {
