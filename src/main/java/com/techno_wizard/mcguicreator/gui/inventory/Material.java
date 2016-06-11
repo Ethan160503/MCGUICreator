@@ -167,56 +167,56 @@ public enum Material {
     SPRUCE_WOOD_STEPS("/blockimg/spruce_wood_steps.png", "Spruce Wood Stairs"),//may be something diffeent
 
     STAINED_CLAY("/blockimg/stained_clay.png", "Stained Clay"),
-    STAINED_CLAY_WHITE("/blockimg/stained_clay.png", "Stained Clay White","STAINED_CLAY",0),
-    STAINED_CLAY_ORANGE("/blockimg/stained_clay.png", "Stained Clay Orange","STAINED_CLAY",1,new Color(224,140,84)),
-    STAINED_CLAY_MAGENTA("/blockimg/stained_clay.png", "Stained Clay Magenta","STAINED_CLAY",2,new Color(140,75,200)),
-    STAINED_CLAY_LIGHT_BLUE("/blockimg/stained_clay.png", "Stained Clay Light Blue","STAINED_CLAY",3,new Color(100,130,200)),
-    STAINED_CLAY_YELLOW("/blockimg/stained_clay.png", "Stained Clay Yellow","STAINED_CLAY",4,new Color(180,170,41)),
-    STAINED_CLAY_LIGHT_GREEN("/blockimg/stained_clay.png", "Stained Clay Lime","STAINED_CLAY",5,new Color(66,180,58)),
-    STAINED_CLAY_PINK("/blockimg/stained_clay.png", "Stained Clay Pink","STAINED_CLAY",6,new Color(216,154,170)),
-    STAINED_CLAY_GRAY("/blockimg/stained_clay.png", "Stained Clay Light Gray","STAINED_CLAY",7,new Color(70,70,70)),
-    STAINED_CLAY_LIGHT_GRAY("/blockimg/stained_clay.png", "Stained Clay Gray","STAINED_CLAY",8,new Color(170,180,180)),
-    STAINED_CLAY_CYAN("/blockimg/stained_clay.png", "Stained Clay Cyan","WOOL",9,new Color(44,100,130)),
-    STAINED_CLAY_LIGHT_PURPLE("/blockimg/stained_clay.png", "Stained Clay Light Purple","STAINED_CLAY",10,new Color(200,100,200)),
-    STAINED_CLAY_BLUE("/blockimg/stained_clay.png", "Stained Clay Blue","STAINED_CLAY",11,new Color(45,55,141)),
-    STAINED_CLAY_BROWN("/blockimg/stained_clay.png", "Stained Clay Brown","STAINED_CLAY",12,new Color(80,50,30)),
-    STAINED_CLAY_GREEN("/blockimg/stained_clay.png", "Stained Clay Green","STAINED_CLAY",13,new Color(0,200,0)),
-    STAINED_CLAY_RED("/blockimg/stained_clay.png", "Stained Clay Red","STAINED_CLAY",14,new Color(156,50,50)),
-    STAINED_CLAY_BLACK("/blockimg/stained_clay.png", "Stained Clay Black","STAINED_CLAY",15,new Color(20,20,20)),
+    STAINED_CLAY_WHITE("/blockimg/stained_clay.png", "Stained Clay White", "STAINED_CLAY", 0),
+    STAINED_CLAY_ORANGE("/blockimg/stained_clay.png", "Stained Clay Orange", "STAINED_CLAY", 1, new Color(224, 140, 84)),
+    STAINED_CLAY_MAGENTA("/blockimg/stained_clay.png", "Stained Clay Magenta", "STAINED_CLAY", 2, new Color(140, 75, 200)),
+    STAINED_CLAY_LIGHT_BLUE("/blockimg/stained_clay.png", "Stained Clay Light Blue", "STAINED_CLAY", 3, new Color(100, 130, 200)),
+    STAINED_CLAY_YELLOW("/blockimg/stained_clay.png", "Stained Clay Yellow", "STAINED_CLAY", 4, new Color(180, 170, 41)),
+    STAINED_CLAY_LIGHT_GREEN("/blockimg/stained_clay.png", "Stained Clay Lime", "STAINED_CLAY", 5, new Color(66, 180, 58)),
+    STAINED_CLAY_PINK("/blockimg/stained_clay.png", "Stained Clay Pink", "STAINED_CLAY", 6, new Color(216, 154, 170)),
+    STAINED_CLAY_GRAY("/blockimg/stained_clay.png", "Stained Clay Light Gray", "STAINED_CLAY", 7, new Color(70, 70, 70)),
+    STAINED_CLAY_LIGHT_GRAY("/blockimg/stained_clay.png", "Stained Clay Gray", "STAINED_CLAY", 8, new Color(170, 180, 180)),
+    STAINED_CLAY_CYAN("/blockimg/stained_clay.png", "Stained Clay Cyan", "WOOL", 9, new Color(44, 100, 130)),
+    STAINED_CLAY_LIGHT_PURPLE("/blockimg/stained_clay.png", "Stained Clay Light Purple", "STAINED_CLAY", 10, new Color(200, 100, 200)),
+    STAINED_CLAY_BLUE("/blockimg/stained_clay.png", "Stained Clay Blue", "STAINED_CLAY", 11, new Color(45, 55, 141)),
+    STAINED_CLAY_BROWN("/blockimg/stained_clay.png", "Stained Clay Brown", "STAINED_CLAY", 12, new Color(80, 50, 30)),
+    STAINED_CLAY_GREEN("/blockimg/stained_clay.png", "Stained Clay Green", "STAINED_CLAY", 13, new Color(0, 200, 0)),
+    STAINED_CLAY_RED("/blockimg/stained_clay.png", "Stained Clay Red", "STAINED_CLAY", 14, new Color(156, 50, 50)),
+    STAINED_CLAY_BLACK("/blockimg/stained_clay.png", "Stained Clay Black", "STAINED_CLAY", 15, new Color(20, 20, 20)),
 
-    STAINED_GLASS_WHITE("/blockimg/stained_glass.png", "Stained Glass White","STAINED_GLASS",0),
-    STAINED_GLASS_ORANGE("/blockimg/stained_glass.png", "Stained Glass Orange","STAINED_GLASS",1,new Color(224,140,84)),
-    STAINED_GLASS_MAGENTA("/blockimg/stained_glass.png", "Stained Glass Magenta","STAINED_GLASS",2,new Color(140,75,200)),
-    STAINED_GLASS_LIGHT_BLUE("/blockimg/stained_glass.png", "Stained Glass Light Blue","STAINED_GLASS",3,new Color(100,130,200)),
-    STAINED_GLASS_YELLOW("/blockimg/stained_glass.png", "Stained Glass Yellow","STAINED_GLASS",4,new Color(180,170,41)),
-    STAINED_GLASS_LIGHT_GREEN("/blockimg/stained_glass.png", "Stained Glass  Lime","STAINED_GLASS",5,new Color(66,180,58)),
-    STAINED_GLASS_PINK("/blockimg/stained_glass.png", "Stained Glass Pink","STAINED_GLASS",6,new Color(216,154,170)),
-    STAINED_GLASS_GRAY("/blockimg/stained_glass.png", "Stained Glass Light Gray","STAINED_GLASS",7,new Color(70,70,70)),
-    STAINED_GLASS_LIGHT_GRAY("/blockimg/stained_glass.png", "Stained Glass  Gray","STAINED_GLASS",8,new Color(170,180,180)),
-    STAINED_GLASS_CYAN("/blockimg/stained_glass.png", "Stained Glass Cyan","STAINED_GLASS",9,new Color(44,100,130)),
-    STAINED_GLASS_LIGHT_PURPLE("/blockimg/stained_glass.png", "Stained Glass  Light Purple","STAINED_GLASS",10,new Color(200,100,200)),
-    STAINED_GLASS_BLUE("/blockimg/stained_glass.png", "Stained Glass Blue","STAINED_GLASS",11,new Color(45,55,141)),
-    STAINED_GLASS_BROWN("/blockimg/stained_glass.png","Stained Glass Brown","STAINED_GLASS",12,new Color(80,50,30)),
-    STAINED_GLASS_GREEN("/blockimg/stained_glass.png", "Stained Glass Green","STAINED_GLASS",13,new Color(0,200,0)),
-    STAINED_GLASS_RED("/blockimg/stained_glass.png", "Stained Glass Red","STAINED_GLASS",14,new Color(156,50,50)),
-    STAINED_GLASS_BLACK("/blockimg/stained_glass.png", "Stained Glass Black","STAINED_GLASS",15,new Color(20,20,20)),
+    STAINED_GLASS_WHITE("/blockimg/stained_glass.png", "Stained Glass White", "STAINED_GLASS", 0),
+    STAINED_GLASS_ORANGE("/blockimg/stained_glass.png", "Stained Glass Orange", "STAINED_GLASS", 1, new Color(224, 140, 84)),
+    STAINED_GLASS_MAGENTA("/blockimg/stained_glass.png", "Stained Glass Magenta", "STAINED_GLASS", 2, new Color(140, 75, 200)),
+    STAINED_GLASS_LIGHT_BLUE("/blockimg/stained_glass.png", "Stained Glass Light Blue", "STAINED_GLASS", 3, new Color(100, 130, 200)),
+    STAINED_GLASS_YELLOW("/blockimg/stained_glass.png", "Stained Glass Yellow", "STAINED_GLASS", 4, new Color(180, 170, 41)),
+    STAINED_GLASS_LIGHT_GREEN("/blockimg/stained_glass.png", "Stained Glass  Lime", "STAINED_GLASS", 5, new Color(66, 180, 58)),
+    STAINED_GLASS_PINK("/blockimg/stained_glass.png", "Stained Glass Pink", "STAINED_GLASS", 6, new Color(216, 154, 170)),
+    STAINED_GLASS_GRAY("/blockimg/stained_glass.png", "Stained Glass Light Gray", "STAINED_GLASS", 7, new Color(70, 70, 70)),
+    STAINED_GLASS_LIGHT_GRAY("/blockimg/stained_glass.png", "Stained Glass  Gray", "STAINED_GLASS", 8, new Color(170, 180, 180)),
+    STAINED_GLASS_CYAN("/blockimg/stained_glass.png", "Stained Glass Cyan", "STAINED_GLASS", 9, new Color(44, 100, 130)),
+    STAINED_GLASS_LIGHT_PURPLE("/blockimg/stained_glass.png", "Stained Glass  Light Purple", "STAINED_GLASS", 10, new Color(200, 100, 200)),
+    STAINED_GLASS_BLUE("/blockimg/stained_glass.png", "Stained Glass Blue", "STAINED_GLASS", 11, new Color(45, 55, 141)),
+    STAINED_GLASS_BROWN("/blockimg/stained_glass.png", "Stained Glass Brown", "STAINED_GLASS", 12, new Color(80, 50, 30)),
+    STAINED_GLASS_GREEN("/blockimg/stained_glass.png", "Stained Glass Green", "STAINED_GLASS", 13, new Color(0, 200, 0)),
+    STAINED_GLASS_RED("/blockimg/stained_glass.png", "Stained Glass Red", "STAINED_GLASS", 14, new Color(156, 50, 50)),
+    STAINED_GLASS_BLACK("/blockimg/stained_glass.png", "Stained Glass Black", "STAINED_GLASS", 15, new Color(20, 20, 20)),
 
-    STAINED_GLASS_PANE_WHITE("/blockimg/stained_glass_pane.png", "Stained Glass Pane White","STAINED_GLASS_PANE",0),
-    STAINED_GLASS_PANE_ORANGE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Orange","STAINED_GLASS_PANE",1,new Color(224,140,84)),
-    STAINED_GLASS_PANE_MAGENTA("/blockimg/stained_glass_pane.png", "Stained Glass Pane Magenta","STAINED_GLASS_PANE",2,new Color(140,75,200)),
-    STAINED_GLASS_PANE_LIGHT_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Blue","STAINED_GLASS_PANE",3,new Color(100,130,200)),
-    STAINED_GLASS_PANE_YELLOW("/blockimg/stained_glass_pane.png", "Stained Glass Pane Yellow","STAINED_GLASS_PANE",4,new Color(180,170,41)),
-    STAINED_GLASS_PANE_LIGHT_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Lime","STAINED_GLASS_PANE",5,new Color(66,180,58)),
-    STAINED_GLASS_PANE_PINK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Pink","STAINED_GLASS_PANE",6,new Color(216,154,170)),
-    STAINED_GLASS_PANE_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Gray","STAINED_GLASS_PANE",7,new Color(70,70,70)),
-    STAINED_GLASS_PANE_LIGHT_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Gray","STAINED_GLASS_PANE",8,new Color(170,180,180)),
-    STAINED_GLASS_PANE_CYAN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Cyan","STAINED_GLASS_PANE",9,new Color(44,100,130)),
-    STAINED_GLASS_PANE_LIGHT_PURPLE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Purple","STAINED_GLASS_PANE",10,new Color(200,100,200)),
-    STAINED_GLASS_PANE_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Blue","STAINED_GLASS_PANE",11,new Color(45,55,141)),
-    STAINED_GLASS_PANE_BROWN("/blockimg/stained_glass_pane.png","Stained Glass Pane Brown","STAINED_GLASS_PANE",12,new Color(80,50,30)),
-    STAINED_GLASS_PANE_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Green","STAINED_GLASS_PANE",13,new Color(0,200,0)),
-    STAINED_GLASS_PANE_RED("/blockimg/stained_glass_pane.png", "Stained Glass Pane Red","STAINED_GLASS_PANE",14,new Color(156,50,50)),
-    STAINED_GLASS_PANE_BLACK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Black","STAINED_GLASS_PANE",15,new Color(20,20,20)),
+    STAINED_GLASS_PANE_WHITE("/blockimg/stained_glass_pane.png", "Stained Glass Pane White", "STAINED_GLASS_PANE", 0),
+    STAINED_GLASS_PANE_ORANGE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Orange", "STAINED_GLASS_PANE", 1, new Color(224, 140, 84)),
+    STAINED_GLASS_PANE_MAGENTA("/blockimg/stained_glass_pane.png", "Stained Glass Pane Magenta", "STAINED_GLASS_PANE", 2, new Color(140, 75, 200)),
+    STAINED_GLASS_PANE_LIGHT_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Blue", "STAINED_GLASS_PANE", 3, new Color(100, 130, 200)),
+    STAINED_GLASS_PANE_YELLOW("/blockimg/stained_glass_pane.png", "Stained Glass Pane Yellow", "STAINED_GLASS_PANE", 4, new Color(180, 170, 41)),
+    STAINED_GLASS_PANE_LIGHT_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Lime", "STAINED_GLASS_PANE", 5, new Color(66, 180, 58)),
+    STAINED_GLASS_PANE_PINK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Pink", "STAINED_GLASS_PANE", 6, new Color(216, 154, 170)),
+    STAINED_GLASS_PANE_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Gray", "STAINED_GLASS_PANE", 7, new Color(70, 70, 70)),
+    STAINED_GLASS_PANE_LIGHT_GRAY("/blockimg/stained_glass_pane.png", "Stained Glass Pane Gray", "STAINED_GLASS_PANE", 8, new Color(170, 180, 180)),
+    STAINED_GLASS_PANE_CYAN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Cyan", "STAINED_GLASS_PANE", 9, new Color(44, 100, 130)),
+    STAINED_GLASS_PANE_LIGHT_PURPLE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Light Purple", "STAINED_GLASS_PANE", 10, new Color(200, 100, 200)),
+    STAINED_GLASS_PANE_BLUE("/blockimg/stained_glass_pane.png", "Stained Glass Pane Blue", "STAINED_GLASS_PANE", 11, new Color(45, 55, 141)),
+    STAINED_GLASS_PANE_BROWN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Brown", "STAINED_GLASS_PANE", 12, new Color(80, 50, 30)),
+    STAINED_GLASS_PANE_GREEN("/blockimg/stained_glass_pane.png", "Stained Glass Pane Green", "STAINED_GLASS_PANE", 13, new Color(0, 200, 0)),
+    STAINED_GLASS_PANE_RED("/blockimg/stained_glass_pane.png", "Stained Glass Pane Red", "STAINED_GLASS_PANE", 14, new Color(156, 50, 50)),
+    STAINED_GLASS_PANE_BLACK("/blockimg/stained_glass_pane.png", "Stained Glass Pane Black", "STAINED_GLASS_PANE", 15, new Color(20, 20, 20)),
 
     STICKY_PISTON("/blockimg/sticky_piston.png", "Sticky Piston"),
     STONE_BRICK("/blockimg/stone_brick.png", "Stone Brick"),//may be called something different
@@ -232,39 +232,39 @@ public enum Material {
     WOOD_FENCE("/blockimg/wood_fence.png", "Wood Fence"),
     WOOD_SLAB("/blockimg/wood_slab.png", "Wood Slab"),
     WOOD_STEPS("/blockimg/wood_steps.png", "Wood Stairs"),
-    WOOL_CARPET_WHITE("/blockimg/wool_carpet.png", "Wool Carpet White","WOOL_CARPET",0),
-    WOOL_CARPET_ORANGE("/blockimg/wool_carpet.png", "Wool Carpet Orange","WOOL_CARPET",1,new Color(224,140,84)),
-    WOOL_CARPET_MAGENTA("/blockimg/wool_carpet.png", "Wool Carpet Magenta","WOOL_CARPET",2,new Color(140,75,200)),
-    WOOL_CARPET_LIGHT_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Light Blue","WOOL_CARPET",3,new Color(100,130,200)),
-    WOOL_CARPET_YELLOW("/blockimg/wool_carpet.png", "Wool Carpet Yellow","WOOL_CARPET",4,new Color(180,170,41)),
-    WOOL_CARPET_LIGHT_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Lime","WOOL_CARPET",5,new Color(66,180,58)),
-    WOOL_CARPET_PINK("/blockimg/wool_carpet.png", "Wool Carpet Pink","WOOL_CARPET",6,new Color(216,154,170)),
-    WOOL_CARPET_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Light Gray","WOOL_CARPET",7,new Color(70,70,70)),
-    WOOL_CARPET_LIGHT_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Gray","WOOL_CARPET",8,new Color(170,180,180)),
-    WOOL_CARPET_CYAN("/blockimg/wool_carpet.png", "Wool Carpet Cyan","WOOL_CARPET",9,new Color(44,100,130)),
-    WOOL_CARPET_LIGHT_PURPLE("/blockimg/wool_carpet.png", "Wool Carpet Light Purple","WOOL_CARPET",10,new Color(200,100,200)),
-    WOOL_CARPET_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Blue","WOOL_CARPET",11,new Color(45,55,141)),
-    WOOL_CARPET_BROWN("/blockimg/wool_carpet.png", "Wool Carpet Brown","WOOL_CARPET",12,new Color(80,50,30)),
-    WOOL_CARPET_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Green","WOOL_CARPET",13,new Color(0,200,0)),
-    WOOL_CARPET_RED("/blockimg/wool_carpet.png", "Wool Carpet Red","WOOL_CARPET",14,new Color(156,50,50)),
-    WOOL_CARPET_BLACK("/blockimg/wool_carpet.png", "Wool Carpet Black","WOOL_CARPET",15,new Color(20,20,20)),
+    WOOL_CARPET_WHITE("/blockimg/wool_carpet.png", "Wool Carpet White", "WOOL_CARPET", 0),
+    WOOL_CARPET_ORANGE("/blockimg/wool_carpet.png", "Wool Carpet Orange", "WOOL_CARPET", 1, new Color(224, 140, 84)),
+    WOOL_CARPET_MAGENTA("/blockimg/wool_carpet.png", "Wool Carpet Magenta", "WOOL_CARPET", 2, new Color(140, 75, 200)),
+    WOOL_CARPET_LIGHT_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Light Blue", "WOOL_CARPET", 3, new Color(100, 130, 200)),
+    WOOL_CARPET_YELLOW("/blockimg/wool_carpet.png", "Wool Carpet Yellow", "WOOL_CARPET", 4, new Color(180, 170, 41)),
+    WOOL_CARPET_LIGHT_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Lime", "WOOL_CARPET", 5, new Color(66, 180, 58)),
+    WOOL_CARPET_PINK("/blockimg/wool_carpet.png", "Wool Carpet Pink", "WOOL_CARPET", 6, new Color(216, 154, 170)),
+    WOOL_CARPET_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Light Gray", "WOOL_CARPET", 7, new Color(70, 70, 70)),
+    WOOL_CARPET_LIGHT_GRAY("/blockimg/wool_carpet.png", "Wool Carpet Gray", "WOOL_CARPET", 8, new Color(170, 180, 180)),
+    WOOL_CARPET_CYAN("/blockimg/wool_carpet.png", "Wool Carpet Cyan", "WOOL_CARPET", 9, new Color(44, 100, 130)),
+    WOOL_CARPET_LIGHT_PURPLE("/blockimg/wool_carpet.png", "Wool Carpet Light Purple", "WOOL_CARPET", 10, new Color(200, 100, 200)),
+    WOOL_CARPET_BLUE("/blockimg/wool_carpet.png", "Wool Carpet Blue", "WOOL_CARPET", 11, new Color(45, 55, 141)),
+    WOOL_CARPET_BROWN("/blockimg/wool_carpet.png", "Wool Carpet Brown", "WOOL_CARPET", 12, new Color(80, 50, 30)),
+    WOOL_CARPET_GREEN("/blockimg/wool_carpet.png", "Wool Carpet Green", "WOOL_CARPET", 13, new Color(0, 200, 0)),
+    WOOL_CARPET_RED("/blockimg/wool_carpet.png", "Wool Carpet Red", "WOOL_CARPET", 14, new Color(156, 50, 50)),
+    WOOL_CARPET_BLACK("/blockimg/wool_carpet.png", "Wool Carpet Black", "WOOL_CARPET", 15, new Color(20, 20, 20)),
 
-    WOOL_WHITE("/blockimg/wool.png", "Wool White","WOOL",0),
-    WOOL_ORANGE("/blockimg/wool.png", "Wool Orange","WOOL",1,new Color(224,140,84)),
-    WOOL_MAGENTA("/blockimg/wool.png", "Wool Magenta","WOOL",2,new Color(140,75,200)),
-    WOOL_LIGHT_BLUE("/blockimg/wool.png", "Wool Light Blue","WOOL",3,new Color(100,130,200)),
-    WOOL_YELLOW("/blockimg/wool.png", "Wool Yellow","WOOL",4,new Color(180,170,41)),
-    WOOL_LIGHT_GREEN("/blockimg/wool.png", "Wool Lime","WOOL",5,new Color(66,180,58)),
-    WOOL_PINK("/blockimg/wool.png", "Wool Pink","WOOL",6,new Color(216,154,170)),
-    WOOL_GRAY("/blockimg/wool.png", "Wool Light Gray","WOOL",7,new Color(70,70,70)),
-    WOOL_LIGHT_GRAY("/blockimg/wool.png", "Wool Gray","WOOL",8,new Color(170,180,180)),
-    WOOL_CYAN("/blockimg/wool.png", "Wool Cyan","WOOL",9,new Color(44,100,130)),
-    WOOL_LIGHT_PURPLE("/blockimg/wool.png", "Wool Light Purple","WOOL",10,new Color(200,100,200)),
-    WOOL_BLUE("/blockimg/wool.png", "Wool Blue","WOOL",11,new Color(45,55,141)),
-    WOOL_BROWN("/blockimg/wool.png", "Wool Brown","WOOL",12,new Color(80,50,30)),
-    WOOL_GREEN("/blockimg/wool.png", "Wool Green","WOOL",13,new Color(0,200,0)),
-    WOOL_RED("/blockimg/wool.png", "Wool Red","WOOL",14,new Color(156,50,50)),
-    WOOL_BLACK("/blockimg/wool.png", "Wool Black","WOOL",15,new Color(20,20,20));
+    WOOL_WHITE("/blockimg/wool.png", "Wool White", "WOOL", 0),
+    WOOL_ORANGE("/blockimg/wool.png", "Wool Orange", "WOOL", 1, new Color(224, 140, 84)),
+    WOOL_MAGENTA("/blockimg/wool.png", "Wool Magenta", "WOOL", 2, new Color(140, 75, 200)),
+    WOOL_LIGHT_BLUE("/blockimg/wool.png", "Wool Light Blue", "WOOL", 3, new Color(100, 130, 200)),
+    WOOL_YELLOW("/blockimg/wool.png", "Wool Yellow", "WOOL", 4, new Color(180, 170, 41)),
+    WOOL_LIGHT_GREEN("/blockimg/wool.png", "Wool Lime", "WOOL", 5, new Color(66, 180, 58)),
+    WOOL_PINK("/blockimg/wool.png", "Wool Pink", "WOOL", 6, new Color(216, 154, 170)),
+    WOOL_GRAY("/blockimg/wool.png", "Wool Light Gray", "WOOL", 7, new Color(70, 70, 70)),
+    WOOL_LIGHT_GRAY("/blockimg/wool.png", "Wool Gray", "WOOL", 8, new Color(170, 180, 180)),
+    WOOL_CYAN("/blockimg/wool.png", "Wool Cyan", "WOOL", 9, new Color(44, 100, 130)),
+    WOOL_LIGHT_PURPLE("/blockimg/wool.png", "Wool Light Purple", "WOOL", 10, new Color(200, 100, 200)),
+    WOOL_BLUE("/blockimg/wool.png", "Wool Blue", "WOOL", 11, new Color(45, 55, 141)),
+    WOOL_BROWN("/blockimg/wool.png", "Wool Brown", "WOOL", 12, new Color(80, 50, 30)),
+    WOOL_GREEN("/blockimg/wool.png", "Wool Green", "WOOL", 13, new Color(0, 200, 0)),
+    WOOL_RED("/blockimg/wool.png", "Wool Red", "WOOL", 14, new Color(156, 50, 50)),
+    WOOL_BLACK("/blockimg/wool.png", "Wool Black", "WOOL", 15, new Color(20, 20, 20));
 
     //Dyes
 
@@ -280,8 +280,8 @@ public enum Material {
         if (!name.equals("Air")) {
             try {
                 this.image = new ImageIcon(getClass().getResource(imagePath));
-            }catch(Exception e){
-                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL "+name);
+            } catch (Exception e) {
+                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL " + name);
                 e.printStackTrace();
             }
         } else {
@@ -297,14 +297,15 @@ public enum Material {
         if (!name.equals("Air")) {
             try {
                 this.image = new ImageIcon(getClass().getResource(imagePath));
-            }catch(Exception e){
-                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL "+name);
+            } catch (Exception e) {
+                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL " + name);
                 e.printStackTrace();
             }
         } else {
             image = new ImageIcon(new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB));
         }
     }
+
     Material(String imagePath, String name, String materialName, int durability, Color tint) {
         this.name = name;
         this.materialName = convertNameToEnum(materialName);
@@ -313,8 +314,8 @@ public enum Material {
         if (!name.equals("Air")) {
             try {
                 this.image = ItemUtil.tintImage(new ImageIcon(getClass().getResource(imagePath)), tint);
-            }catch(Exception e){
-                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL "+name);
+            } catch (Exception e) {
+                System.out.println("THE ERROR WAS CAUSED BY THE IMAGE FROM MATERIAL " + name);
                 e.printStackTrace();
             }
         } else {
@@ -355,8 +356,8 @@ public enum Material {
         return null;
     }
 
-    private String convertNameToEnum(String string){
-        return string.replace(" ","_").toUpperCase();
+    private String convertNameToEnum(String string) {
+        return string.replace(" ", "_").toUpperCase();
     }
 
 }

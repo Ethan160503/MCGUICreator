@@ -1,28 +1,28 @@
 package com.techno_wizard.mcguicreator.gui;
 
 public enum ChatColor {
-    BLACK("Black",'0', "000000"),
-    DARK_BLUE("Dark Blue",'1', "0000AA"),
-    DARK_GREEN("Dark Green",'2', "00AA00"),
-    DARK_AQUA("Cyan",'3', "00AAAA"),
-    DARK_RED("Dark Red",'4', "AA0000"),
-    DARK_PURPLE("Dark Purple",'5', "AA00AA"),
-    GOLD("Gold",'6', "FFAA00"),
-    GRAY("Gray",'7', "AAAAAA"),
-    DARK_GRAY("Dark Gray",'8', "555555"),
-    BLUE("Blue",'9', "5555FF"),
-    GREEN("Green",'a', "55FF55"),
-    AQUA("Aqua",'b', "55FFFF"),
-    RED("Red",'c', "FF5555"),
-    LIGHT_PURPLE("Light Purple",'d', "FF55FF"),
-    YELLOW("Yellow",'e', "FFFF55"),
-    WHITE("White",'f', "FFFFFF"),
-    MAGIC("Magic",'k', null, "[Magic]"),
-    BOLD("Bold",'l', "<b>"),
-    STRIKETHROUGH("StrikeThrough",'m', null, "<s>"),
-    UNDERLINE("Underline",'n', null, "<u>"),
-    ITALIC("Italic",'o', null, "<i>"),
-    RESET("Reset",'r', "FFFFFF");
+    BLACK("Black", '0', "000000"),
+    DARK_BLUE("Dark Blue", '1', "0000AA"),
+    DARK_GREEN("Dark Green", '2', "00AA00"),
+    DARK_AQUA("Cyan", '3', "00AAAA"),
+    DARK_RED("Dark Red", '4', "AA0000"),
+    DARK_PURPLE("Dark Purple", '5', "AA00AA"),
+    GOLD("Gold", '6', "FFAA00"),
+    GRAY("Gray", '7', "AAAAAA"),
+    DARK_GRAY("Dark Gray", '8', "555555"),
+    BLUE("Blue", '9', "5555FF"),
+    GREEN("Green", 'a', "55FF55"),
+    AQUA("Aqua", 'b', "55FFFF"),
+    RED("Red", 'c', "FF5555"),
+    LIGHT_PURPLE("Light Purple", 'd', "FF55FF"),
+    YELLOW("Yellow", 'e', "FFFF55"),
+    WHITE("White", 'f', "FFFFFF"),
+    MAGIC("Magic", 'k', null, "[Magic]"),
+    BOLD("Bold", 'l', "<b>"),
+    STRIKETHROUGH("StrikeThrough", 'm', null, "<s>"),
+    UNDERLINE("Underline", 'n', null, "<u>"),
+    ITALIC("Italic", 'o', null, "<i>"),
+    RESET("Reset", 'r', "FFFFFF");
 
     public static final char COLOR_CHAR = '§';
     private final String HEX;
@@ -32,15 +32,15 @@ public enum ChatColor {
     private final String name;
     private final String toString;
 
-    ChatColor(String name,char code, String hex) {
-        this(name,code, hex, null);
+    ChatColor(String name, char code, String hex) {
+        this(name, code, hex, null);
     }
 
-    ChatColor(String name,char code, String hex, String htmlOpen) {
+    ChatColor(String name, char code, String hex, String htmlOpen) {
         this.code = code;
         this.HEX = hex;
         this.name = name;
-        if(htmlOpen != null) {
+        if (htmlOpen != null) {
             HTML_OPEN_TAG = htmlOpen;
             HTML_CLOSE_TAG = new StringBuilder(htmlOpen).insert(1, "/").toString();
         } else {
@@ -50,13 +50,16 @@ public enum ChatColor {
         this.toString = new String(new char[]{'§', code});
     }
 
-    public static ChatColor getChatColor(char c){
-        for(ChatColor color:ChatColor.values())
-            if(color.getChar()==c)
+    public static ChatColor getChatColor(char c) {
+        for (ChatColor color : ChatColor.values())
+            if (color.getChar() == c)
                 return color;
         return ChatColor.RESET;
     }
-    public String getName(){return this.name;}
+
+    public String getName() {
+        return this.name;
+    }
 
     public char getChar() {
         return this.code;
@@ -72,6 +75,7 @@ public enum ChatColor {
 
     /**
      * gets code's HEX color code
+     *
      * @return hex color code
      */
     public String getHex() {
@@ -80,6 +84,7 @@ public enum ChatColor {
 
     /**
      * gets the html open tag. may be null
+     *
      * @return the html open tag
      */
     public String getHTMLOpenTag() {
@@ -88,6 +93,7 @@ public enum ChatColor {
 
     /**
      * Gets the html close tag. Return may be null
+     *
      * @return html close tag. may be null
      */
     public String getHTMLCloseTag() {

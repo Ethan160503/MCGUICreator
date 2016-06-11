@@ -20,7 +20,7 @@ public class TextEditorManager {
     private ColorEditor selectedEditor = null;
     private EditorManager em;
 
-    public TextEditorManager(EditorManager e){
+    public TextEditorManager(EditorManager e) {
         this.em = e;
         initListener();
     }
@@ -67,11 +67,12 @@ public class TextEditorManager {
 
     /**
      * Adds the ChatColor 'colorCode' to the selected editor
+     *
      * @param colorCode
      */
     public void editSelectedEditor(String colorCode) {
         // check is nothing is selected
-        if(selectedEditor != null) {
+        if (selectedEditor != null) {
 
             switch (selectedEditor) {
                 case ITEMSTACK_LORE:

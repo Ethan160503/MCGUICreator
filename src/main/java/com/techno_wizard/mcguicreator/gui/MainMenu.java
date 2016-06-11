@@ -80,11 +80,11 @@ public class MainMenu extends JFrame {
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        editorManager = new EditorManager(this,stackNameEditor,showFormattedTextCheckBoxDetails,
+        editorManager = new EditorManager(this, stackNameEditor, showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
-                stackType,enableEnchantmentNotVisibleCheckBox,stackNotes,editorPane1, editorTabbedPane,
-                inventoryNameEditor,eventGenerateType,inventorySizeSpinner,
-                enchantmentList,closeInvOnClickRButton);
+                stackType, enableEnchantmentNotVisibleCheckBox, stackNotes, editorPane1, editorTabbedPane,
+                inventoryNameEditor, eventGenerateType, inventorySizeSpinner,
+                enchantmentList, closeInvOnClickRButton);
 
         editorManager.updateInventorySize(3);
 
@@ -97,20 +97,21 @@ public class MainMenu extends JFrame {
         initEnchantments();
         pack();
 
-        new InventoryHoverOverGUI(inventoryTable,panel1,inventoryTableModel);
+        new InventoryHoverOverGUI(inventoryTable, panel1, inventoryTableModel);
     }
 
     /**
      * inits the enchantments
      */
-    public void initEnchantments(){
+    public void initEnchantments() {
         //Create the list to store all the enchantments
         enchantmentList.setModel(new DefaultListModel());
         this.enchantmentType.addItem("");
-        for(Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values()){
+        for (Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values()) {
             this.enchantmentType.addItem(e.getBukkitName());
         }
     }
+
     /**
      * inits the materials
      */
@@ -122,8 +123,8 @@ public class MainMenu extends JFrame {
     /**
      * inits the AutoGenerate Types
      */
-    public void initAutoGenerateTypes(){
-        for(AutoGenerateType agt : AutoGenerateType.values())
+    public void initAutoGenerateTypes() {
+        for (AutoGenerateType agt : AutoGenerateType.values())
             eventGenerateType.addItem(agt.getName());
     }
 
@@ -157,10 +158,10 @@ public class MainMenu extends JFrame {
         MouseListener addEnchantmentListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!(enchantmentType.getSelectedItem()).equals("")&&((int)enchantmentLevelSpinner.getValue())>0){
+                if (!(enchantmentType.getSelectedItem()).equals("") && ((int) enchantmentLevelSpinner.getValue()) > 0) {
                     DefaultListModel listModel = (DefaultListModel) enchantmentList.getModel();
-                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevelSpinner.getValue()));
-                    getInvManager().getActiveItemStack().removeEnchantment(ench,enchantmentList);
+                    Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName((String) enchantmentType.getSelectedItem()), ((int) enchantmentLevelSpinner.getValue()));
+                    getInvManager().getActiveItemStack().removeEnchantment(ench, enchantmentList);
                     getInvManager().getActiveItemStack().addEnchantment(ench);
                     listModel.addElement(ench.getDisplay());
                 }
@@ -171,9 +172,9 @@ public class MainMenu extends JFrame {
         MouseListener removeEnchantmentListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!(enchantmentType.getSelectedItem()).equals("")){
-                    Enchantment ench = new Enchantment( Enchantment.EnchantmentType.getEnchantmentByName((String)enchantmentType.getSelectedItem()),((int)enchantmentLevelSpinner.getValue()));
-                    getInvManager().getActiveItemStack().removeEnchantment(ench,enchantmentList);
+                if (!(enchantmentType.getSelectedItem()).equals("")) {
+                    Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName((String) enchantmentType.getSelectedItem()), ((int) enchantmentLevelSpinner.getValue()));
+                    getInvManager().getActiveItemStack().removeEnchantment(ench, enchantmentList);
                 }
             }
         };
@@ -218,7 +219,7 @@ public class MainMenu extends JFrame {
         inventorySizeSpinner.setValue(3);
         enchantmentLevelSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
 
-        invManager = new InventoryManager(this,inventoryTable);
+        invManager = new InventoryManager(this, inventoryTable);
     }
 
     public InventoryManager getInvManager() {
@@ -229,6 +230,11 @@ public class MainMenu extends JFrame {
         return editorManager;
     }
 
-    public JPanel getInventoryGUI(){return this.panel1;}
-    public JTable getInventoryTable(){return this.inventoryTable;}
+    public JPanel getInventoryGUI() {
+        return this.panel1;
+    }
+
+    public JTable getInventoryTable() {
+        return this.inventoryTable;
+    }
 }

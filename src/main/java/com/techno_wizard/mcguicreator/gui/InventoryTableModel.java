@@ -23,21 +23,23 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
     public int getRowCount() {
         return itemStacks[0].length;
     }
+
     public int getColumnCount() {
         return itemStacks.length;
     }
 
     /**
      * Use this to set the inventory size.
+     *
      * @param rows
      */
-    public void setInventorySize(int rows){
+    public void setInventorySize(int rows) {
         ItemStack[][] oldArray = itemStacks;
         ItemStack[][] newArray = new ItemStack[getColumnCount()][rows];
-        for(int y = 0; y < oldArray[0].length;y++){
-            for(int x = 0; x < oldArray.length;x++){
+        for (int y = 0; y < oldArray[0].length; y++) {
+            for (int x = 0; x < oldArray.length; x++) {
                 //Make sure the rows exist.
-                if(y >= rows)
+                if (y >= rows)
                     continue;
 
                 newArray[x][y] = oldArray[x][y];
@@ -47,13 +49,18 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
     }
 
 
+    public void setInventoryName(String name) {
+        this.inventoryName = name;
+    }
 
-    public void setInventoryName(String name){this.inventoryName = name;}
-    public String getInventoryName(){return this.inventoryName;}
+    public String getInventoryName() {
+        return this.inventoryName;
+    }
 
     /**
      * returns the object at ROW, COLUMN
      * NOTE: The row and columns are reversed.
+     *
      * @param rowIndex
      * @param columnIndex
      * @return
@@ -64,7 +71,7 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
 
     public ItemStack getItemStackAt(int column, int row) {
         //Since the itemstack might not exist yet, lets create a new Itemstack instance at that slot in order to prevent any possible NPEs
-        if(column <0 || row < 0|| column >= this.getColumnCount() || row >= this.getRowCount())
+        if (column < 0 || row < 0 || column >= this.getColumnCount() || row >= this.getRowCount())
             return null;
 
         if (itemStacks[column][row] == null)
@@ -73,17 +80,23 @@ public class InventoryTableModel extends AbstractTableModel implements Serializa
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex){
+    public Class<?> getColumnClass(int columnIndex) {
         return ImageIcon.class;
     }
 
-    public boolean rowContainsItemstacks(int row){
-        for(int x =0;x<9;x++){
-            if(getItemStackAt(x,row).getMaterial()!=Material.AIR)
+    public boolean rowContainsItemstacks(int row) {
+        for (int x = 0; x < 9; x++) {
+            if (getItemStackAt(x, row).getMaterial() != Material.AIR)
                 return true;
         }
         return false;
     }
-    public ItemStack[][] getItemstacks(){return this.itemStacks;}
-    public void setItemStacks(ItemStack[][] is){this.itemStacks = is;}
+
+    public ItemStack[][] getItemstacks() {
+        return this.itemStacks;
+    }
+
+    public void setItemStacks(ItemStack[][] is) {
+        this.itemStacks = is;
+    }
 }

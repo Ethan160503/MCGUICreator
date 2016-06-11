@@ -7,31 +7,35 @@ import java.util.List;
  * Created by Zombie_Striker on 4/13/2016.
  */
 public enum AutoGenerateType {
-    NONE(generateEmpty(),"Do not generate any"),EMPTY(AutoGenerateType.generateEmpty(),"Empty(Default)"),GIVE_ITEM(AutoGenerateType.generateGiveItem(),"Give Itemstack"),
-    SEND_MESSAGE(AutoGenerateType.generateSendMessage(),"Send Message"),OPEN_OTHER_INVENTORY(AutoGenerateType.generateOpenOtherInventory(),"Open an other inventory");
+    NONE(generateEmpty(), "Do not generate any"), EMPTY(AutoGenerateType.generateEmpty(), "Empty(Default)"), GIVE_ITEM(AutoGenerateType.generateGiveItem(), "Give Itemstack"),
+    SEND_MESSAGE(AutoGenerateType.generateSendMessage(), "Send Message"), OPEN_OTHER_INVENTORY(AutoGenerateType.generateOpenOtherInventory(), "Open an other inventory");
 
     private List<String> code;
     private String name;
 
-    AutoGenerateType(List<String> code,String name){
+    AutoGenerateType(List<String> code, String name) {
         this.code = code;
         this.name = name;
     }
-    public String  getName(){
+
+    public String getName() {
         return this.name;
     }
-    public List<String> getCode(){
+
+    public List<String> getCode() {
         return code;
     }
-    public String getCodeAsString(){
+
+    public String getCodeAsString() {
         StringBuilder sb = new StringBuilder();
-        for(String s : code)
-            sb.append(s+"\n");
+        for (String s : code)
+            sb.append(s + "\n");
         return sb.toString();
     }
-    public static AutoGenerateType getTypeByName(String name){
-        for(AutoGenerateType a : AutoGenerateType.values()){
-            if(a.getName().equals(name))
+
+    public static AutoGenerateType getTypeByName(String name) {
+        for (AutoGenerateType a : AutoGenerateType.values()) {
+            if (a.getName().equals(name))
                 return a;
         }
         return null;
@@ -39,21 +43,24 @@ public enum AutoGenerateType {
     }
 
 
-    private static List<String> generateEmpty(){
+    private static List<String> generateEmpty() {
         ArrayList<String> code = new ArrayList<>();
         code.add("");
         return code;
     }
-    private static List<String> generateGiveItem(){
+
+    private static List<String> generateGiveItem() {
         ArrayList<String> code = new ArrayList<>();
         code.add("((Player)e.getWhoClicked()).getInventory().addItem(/*INSERT ITEMSTACK HERE*/);");
         return code;
     }
-    private static List<String> generateSendMessage(){
+
+    private static List<String> generateSendMessage() {
         ArrayList<String> code = new ArrayList<>();
         code.add("e.getWhoClicked().sendMessage(\"Testing\");");
         return code;
     }
+
     private static List<String> generateOpenOtherInventory() {
         ArrayList<String> code = new ArrayList<>();
         code.add("e.getWhoClicked().closeInventory();");

@@ -14,7 +14,7 @@ import java.io.Reader;
 /**
  * Created by Zombie_Striker on 4/28/2016.
  */
-public class TutorialMenu extends JFrame{
+public class TutorialMenu extends JFrame {
     private JButton basicsButton;
     private JButton advancedItemstackEditingButton;
     private JButton exportButton;
@@ -28,7 +28,7 @@ public class TutorialMenu extends JFrame{
 
     private JSONObject tutorialJson;
 
-    public TutorialMenu(){
+    public TutorialMenu() {
         this.setContentPane(contentFrame);
         this.pack();
         this.setVisible(true);
@@ -39,7 +39,7 @@ public class TutorialMenu extends JFrame{
 
         tutorialText.setEditable(false);
 
-        this.setSize(500,500);
+        this.setSize(500, 500);
 
         tutorialText.setFont(ItemUtil.getMCFont(tutorialText.getFont()));
         tutorialLabel.setFont(ItemUtil.getMCFont(tutorialLabel.getFont()));
@@ -49,28 +49,28 @@ public class TutorialMenu extends JFrame{
     }
 
     public void init() {
-        basicsButton.addActionListener(e->getTutorialText(basicsButton));
-        advancedItemstackEditingButton.addActionListener(e->getTutorialText(advancedItemstackEditingButton));
-        howToEditTheButton.addActionListener(e->getTutorialText(howToEditTheButton));
-        exportButton.addActionListener(e->getTutorialText(exportButton));
+        basicsButton.addActionListener(e -> getTutorialText(basicsButton));
+        advancedItemstackEditingButton.addActionListener(e -> getTutorialText(advancedItemstackEditingButton));
+        howToEditTheButton.addActionListener(e -> getTutorialText(howToEditTheButton));
+        exportButton.addActionListener(e -> getTutorialText(exportButton));
     }
 
-    public void getTutorialText(JButton b){
+    public void getTutorialText(JButton b) {
         tutorialLabel.setText(b.getText());
         JSONObject text = (JSONObject) tutorialJson.get("text");
         String template;
-        int id=0;
+        int id = 0;
 
-        if(b==basicsButton)
-            id=0;
-        if(b==advancedItemstackEditingButton)
-            id=1;
-        if(b==exportButton)
-            id=2;
-        if(b==howToEditTheButton)
-            id=3;
+        if (b == basicsButton)
+            id = 0;
+        if (b == advancedItemstackEditingButton)
+            id = 1;
+        if (b == exportButton)
+            id = 2;
+        if (b == howToEditTheButton)
+            id = 3;
 
-        template = (String) text.get("tutorial-"+id);
+        template = (String) text.get("tutorial-" + id);
         tutorialText.setText(template);
         tutorialText.setImages(tutorialText.loadImages(id));
     }

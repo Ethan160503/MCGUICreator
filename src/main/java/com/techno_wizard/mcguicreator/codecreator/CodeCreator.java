@@ -63,18 +63,18 @@ public class CodeCreator {
 
                 String loreName = "itemlore" + ((row * 9) + col);
                 boolean hasLore = createStringList(code, is.getLoreAsList(), loreName);
-                code.add("Itemstack itemstack"+((row * 9) + col)+" = createItemstack("
-                                + is.getMaterial().getMaterialEnumName() + ","
-                                + is.getAmount() + ","
-                                + "\"" + is.getName()
-                                + "\"," + (hasLore ? loreName : "null")
-                                + ", (short)" + is.getMaterial().getDurability()
-                                + ");");
-                for(int i = 0; i < is.getEnchantments().size();i++){
-                    Enchantment en=is.getEnchantments().get(i);
-                    code.add("itemstack"+((row * 9) + col)+".add"+(en.isUnsafe()?"Unsafe":"")+"Enchantment(Enchantment."+en.getBukkitName()+","+en.getPowerLevel()+");");
+                code.add("Itemstack itemstack" + ((row * 9) + col) + " = createItemstack("
+                        + is.getMaterial().getMaterialEnumName() + ","
+                        + is.getAmount() + ","
+                        + "\"" + is.getName()
+                        + "\"," + (hasLore ? loreName : "null")
+                        + ", (short)" + is.getMaterial().getDurability()
+                        + ");");
+                for (int i = 0; i < is.getEnchantments().size(); i++) {
+                    Enchantment en = is.getEnchantments().get(i);
+                    code.add("itemstack" + ((row * 9) + col) + ".add" + (en.isUnsafe() ? "Unsafe" : "") + "Enchantment(Enchantment." + en.getBukkitName() + "," + en.getPowerLevel() + ");");
                 }
-                code.add(inventoryName + ".setItem(" + ((row * 9) + col) + ",itemstack"+((row*9)+col)+");");
+                code.add(inventoryName + ".setItem(" + ((row * 9) + col) + ",itemstack" + ((row * 9) + col) + ");");
             }
         }
         code.add("}");
@@ -83,7 +83,7 @@ public class CodeCreator {
         code.add("");
         code.add("//------- SECTION 4");
         code.add("");
-        createEvents(code,mainMenu);
+        createEvents(code, mainMenu);
 
         //Create the createItemstack method
         createCreateItemstackMethod(code);
@@ -122,28 +122,29 @@ public class CodeCreator {
         }
         return true;
     }
-    public static void createEvents(List<String> code,MainMenu mainMenu){
+
+    public static void createEvents(List<String> code, MainMenu mainMenu) {
         code.add("@EventHandler");
         code.add("public void onCustomInventoryClick(InventoryClickEvent e){");
-        code.add("if(e.getInventory().getTitle().equals(\""+"TEMP NAME"+"\"){");
+        code.add("if(e.getInventory().getTitle().equals(\"" + "TEMP NAME" + "\"){");
         code.add("if(e.getCurrentItem()!=null){");
         code.add("e.setCanceled(true);");
-        int slots = ((mainMenu.getInvManager().getInventoryTableModel().getRowCount()-1)*9)+mainMenu.getInvManager().getInventoryTableModel().getColumnCount()-1;
+        int slots = ((mainMenu.getInvManager().getInventoryTableModel().getRowCount() - 1) * 9) + mainMenu.getInvManager().getInventoryTableModel().getColumnCount() - 1;
         boolean isFirst = true;
-        for(int i = 0; i < slots; i++){
-            int row = (i)/9;
-            int col = i%9;
-            ItemStack is = mainMenu.getInvManager().getInventoryTableModel().getItemStackAt(col,row);
-            if(is.getAutoGenerateType() != AutoGenerateType.NONE) {
-                if(isFirst){
-                    code.add("if(e.getSlot() == "+((row*9)+col)+"){");
+        for (int i = 0; i < slots; i++) {
+            int row = (i) / 9;
+            int col = i % 9;
+            ItemStack is = mainMenu.getInvManager().getInventoryTableModel().getItemStackAt(col, row);
+            if (is.getAutoGenerateType() != AutoGenerateType.NONE) {
+                if (isFirst) {
+                    code.add("if(e.getSlot() == " + ((row * 9) + col) + "){");
                     isFirst = false;
-                }else
-                    code.add("else if(e.getSlot() == "+((row*9)+col)+"){");
-                code.add("//This is the "+is.getMaterial().getDisplayName()+(is.getName().length()>1?(" called "+is.getName()+"."):"."));
-                    for (String s : is.getAutoGenerateType().getCode()) {
-                        code.add(s);
-                    }
+                } else
+                    code.add("else if(e.getSlot() == " + ((row * 9) + col) + "){");
+                code.add("//This is the " + is.getMaterial().getDisplayName() + (is.getName().length() > 1 ? (" called " + is.getName() + ".") : "."));
+                for (String s : is.getAutoGenerateType().getCode()) {
+                    code.add(s);
+                }
                 code.add("}");
             }
         }
@@ -164,15 +165,16 @@ public class CodeCreator {
         code.add("return is;");
         code.add("}");
     }
-    public static List<String> format(List<String> code){
+
+    public static List<String> format(List<String> code) {
         List<String> formattedCode = new ArrayList<>();
         String indent = "   ";
         int indentCount = 1;
         // for each line
-        for(int i = 0; i < code.size();i++){
+        for (int i = 0; i < code.size(); i++) {
             int prevIndents = indentCount;
             boolean hasCloseBrace = false;
-            if(code.get(i).contains("}") || code.get(i).contains("{")) {
+            if (code.get(i).contains("}") || code.get(i).contains("{")) {
                 for (Character c : code.get(i).toCharArray()) {
                     if (c.equals('{'))
                         indentCount++;
@@ -183,15 +185,15 @@ public class CodeCreator {
                 }
             }
             //Get the correct amount of indents and removes one if there is a close brace
-            String indents="";
+            String indents = "";
             int iterCount = prevIndents;
             if (hasCloseBrace) iterCount--;
 
-            for(int j = 0; j < iterCount; j++){
-                indents+=indent;
+            for (int j = 0; j < iterCount; j++) {
+                indents += indent;
             }
 
-            formattedCode.add(indents+ code.get(i));
+            formattedCode.add(indents + code.get(i));
         }
         return formattedCode;
     }

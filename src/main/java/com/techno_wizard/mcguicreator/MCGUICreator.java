@@ -37,14 +37,14 @@ public class MCGUICreator {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
-        frame.setSize(1250,600);
+        frame.setSize(1250, 600);
 
 
         frame.setJMenuBar(getMenuBar(mainMenu));
         frame.setVisible(true);
     }
 
-    private static JMenuBar getMenuBar(MainMenu mainMenu){
+    private static JMenuBar getMenuBar(MainMenu mainMenu) {
         JMenuBar menuBar = new JMenuBar();
 
         menuBar.setFont(ItemUtil.getMCFont(menuBar.getFont()));
@@ -55,7 +55,7 @@ public class MCGUICreator {
         JMenu fileExport = new JMenu("Export code...");
         JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
         JMenuItem exportToPopup = new JMenuItem("Export to popup");
-        addActionListener(mainMenu,exportToClipboard,exportToPopup,fileSave,fileOpen);
+        addActionListener(mainMenu, exportToClipboard, exportToPopup, fileSave, fileOpen);
 
 
         menuBar.add(fileMenu);
@@ -69,7 +69,7 @@ public class MCGUICreator {
         //TODO: figure out why this does not update.
         JMenu chatColor = new JMenu("ChatColor");
         menuBar.add(chatColor);
-        for(ChatColor c : ChatColor.values()) {
+        for (ChatColor c : ChatColor.values()) {
             JMenuItem color = new JMenuItem(c.getName());
             color.addActionListener(e -> mainMenu.getEditorManager().getTextEditorManager().editSelectedEditor(c.getColorCode()));
             chatColor.add(color);
@@ -78,16 +78,17 @@ public class MCGUICreator {
 
         JMenu helpMenu = new JMenu("[HELP]");
         JMenuItem helpItem = new JMenuItem("Open Tutorial Window");
-        helpItem.addActionListener(e ->new TutorialMenu());
+        helpItem.addActionListener(e -> new TutorialMenu());
         helpMenu.add(helpItem);
         menuBar.add(helpMenu);
 
 
         return menuBar;
     }
-    private static void addActionListener(MainMenu mainMenu,JMenuItem exportToClipboard,JMenuItem exportToPopup,JMenuItem fileSave,JMenuItem fileOpen){
+
+    private static void addActionListener(MainMenu mainMenu, JMenuItem exportToClipboard, JMenuItem exportToPopup, JMenuItem fileSave, JMenuItem fileOpen) {
         exportToClipboard.addActionListener(e -> {
-           printCode(false);
+            printCode(false);
         });
         exportToPopup.addActionListener(e -> {
             printCode(true);
@@ -108,18 +109,18 @@ public class MCGUICreator {
 
             if (chooser.showOpenDialog(mainMenu) == JFileChooser.APPROVE_OPTION) {
                 try {
-                    File out = new File(chooser.getSelectedFile()+fileType);
-                    if(!out.exists())
+                    File out = new File(chooser.getSelectedFile() + fileType);
+                    if (!out.exists())
                         out.createNewFile();
                     FileOutputStream fos = new FileOutputStream(out);
                     ObjectOutputStream ous = new ObjectOutputStream(fos);
                     ous.writeObject(mainMenu.getInvManager().getInventoryTableModel());
                     ous.close();
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 mainMenu.remove(chooser);
-            }else {
+            } else {
                 System.out.println("Save option not approved!");
                 mainMenu.remove(chooser);
             }
@@ -136,32 +137,33 @@ public class MCGUICreator {
             if (chooser.showOpenDialog(mainMenu) == JFileChooser.APPROVE_OPTION) {
                 try {
                     File open = chooser.getSelectedFile();
-                    if(open.exists()) {
+                    if (open.exists()) {
                         FileInputStream fis = new FileInputStream(open);
                         ObjectInputStream ois = new ObjectInputStream(fis);
                         InventoryTableModel itm = (InventoryTableModel) ois.readObject();
                         mainMenu.getInvManager().transferData(itm);
                         ois.close();
                     }
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 mainMenu.remove(chooser);
-            }else {
+            } else {
                 System.out.println("Option not approved!");
                 mainMenu.remove(chooser);
             }
         });
     }
-    public static void printCode(boolean shouldExport){
+
+    public static void printCode(boolean shouldExport) {
         mainMenu.getEditorManager().saveCurrentItemStack();
         List<String> names = new ArrayList<>();
         List<Integer> slotsNoName = new ArrayList<>();
         List<Integer> slotsSameName = new ArrayList<>();
         boolean isEmpty = true;
-        for(int index = 0 ; index < getMainMenu().getInvManager().getInventoryTableModel().getRowCount()*9;index++){
-            ItemStack is = getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(index%9,index/9);
-            if(is.getMaterial() != Material.AIR){
+        for (int index = 0; index < getMainMenu().getInvManager().getInventoryTableModel().getRowCount() * 9; index++) {
+            ItemStack is = getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(index % 9, index / 9);
+            if (is.getMaterial() != Material.AIR) {
                 isEmpty = false;
                 if (is.getName().length() == 0) {
                     slotsNoName.add(index);
@@ -173,20 +175,20 @@ public class MCGUICreator {
             }
         }
         StringBuilder sb = new StringBuilder();
-        if(isEmpty) {
+        if (isEmpty) {
             sb.append("#-The Inventory is empty!");
         }
-        if(slotsNoName.size()>0) {
+        if (slotsNoName.size() > 0) {
             sb.append("\n#-The following slots have no name.");
             for (int i : slotsNoName)
                 sb.append("\n -" + i);
         }
-        if(slotsSameName.size()>0) {
+        if (slotsSameName.size() > 0) {
             sb.append("\n#-The following slots have the same name as an already loaded slot.");
             for (int i : slotsSameName)
-                sb.append("\n -" + i + " : \" " + getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(i % 9, i / 9).getName()+" \"");
+                sb.append("\n -" + i + " : \" " + getMainMenu().getInvManager().getInventoryTableModel().getItemStackAt(i % 9, i / 9).getName() + " \"");
         }
-        if(slotsSameName.size()>0||slotsNoName.size()>0||isEmpty) {
+        if (slotsSameName.size() > 0 || slotsNoName.size() > 0 || isEmpty) {
             new WarningPopUp(sb.toString(), new WarningResult() {
                 public void onActivate() {
                     if (shouldExport) {
@@ -202,9 +204,12 @@ public class MCGUICreator {
                         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                         clipboard.setContents(new StringSelection(code.toString()), null);
                     }
-                }public void onCancel() {}
+                }
+
+                public void onCancel() {
+                }
             });
-        }else{
+        } else {
             if (shouldExport) {
                 ItemStack is = mainMenu.getInvManager().getActiveItemStack();
                 StringBuilder code = new StringBuilder();
@@ -225,7 +230,7 @@ public class MCGUICreator {
     }
 
 
-    public static MainMenu getMainMenu(){
+    public static MainMenu getMainMenu() {
         return mainMenu;
     }
 }

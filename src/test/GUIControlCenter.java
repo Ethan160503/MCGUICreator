@@ -39,7 +39,7 @@ public class GUIControlCenter implements Listener {
 
         inv.setItem(0, stack);
         return inv;
-    };
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {

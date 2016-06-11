@@ -25,14 +25,6 @@
     "add item to ench buffer" : "loreBuffer.put(new Enchantment($ench$,$power$),$power$);",
     "clear" : "enchBuffer.clear();"
   },
-  "java constructors" : {
-    "int" : "int $name$ = $val$;",
-    "double" : "double $name$ = $val$;",
-    "short" : "short $name$ = $val$;",
-    "float" : "float $name$ = $val$;",
-    "char" : "char $name$ = $val$;",
-    "String" : "String $name$ = \"$val$\";"
-  },
   "extra" : {
     "init inv" : "public void initInventory(){",
     "class constructor": "public class $classname$Factory implements Listener{\nInventory $inv$;\n\n public $classname$Factory(JavaPlugin main){\n$inv$ = Bukkit.createInventory(null, $size$, \"$name$\");\nBukkit.getPluginManager().registerEvents(this,main);\ninitInventory();\n}\n\npublic Inventory getInventory(){\nreturn $inv$;\n}\n",

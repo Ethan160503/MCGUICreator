@@ -13,7 +13,7 @@ public class JImageAndTextPane extends JEditorPane {
     private BufferedImage[] images;
 
 
-    public JImageAndTextPane(){
+    public JImageAndTextPane() {
     }
 
     @Override
@@ -36,19 +36,20 @@ public class JImageAndTextPane extends JEditorPane {
     }
 
 
-    public BufferedImage[] loadImages(int tutorialID){
+    public BufferedImage[] loadImages(int tutorialID) {
         BufferedImage[] bia = new BufferedImage[10];
-        for(int i = 0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             try {
                 BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tutorial/" + tutorialID + "-" + i + ".png"));
                 bia[i] = image;
-            }catch(Exception e){
+            } catch (Exception e) {
                 break;
             }
         }
         return bia;
     }
-    public void setImages(BufferedImage[] bi){
+
+    public void setImages(BufferedImage[] bi) {
         this.images = bi;
     }
 }

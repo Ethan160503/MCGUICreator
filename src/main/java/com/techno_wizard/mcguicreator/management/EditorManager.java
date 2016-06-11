@@ -1,18 +1,18 @@
 package com.techno_wizard.mcguicreator.management;
 
-import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
-import com.techno_wizard.mcguicreator.gui.*;
-import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
+import com.techno_wizard.mcguicreator.gui.ChatColor;
+import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
 import com.techno_wizard.mcguicreator.help.WarningPopUp;
 import com.techno_wizard.mcguicreator.help.WarningResult;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +31,6 @@ public class EditorManager {
     private JEditorPane loreEditor;
     private JCheckBox showFormattedTxtInv;
     private JEditorPane inventoryNameEditor;
-    private JTabbedPane editorTabbedPane;
     private JComboBox eventGeneratorBox;
     private JSpinner inventorySizeSpinner;
     private JRadioButton closeInvOnClick;
@@ -52,7 +51,7 @@ public class EditorManager {
                          JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
                          JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,
-                         JList enchantmentList,JRadioButton closeInvOnClick) {
+                         JList enchantmentList, JRadioButton closeInvOnClick) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -64,7 +63,7 @@ public class EditorManager {
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
         this.showFormattedTxtInv = showFormattedTxtInv;
-        this.editorTabbedPane = editorTabbedPane;
+        JTabbedPane editorTabbedPane1 = editorTabbedPane;
         this.eventGeneratorBox = eventGeneratorBox;
         this.inventorySizeSpinner = inventorySizeSpinner;
         this.closeInvOnClick = closeInvOnClick;
@@ -122,11 +121,11 @@ public class EditorManager {
 
         inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
-            if((int) inventorySizeSpinner.getValue() < mainMenu.getInventoryTable().getRowCount()) {
+            if ((int) inventorySizeSpinner.getValue() < mainMenu.getInventoryTable().getRowCount()) {
                 boolean isDeletingItemstacks = false;
-                if((int) inventorySizeSpinner.getValue() > 6) {
+                if ((int) inventorySizeSpinner.getValue() > 6) {
                     inventorySizeSpinner.setValue(6);
-                }else if((int) inventorySizeSpinner.getValue() > 0) {
+                } else if ((int) inventorySizeSpinner.getValue() > 0) {
                     for (int rows = (int) inventorySizeSpinner.getValue(); rows < mainMenu.getInventoryTable().getRowCount(); rows++) {
                         if (mainMenu.getInvManager().getInventoryTableModel().rowContainsItemstacks(rows)) {
                             WarningPopUp wpu = new WarningPopUp("A row you are deleting contains an itemstack.", new WarningResult() {
@@ -134,8 +133,11 @@ public class EditorManager {
                                 public void onActivate() {
                                     updateInventorySize((int) inventorySizeSpinner.getValue());
                                 }
+
                                 @Override
-                                public void onCancel() {inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());}
+                                public void onCancel() {
+                                    inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());
+                                }
                             });
                             isDeletingItemstacks = true;
                             break;
@@ -143,9 +145,9 @@ public class EditorManager {
                     }
                     if (!isDeletingItemstacks)
                         updateInventorySize((int) inventorySizeSpinner.getValue());
-                }else
+                } else
                     inventorySizeSpinner.setValue(1);
-            }else
+            } else
                 updateInventorySize((int) inventorySizeSpinner.getValue());
 
         });
@@ -205,7 +207,7 @@ public class EditorManager {
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
         oldItemstack.setCloseInvOnClick(closeInvOnClick.isSelected());
         List<Enchantment> enchs = new ArrayList<>();
-        for(int i = 0; i <((DefaultListModel)enchantmentList.getModel()).size();i++){
+        for (int i = 0; i < ((DefaultListModel) enchantmentList.getModel()).size(); i++) {
             String s = (String) enchantmentList.getModel().getElementAt(i);
             Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
             enchs.add(ench);
@@ -257,8 +259,8 @@ public class EditorManager {
         showFormattedTxtLore.setSelected(textIsFormatted);
     }
 
-    public void setButtonListener(ChatColor color, JButton button){
-        button.addActionListener(e->onColorButtonPress(color));
+    public void setButtonListener(ChatColor color, JButton button) {
+        button.addActionListener(e -> onColorButtonPress(color));
     }
 
     /**
@@ -272,7 +274,7 @@ public class EditorManager {
         this.getTextEditorManager().editSelectedEditor(chatColor.getColorCode());
 
         // restore old view
-        if(textWasFormatted)
+        if (textWasFormatted)
             setTextIsFormatted(true);
     }
 
@@ -284,17 +286,27 @@ public class EditorManager {
             materialComboBox.addItem(mat);
     }
 
-    public JEditorPane getInventoryNameEditor(){return inventoryNameEditor;}
+    public JEditorPane getInventoryNameEditor() {
+        return inventoryNameEditor;
+    }
 
-    public JEditorPane getItemStackNameEditor(){return stackNameEditor;}
+    public JEditorPane getItemStackNameEditor() {
+        return stackNameEditor;
+    }
 
-    public JEditorPane getItemStackLoreEditor(){return loreEditor;}
+    public JEditorPane getItemStackLoreEditor() {
+        return loreEditor;
+    }
 
-    public JTextField getNotes(){return notesBox;}
+    public JTextField getNotes() {
+        return notesBox;
+    }
 
-    public TextEditorManager getTextEditorManager(){return textEditorManager;}
+    public TextEditorManager getTextEditorManager() {
+        return textEditorManager;
+    }
 
-    public void updateInventorySize(int size){
+    public void updateInventorySize(int size) {
         mainMenu.getInvManager().getInventoryTableModel().setInventorySize(size);
         mainMenu.getInventoryTable().setRowHeight(90);
         mainMenu.getInventoryTable().setModel(mainMenu.getInvManager().getInventoryTableModel());

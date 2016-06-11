@@ -18,7 +18,7 @@ public class InventoryManager {
     InventoryTableModel model;
     int selectedX = 0, selectedY = 0;
 
-    public InventoryManager(MainMenu mainMenue,JTable table) {
+    public InventoryManager(MainMenu mainMenue, JTable table) {
         this.table = table;
         this.mainMenu = mainMenue;
         // assert the table model is correct
@@ -36,15 +36,15 @@ public class InventoryManager {
     public void initSlots() {
 
         MouseListener tableClickListener = new MouseAdapter() {
-            boolean isBeingDragged=false;
+            boolean isBeingDragged = false;
             ItemStack beingDragged = null;
-            long firstPressed=0;
+            long firstPressed = 0;
 
             @Override
             public void mousePressed(MouseEvent e) {
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
-                if(outOfBounds(clickedX,clickedY))
+                if (outOfBounds(clickedX, clickedY))
                     return;
                 selectNewItemStack(e);
                 isBeingDragged = true;
@@ -54,13 +54,13 @@ public class InventoryManager {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(isBeingDragged&&beingDragged!=null) {
+                if (isBeingDragged && beingDragged != null) {
                     int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                     int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col;
 
-                    if(outOfBounds(clickedX,clickedY))
+                    if (outOfBounds(clickedX, clickedY))
                         return;
-                    if(System.currentTimeMillis()-firstPressed>100) {
+                    if (System.currentTimeMillis() - firstPressed > 100) {
 
                         ItemStack slot = beingDragged;
 
@@ -81,11 +81,11 @@ public class InventoryManager {
                         boolean close = activeItemStack.getCloseInvOnClick();
 
                         //Update each slot
-                        activeItemStack.update(slot.getMaterial(), slot.getLore(), slot.getAmount(),slot.getName(),slot.getEnchantments(),slot.getNotes(),slot.getAutoGenerateType(),slot.getCloseInvOnClick());
-                        slot.update(m,lore,amount,name,ench,notes,autogen,close);
+                        activeItemStack.update(slot.getMaterial(), slot.getLore(), slot.getAmount(), slot.getName(), slot.getEnchantments(), slot.getNotes(), slot.getAutoGenerateType(), slot.getCloseInvOnClick());
+                        slot.update(m, lore, amount, name, ench, notes, autogen, close);
                         mainMenu.getEditorManager().loadStack(getActiveItemStack());
 
-                    }else{
+                    } else {
                         selectNewItemStack(e);
                     }
                     isBeingDragged = false;
@@ -96,16 +96,16 @@ public class InventoryManager {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!isBeingDragged)
+                if (!isBeingDragged)
                     selectNewItemStack(e);
             }
 
-            public void selectNewItemStack(MouseEvent e){
+            public void selectNewItemStack(MouseEvent e) {
                 int clickedY = table.rowAtPoint(e.getPoint());//get mouse-selected row
                 int clickedX = table.columnAtPoint(e.getPoint());//get mouse-selected col
 
                 //Make sure the user does not click on the same slot twice
-                if (selectedX == clickedX && selectedY == clickedY||outOfBounds(clickedX,clickedY))
+                if (selectedX == clickedX && selectedY == clickedY || outOfBounds(clickedX, clickedY))
                     return;
 
                 //Save the previous Itemstack
@@ -140,26 +140,25 @@ public class InventoryManager {
         selectedY = y;
     }
 
-    public ItemStack getActiveItemStack(){
+    public ItemStack getActiveItemStack() {
         return model.getItemStackAt(selectedX, selectedY);
     }
 
     public void onColorPress() {
 
     }
-    public InventoryTableModel getInventoryTableModel(){
+
+    public InventoryTableModel getInventoryTableModel() {
         return this.model;
     }
 
-    private boolean outOfBounds(int clickedX,int clickedY){
+    private boolean outOfBounds(int clickedX, int clickedY) {
 
         //Make sure it's not out of bounds
-        if (clickedX >= getInventoryTableModel().getColumnCount()||clickedY >=getInventoryTableModel().getRowCount()||clickedX<0||clickedY<0)
-            return true;
-        return false;
+        return clickedX >= getInventoryTableModel().getColumnCount() || clickedY >= getInventoryTableModel().getRowCount() || clickedX < 0 || clickedY < 0;
     }
 
-    public void transferData(InventoryTableModel itm){
+    public void transferData(InventoryTableModel itm) {
         this.getInventoryTableModel().setInventoryName(itm.getInventoryName());
         this.getInventoryTableModel().setItemStacks(itm.getItemstacks());
         mainMenu.getEditorManager().updateInventorySize(itm.getRowCount());

@@ -12,7 +12,7 @@ import org.json.simple.JSONValue;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,11 +24,9 @@ public class CodeGenerator {
 
     private static CodeGenerator instance;
     private MainMenu mainMenu;
-    private JSONObject codeTemplates;
 
     private JSONObject commentsStringMap;
     private JSONObject inventoryStringMap;
-    private JSONObject javaConstructorsStringMap;
     private JSONObject itemStackStringMap;
     private JSONObject loreStringMap;
     private JSONObject enchantmentStringMap;
@@ -36,7 +34,6 @@ public class CodeGenerator {
 
     private Pattern openBracketPattern;
     private Pattern closeBracketPattern;
-    private Pattern colorCodePattern;
 
     //instance needs to be static in order to use this
     public static CodeGenerator getInstance() {
@@ -48,7 +45,7 @@ public class CodeGenerator {
 
     private CodeGenerator() {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream("/text/code_templates.json"));
-        codeTemplates = (JSONObject) JSONValue.parse(reader);
+        JSONObject codeTemplates = (JSONObject) JSONValue.parse(reader);
         try {
             reader.close();
         } catch (IOException e) {
@@ -59,7 +56,6 @@ public class CodeGenerator {
 
         commentsStringMap = (JSONObject) codeTemplates.get("comments");
         inventoryStringMap = (JSONObject) codeTemplates.get("inventory");
-        javaConstructorsStringMap = (JSONObject) codeTemplates.get("java constructors");
         itemStackStringMap = (JSONObject) codeTemplates.get("itemstack");
         loreStringMap = (JSONObject) codeTemplates.get("lore");
         enchantmentStringMap = (JSONObject) codeTemplates.get("enchantment");
@@ -67,7 +63,6 @@ public class CodeGenerator {
 
         openBracketPattern = Pattern.compile("[{]");
         closeBracketPattern = Pattern.compile("[}]");
-        colorCodePattern = Pattern.compile("[§.]");
     }
 
     /**
@@ -77,36 +72,31 @@ public class CodeGenerator {
         private List<String> code = new ArrayList<>();
         private final static String INDENT = "    ";
 
-        public void addLine(String line) {
+        void addLine(String line) {
             String[] sections = line.split("\\n");
-            for (String section :sections) {
-                code.add(section);
-            }
+            Collections.addAll(code, sections);
         }
 
-        public void addEmptyLine() {
+        void addEmptyLine() {
             code.add("");
         }
 
-        public String getFormattedOutput() {
+        String getFormattedOutput() {
             StringBuilder sb = new StringBuilder();
             int runningIndentCount = 0;
             // for each line
 
-            Iterator<String> iterator = code.iterator();
-            while (iterator.hasNext()) {
-                String next = iterator.next();
-
+            for (String next : code) {
                 // find counts of open and closes.
                 Matcher openMatcher = openBracketPattern.matcher(next);
                 Matcher closeMatcher = closeBracketPattern.matcher(next);
 
                 int openCount = 0, closeCount = 0;
                 while (openMatcher.find())
-                    openCount ++;
+                    openCount++;
 
                 while (closeMatcher.find())
-                    closeCount ++;
+                    closeCount++;
 
 
                 int lineIndentMovement = openCount - closeCount;
@@ -119,19 +109,19 @@ public class CodeGenerator {
                 // edit it for the current line
                 if (lineIndentMovement < 0) {
                     // it's losing indents on this line
-                     if(runningIndentCount + lineIndentMovement <= 0) {
-                         // everything was cleared
-                         shownIndent = "";
-                     } else {
-                         // not everything was cleared
+                    if (runningIndentCount + lineIndentMovement <= 0) {
+                        // everything was cleared
+                        shownIndent = "";
+                    } else {
+                        // not everything was cleared
                          /*
                          Take the first index, then go to the last index (total char) and add the
                          negative line indent of the line multiplied by 4
                           */
-                         shownIndent = shownIndent.substring(0, (runningIndentCount * 4) + (lineIndentMovement * 4));
-                     }
+                        shownIndent = shownIndent.substring(0, (runningIndentCount * 4) + (lineIndentMovement * 4));
+                    }
                 }
-                sb.append(shownIndent + next + "\n");
+                sb.append(shownIndent).append(next).append("\n");
                 runningIndentCount += lineIndentMovement;
                 if (runningIndentCount < 0)
                     runningIndentCount = 0;
@@ -139,24 +129,26 @@ public class CodeGenerator {
             return sb.toString();
         }
     }
+
     /**
      * Writes the java code that constructs the inventoryStringMap table model in bukkit
-     * @return
+     *
+     * @return representing java
      */
-    public String writeRepresentingJava(InventoryTableModel invModel){
+    public String writeRepresentingJava(InventoryTableModel invModel) {
         CodeBuffer buffer = new CodeBuffer();
 
-        buffer.addLine(((String)extraStringMap.get("imports")));
+        buffer.addLine(((String) extraStringMap.get("imports")));
         // print the initial notes
         buffer.addLine((String) commentsStringMap.get("init comment"));
         buffer.addEmptyLine();
         buffer.addEmptyLine();
 
         buffer.addLine(((String) extraStringMap.get("class constructor"))
-                .replace("$count$", invModel.getRowCount()*9+"")
+                .replace("$count$", invModel.getRowCount() * 9 + "")
                 .replace("$classname$", invModel.getInventoryName().replace(" ", ""))
-                .replace("$inv$","inventoryInstance")
-                .replace("$size$",(mainMenu.getInvManager().getInventoryTableModel().getRowCount()*9)+"")
+                .replace("$inv$", "inventoryInstance")
+                .replace("$size$", (mainMenu.getInvManager().getInventoryTableModel().getRowCount() * 9) + "")
         );
 
         buffer.addLine((String) extraStringMap.get("init inv"));
@@ -167,23 +159,23 @@ public class CodeGenerator {
         // add space before creating stacks
         buffer.addEmptyLine();
 
-        for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
-            ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
-            if(toWrite.getMaterial() != Material.AIR){
-                addItemstackToInv(toWrite, buffer,slot);
+        for (int slot = 0; slot < invModel.getRowCount() * 9; slot++) {
+            ItemStack toWrite = invModel.getItemStackAt(slot % 9, slot / 9);
+            if (toWrite.getMaterial() != Material.AIR) {
+                addItemstackToInv(toWrite, buffer, slot);
                 buffer.addEmptyLine();
             }
         }
         buffer.addLine("}");//Closing bracket for the intiInv method
 
-        buffer.addLine(((String)extraStringMap.get("listener top"))
-                .replace("$inv$","inventoryInstance")
+        buffer.addLine(((String) extraStringMap.get("listener top"))
+                .replace("$inv$", "inventoryInstance")
         );
         buffer.addLine("switch(e.getSlot()){");
-        for(int slot = 0; slot < invModel.getRowCount()*9;slot++){
-            ItemStack toWrite = invModel.getItemStackAt(slot%9,slot/9);
-            if(toWrite.getMaterial() != Material.AIR){
-                addItemstackToListener(toWrite, buffer,slot);
+        for (int slot = 0; slot < invModel.getRowCount() * 9; slot++) {
+            ItemStack toWrite = invModel.getItemStackAt(slot % 9, slot / 9);
+            if (toWrite.getMaterial() != Material.AIR) {
+                addItemstackToListener(toWrite, buffer, slot);
                 buffer.addEmptyLine();
             }
         }
@@ -194,7 +186,6 @@ public class CodeGenerator {
 
         return buffer.getFormattedOutput();
     }
-
 
     private void addItemstackToListener(ItemStack itemstack, CodeBuffer codeBuffer, int slot) {
         if (itemstack.getAutoGenerateType() != AutoGenerateType.EMPTY) {
@@ -247,8 +238,8 @@ public class CodeGenerator {
 
         buffer.addLine(((String) inventoryStringMap.get("add stack to slot"))
                 .replace("$stack$", "stack" + slot)
-                .replace("$slot$", slot+"")
-                .replace("$inv$", "inventoryInstance" )
+                .replace("$slot$", slot + "")
+                .replace("$inv$", "inventoryInstance")
         );
 
         buffer.addLine("//end stack");
