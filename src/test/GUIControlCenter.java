@@ -1,3 +1,4 @@
+import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -76,5 +77,11 @@ public class GUIControlCenter implements Listener {
         }
         if (didMatchInv)
             e.setCancelled(true);
+    }
+
+    public Inventory cloneInventory(Inventory inv) {
+        Inventory clone = Bukkit.createInventory(inv.getHolder(), inv.getSize(), inv.getName());
+        clone.setContents(inv.getContents().clone());
+        return clone;
     }
 }

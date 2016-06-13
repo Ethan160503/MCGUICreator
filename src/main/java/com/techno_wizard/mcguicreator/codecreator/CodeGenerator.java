@@ -34,6 +34,7 @@ public class CodeGenerator {
 
     private Pattern openBracketPattern;
     private Pattern closeBracketPattern;
+    private Pattern switchCasePattern;
 
     //instance needs to be static in order to use this
     public static CodeGenerator getInstance() {
@@ -63,6 +64,7 @@ public class CodeGenerator {
 
         openBracketPattern = Pattern.compile("[{]");
         closeBracketPattern = Pattern.compile("[}]");
+        switchCasePattern = Pattern.compile("case .*:");
     }
 
     /**
@@ -84,6 +86,8 @@ public class CodeGenerator {
         String getFormattedOutput() {
             StringBuilder sb = new StringBuilder();
             int runningIndentCount = 0;
+            boolean isOnSwitchCase = false;
+            boolean applySwitchClose = false;
             // for each line
 
             for (String next : code) {
@@ -95,8 +99,27 @@ public class CodeGenerator {
                 while (openMatcher.find())
                     openCount++;
 
+                if (!isOnSwitchCase && switchCasePattern.matcher(next).find()) {
+                    // its a case statement
+                    openCount++;
+                    isOnSwitchCase = true;
+                }
+
+
                 while (closeMatcher.find())
                     closeCount++;
+
+                // the last line applied a switch case close. Unindent.
+                if (applySwitchClose) {
+                    closeCount++;
+                    applySwitchClose = false;
+                }
+
+                if (isOnSwitchCase && next.contains("break;")) {
+                    // case ended
+                    isOnSwitchCase = false;
+                    applySwitchClose = true;
+                }
 
 
                 int lineIndentMovement = openCount - closeCount;
@@ -147,7 +170,8 @@ public class CodeGenerator {
         buffer.addLine(((String) extraStringMap.get("class constructor"))
                 .replace("$count$", invModel.getRowCount() * 9 + "")
                 .replace("$classname$", invModel.getInventoryName().replace(" ", ""))
-                .replace("$inv$", "inventoryInstance")
+                .replace("$name$", invModel.getInventoryName())
+                .replace("$inv$", invModel.getInventoryName())
                 .replace("$size$", (mainMenu.getInvManager().getInventoryTableModel().getRowCount() * 9) + "")
         );
 
@@ -180,9 +204,13 @@ public class CodeGenerator {
             }
         }
 
-        // close out brackets. 5 needed.
-        for (int i = 0; i < 5; i++)
+        // close out brackets back to class body. 4 needed.
+        for (int i = 0; i < 4; i++)
             buffer.addLine("}");
+
+        buffer.addLine((String) extraStringMap.get("clone method"));
+
+        buffer.addLine("}"); // add class closing bracket
 
         return buffer.getFormattedOutput();
     }

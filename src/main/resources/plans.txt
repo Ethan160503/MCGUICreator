@@ -7,9 +7,9 @@ Inventory
         Add hoverover for details like MC does ===---Done
         Add count of items in stack ===---Done
     Data retention
-        table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items.
+        table model needs to be created to hold item materials, but not Bukkit's. We need all inventory applicable items. ===---Done
             was planning on creating a MASSIVE json file read through Gson with each item's picture path for easy
-            updating later
+            updating later===---Done
         need a custom itemstack item that holds the stack item count, name, lore, enchantment data, and other info ==---Done
         Inventory needs to be somehow serializable now, because it's better if it is built that way to start with.  ===---Done?
     Table needs to be able to drag and drop items around. this might be hard. ==---Done

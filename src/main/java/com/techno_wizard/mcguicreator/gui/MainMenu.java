@@ -212,6 +212,7 @@ public class MainMenu extends JFrame {
         //set the table model
         inventoryTableModel = new InventoryTableModel();
         inventoryTable.setModel(inventoryTableModel);
+        inventoryTable.setTableHeader(null);
 
         stackItemCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
         stackItemCountSpinner.setValue(1);

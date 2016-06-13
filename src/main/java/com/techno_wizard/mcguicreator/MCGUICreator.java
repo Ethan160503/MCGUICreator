@@ -229,7 +229,6 @@ public class MCGUICreator {
         slotsSameName.clear();
     }
 
-
     public static MainMenu getMainMenu() {
         return mainMenu;
     }

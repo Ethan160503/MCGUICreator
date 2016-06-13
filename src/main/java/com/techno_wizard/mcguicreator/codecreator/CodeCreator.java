@@ -50,7 +50,7 @@ public class CodeCreator {
         code.add("");
         code.add("//------- SECTION 3");
         code.add("");
-        code.add("public void initInventory(){");
+        code.add("public void initInventory() {");
         code.add(inventoryName + " = Bukkit.createInventory(null," + (model.getRowCount() * 9) + "," + inventoryName + ");");
 
         //Setting the slots
