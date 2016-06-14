@@ -7,8 +7,11 @@ import java.util.List;
  * Created by Zombie_Striker on 4/13/2016.
  */
 public enum AutoGenerateType {
-    NONE(generateEmpty(), "Do not generate any"), EMPTY(AutoGenerateType.generateEmpty(), "Empty(Default)"), GIVE_ITEM(AutoGenerateType.generateGiveItem(), "Give Itemstack"),
-    SEND_MESSAGE(AutoGenerateType.generateSendMessage(), "Send Message"), OPEN_OTHER_INVENTORY(AutoGenerateType.generateOpenOtherInventory(), "Open an other inventory");
+    NONE(generateEmpty(), "Do not generate any"),
+    EMPTY(AutoGenerateType.generateEmpty(), "Empty (Default)"),
+    GIVE_ITEM(AutoGenerateType.generateGiveItem(), "Give Itemstack"),
+    SEND_MESSAGE(AutoGenerateType.generateSendMessage(), "Send Message"),
+    OPEN_OTHER_INVENTORY(AutoGenerateType.generateOpenOtherInventory(), "Open an other inventory");
 
     private List<String> code;
     private String name;

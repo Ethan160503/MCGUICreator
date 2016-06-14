@@ -11,6 +11,7 @@ import java.io.Serializable;
  * Table model representing a player inventory
  */
 public class InventoryTableModel extends AbstractTableModel implements Serializable {
+    private static final long serialVersionUID = 1;
 
     private String inventoryName = "Custom Inventory";
     private ItemStack[][] itemStacks;

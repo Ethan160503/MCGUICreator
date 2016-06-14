@@ -162,5 +162,6 @@ public class InventoryManager {
         this.getInventoryTableModel().setInventoryName(itm.getInventoryName());
         this.getInventoryTableModel().setItemStacks(itm.getItemstacks());
         mainMenu.getEditorManager().updateInventorySize(itm.getRowCount());
+        this.getInventoryTableModel().fireTableDataChanged();
     }
 }

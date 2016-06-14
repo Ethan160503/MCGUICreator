@@ -30,6 +30,7 @@ public class MCGUICreator {
     private static MainMenu mainMenu;
 
     public static void main(String[] args) {
+
         JFrame frame = new JFrame();
 
         mainMenu = new MainMenu();
@@ -118,11 +119,12 @@ public class MCGUICreator {
                     ous.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(mainMenu, "There was an error reading the file.\n" +
+                            "This may be a save file for an outdated MCGUICreator version or a corrupt file.",
+                            "Oops...", JOptionPane.INFORMATION_MESSAGE);
                 }
-                mainMenu.remove(chooser);
             } else {
                 System.out.println("Save option not approved!");
-                mainMenu.remove(chooser);
             }
         });
 
