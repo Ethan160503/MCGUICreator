@@ -2,18 +2,9 @@ package com.techno_wizard.mcguicreator.gui.inventory;
 
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
+import java.util.*;
 /**
  * Created by Ethan on 4/3/2016.
  */
@@ -123,18 +114,6 @@ public class ItemStack implements Serializable {
         this.setNotes(notes);
         this.setAutoGenerateType(auto);
         this.setCloseInvOnClick(closeInvOnClick);
-    }
-
-    /**
-     * Use this to update all the values of an itemstack. This is what we should use to update the itemstack and
-     * icon whenever a value is changed.
-     *
-     * @param materialName
-     * @param lore
-     * @param amount
-     */
-    public void update(String materialName, String lore, int amount, String name, List<Enchantment> ench, String note, AutoGenerateType auto, boolean closeInvOnClick) {
-        update(Material.getMaterialByName(materialName), lore, amount, name, ench, note, auto, closeInvOnClick);
     }
 
     public String getName() {

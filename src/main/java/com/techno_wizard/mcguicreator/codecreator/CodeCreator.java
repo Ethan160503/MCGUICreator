@@ -1,14 +1,10 @@
 package com.techno_wizard.mcguicreator.codecreator;
 
-import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
-import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Zombie_Striker on 4/5/2016.

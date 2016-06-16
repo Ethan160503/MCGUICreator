@@ -1,6 +1,5 @@
 package com.techno_wizard.mcguicreator.management;
 
-import javax.swing.text.BadLocationException;
 import java.awt.event.*;
 
 import static com.techno_wizard.mcguicreator.management.TextEditorManager.ColorEditor.*;
@@ -59,10 +58,6 @@ public class TextEditorManager {
 
     public void setSelectedEditor(ColorEditor colorEditor) {
         this.selectedEditor = colorEditor;
-    }
-
-    public ColorEditor getSelectedEditor() {
-        return this.selectedEditor;
     }
 
     /**

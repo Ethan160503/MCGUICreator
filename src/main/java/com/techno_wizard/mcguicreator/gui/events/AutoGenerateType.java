@@ -1,7 +1,6 @@
 package com.techno_wizard.mcguicreator.gui.events;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Zombie_Striker on 4/13/2016.

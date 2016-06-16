@@ -1,17 +1,12 @@
 package com.techno_wizard.mcguicreator.management;
 
-import com.techno_wizard.mcguicreator.gui.ChatColor;
-import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
-import com.techno_wizard.mcguicreator.help.WarningPopUp;
-import com.techno_wizard.mcguicreator.help.WarningResult;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.help.*;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +30,6 @@ public class EditorManager {
     private JSpinner inventorySizeSpinner;
     private JRadioButton closeInvOnClick;
 
-    /*private JButton copyToClipboardButton;
-    private JButton exportButton;*/
     private JList enchantmentList;
 
     private boolean textIsFormatted;
@@ -68,8 +61,6 @@ public class EditorManager {
         this.inventorySizeSpinner = inventorySizeSpinner;
         this.closeInvOnClick = closeInvOnClick;
 
-        /*this.copyToClipboardButton = copyToClipboardButton;
-        this.exportButton = exportButton;*/
         this.enchantmentList = enchantmentList;
 
 
@@ -79,6 +70,18 @@ public class EditorManager {
     }
 
     public void initEditors() {
+        //TODO: Find a better way to stop useres from creating new lines
+        this.inventoryNameEditor.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                inventoryNameEditor.setText(inventoryNameEditor.getText().replace("\n"," "));
+            }
+        });
+        this.stackNameEditor.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e){
+                stackNameEditor.setText(stackNameEditor.getText().replace("\n"," "));
+            }
+        });
+
         materialComboBox.addActionListener(e ->
                 mainMenu.getInvManager().updateActiveItemStackIcon((Material) materialComboBox.getSelectedItem()));
         //TODO add text formatting switch
@@ -86,38 +89,6 @@ public class EditorManager {
         showFormattedTxtLore.addActionListener(listener);
         showFormattedTxtDetails.addActionListener(listener);
         showFormattedTxtInv.addActionListener(listener);
-
-        //Creating the code for the clipboard.
-        //todo delegate to managing class
-       /* MouseListener copyToClipboardListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Update the active itemstack
-                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                StringBuilder code = new StringBuilder();
-                for (String s : CodeCreator.writecode(mainMenu)) {
-                    code.append(s + "\n");
-                }
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(new StringSelection(code.toString()), null);
-            }
-        };
-        copyToClipboardButton.addMouseListener(copyToClipboardListener);
-
-        MouseListener exportListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Update the active itemstack
-                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-
-                StringBuilder code = new StringBuilder();
-                for (String s : CodeCreator.writecode(mainMenu)) {
-                    code.append(s + "\n");
-                }
-                new CodeExporter(code.toString());
-            }
-        };
-        exportButton.addMouseListener(exportListener);*/
 
         inventorySizeSpinner.setValue(mainMenu.getInvManager().getInventoryTableModel().getRowCount());
         inventorySizeSpinner.addChangeListener(e -> {
@@ -258,14 +229,14 @@ public class EditorManager {
         showFormattedTxtInv.setSelected(textIsFormatted);
         showFormattedTxtLore.setSelected(textIsFormatted);
     }
-
-    public void setButtonListener(ChatColor color, JButton button) {
+    //TODO: Remove since there are no longer any buttons that add chatcolors.
+    /*public void setButtonListener(ChatColor color, JButton button) {
         button.addActionListener(e -> onColorButtonPress(color));
     }
 
     /**
      * @param chatColor
-     */
+     *
     public void onColorButtonPress(ChatColor chatColor) {
         boolean textWasFormatted = textIsFormatted;
         // change to original to add color code
@@ -276,15 +247,7 @@ public class EditorManager {
         // restore old view
         if (textWasFormatted)
             setTextIsFormatted(true);
-    }
-
-    /**
-     * inits the materials
-     */
-    public void initMaterialList() {
-        for (Material mat : Material.values())
-            materialComboBox.addItem(mat);
-    }
+    }*/
 
     public JEditorPane getInventoryNameEditor() {
         return inventoryNameEditor;
@@ -308,7 +271,7 @@ public class EditorManager {
 
     public void updateInventorySize(int size) {
         mainMenu.getInvManager().getInventoryTableModel().setInventorySize(size);
-        mainMenu.getInventoryTable().setRowHeight(90);
+        mainMenu.getInventoryTable().setRowHeight(75);
         mainMenu.getInventoryTable().setModel(mainMenu.getInvManager().getInventoryTableModel());
     }
 }

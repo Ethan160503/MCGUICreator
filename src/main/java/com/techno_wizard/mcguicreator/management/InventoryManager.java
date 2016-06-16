@@ -1,7 +1,6 @@
 package com.techno_wizard.mcguicreator.management;
 
-import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
-import com.techno_wizard.mcguicreator.gui.MainMenu;
+import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 
@@ -142,10 +141,6 @@ public class InventoryManager {
 
     public ItemStack getActiveItemStack() {
         return model.getItemStackAt(selectedX, selectedY);
-    }
-
-    public void onColorPress() {
-
     }
 
     public InventoryTableModel getInventoryTableModel() {

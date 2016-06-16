@@ -15,28 +15,6 @@ public class MainMenu extends JFrame {
 
     private JTable inventoryTable;
     private JPanel panel1;
-    /*private JButton blackButton;
-    private JButton darkRedButton;
-    private JButton darkPurpleButton;
-    private JButton darkBlueButton;
-    private JButton darkAquaButton;
-    private JButton goldButton;
-    private JButton grayButton;
-    private JButton darkGrayButton;
-    private JButton blueButton;
-    private JButton greenButton;
-    private JButton aquaButton;
-    private JButton redButton;
-    private JButton lightPurpleButton;
-    private JButton yellowButton;
-    private JButton whiteButton;
-    private JButton darkGreenButton;
-    private JButton strikethroughButton;
-    private JButton boldButton;
-    private JButton magicButton;
-    private JButton underlineButton;
-    private JButton italicButton;
-    private JButton resetButton;*/
     private JEditorPane editorPane1;
     private JCheckBox showFormattedTextCheckBoxLore;
     private JCheckBox showFormattedTextCheckBoxDetails;
@@ -50,9 +28,6 @@ public class MainMenu extends JFrame {
     private EditorManager editorManager;
 
 
-    //Code buttons
-    /*private JButton exportButton;
-    private JButton copyToClipboardButton;*/
     private JEditorPane inventoryNameEditor;
     private JCheckBox showFormattedTextCheckBoxInv;
     private JSpinner inventorySizeSpinner;
@@ -89,66 +64,26 @@ public class MainMenu extends JFrame {
         editorManager.updateInventorySize(3);
 
         initButtons();
-        // psst... this does nothing! Thanks IntelliJ! Lol. Got to fix that.
-        initMenuBar();
 
-        initMaterials();
-        initAutoGenerateTypes();
-        initEnchantments();
+        initInventoryObject();
         pack();
 
         new InventoryHoverOverGUI(inventoryTable, panel1, inventoryTableModel);
     }
 
     /**
-     * inits the enchantments
+     * inits materials, enchantments, and autogenerate types
      */
-    public void initEnchantments() {
+    public void initInventoryObject(){
         //Create the list to store all the enchantments
         enchantmentList.setModel(new DefaultListModel());
         this.enchantmentType.addItem("");
-        for (Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values()) {
+        for (Enchantment.EnchantmentType e : Enchantment.EnchantmentType.values())
             this.enchantmentType.addItem(e.getBukkitName());
-        }
-    }
-
-    /**
-     * inits the materials
-     */
-    public void initMaterials() {
         for (Material mat : Material.values())
             stackType.addItem(mat);
-    }
-
-    /**
-     * inits the AutoGenerate Types
-     */
-    public void initAutoGenerateTypes() {
         for (AutoGenerateType agt : AutoGenerateType.values())
             eventGenerateType.addItem(agt.getName());
-    }
-
-
-    /**
-     * inits the toolbar
-     */
-    private void initMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu();
-        JMenuItem fileOpen = new JMenuItem("Open");
-        JMenu fileExport = new JMenu("Export code...");
-        JMenuItem exportToClipboard = new JMenuItem("Export to clipboard");
-        JMenuItem exportToPopup = new JMenuItem("Export to popup");
-
-
-        menuBar.add(fileMenu);
-        fileMenu.add(fileOpen);
-        fileMenu.add(fileExport);
-        fileExport.add(exportToClipboard);
-        fileExport.add(exportToPopup);
-
-
-        this.setJMenuBar(menuBar);
     }
 
     /**
@@ -227,13 +162,7 @@ public class MainMenu extends JFrame {
         return invManager;
     }
 
-    public EditorManager getEditorManager() {
-        return editorManager;
-    }
-
-    public JPanel getInventoryGUI() {
-        return this.panel1;
-    }
+    public EditorManager getEditorManager() {return editorManager;}
 
     public JTable getInventoryTable() {
         return this.inventoryTable;

@@ -1,7 +1,6 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.gui.inventory.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -12,7 +11,6 @@ import java.io.Serializable;
  */
 public class InventoryTableModel extends AbstractTableModel implements Serializable {
     private static final long serialVersionUID = 1;
-
     private String inventoryName = "Custom Inventory";
     private ItemStack[][] itemStacks;
 

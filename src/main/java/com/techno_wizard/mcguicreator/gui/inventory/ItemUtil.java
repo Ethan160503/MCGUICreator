@@ -1,18 +1,12 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 
-import sun.awt.IconInfo;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
+import java.io.*;
 
 /**
  * Created by Zombie_Striker on 4/4/2016.
@@ -42,7 +36,7 @@ public class ItemUtil {
         if (i == 8) return "VII";
         if (i == 9) return "IX";
         if (i == 10) return "X";
-        return i + "";
+        return String.valueOf(i);
     }
 
     public static int getIntegers(String romanNum) {
@@ -87,25 +81,6 @@ public class ItemUtil {
         if (font != null) {
             return font.deriveFont(oldFont.getStyle(), oldFont.getSize2D());
         }
-        /*if(font!= null) {
-            UIDefaults defs = UIManager.getLookAndFeelDefaults();
-            for (Iterator i = defs.keySet().iterator(); i.hasNext(); ) {
-                Object keyObject = i.next();
-                if (keyObject instanceof StringBuffer) {
-                    StringBuffer key = (StringBuffer) keyObject;
-                    if (key.toString().endsWith(".font")) {
-                        Font oldFont = defs.getFont(key.toString());
-                        defs.put(key.toString(), font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                    }
-                } else if (keyObject instanceof String) {
-                    String key = (String) keyObject;
-                    if (key.endsWith(".font")) {
-                        Font oldFont = defs.getFont(key);
-                        defs.put(key, font.deriveFont(oldFont.getStyle(), 1f * oldFont.getSize2D()));
-                    }
-                }
-            }
-        }*/
         return oldFont;
     }
 
