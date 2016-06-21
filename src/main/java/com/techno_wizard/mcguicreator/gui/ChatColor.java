@@ -1,5 +1,8 @@
 package com.techno_wizard.mcguicreator.gui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum ChatColor {
     BLACK("Black", '0', "000000"),
     DARK_BLUE("Dark Blue", '1', "0000AA"),
@@ -18,7 +21,7 @@ public enum ChatColor {
     YELLOW("Yellow", 'e', "FFFF55"),
     WHITE("White", 'f', "FFFFFF"),
     MAGIC("Magic", 'k', null, "[Magic]"),
-    BOLD("Bold", 'l', "<b>"),
+    BOLD("Bold", 'l', null, "<b>"),
     STRIKETHROUGH("StrikeThrough", 'm', null, "<s>"),
     UNDERLINE("Underline", 'n', null, "<u>"),
     ITALIC("Italic", 'o', null, "<i>"),
@@ -31,9 +34,10 @@ public enum ChatColor {
     private final char code;
     private final String name;
     private final String toString;
+    private static Pattern colorCode = Pattern.compile("§.");
 
     ChatColor(String name, char code, String hex) {
-        this(name, code, hex, null);
+        this(name, code, hex, "<font color=#" + hex + "\">");
     }
 
     ChatColor(String name, char code, String hex, String htmlOpen) {
@@ -102,5 +106,20 @@ public enum ChatColor {
 
     public String toString() {
         return this.toString;
+    }
+
+    public static String getFormattedColorText(String coded) {
+        String output = new String(coded);
+        Matcher matcher = colorCode.matcher(coded);
+        while (matcher.find()) {
+            String sub = coded.substring(matcher.start(), matcher.start() + matcher.end());
+
+            for (ChatColor color: ChatColor.values()) {
+                if (color.getChar() == sub.charAt(1)) {
+                    output = output.replace(sub, color.getHTMLOpenTag());
+                }
+            }
+        }
+        return output;
     }
 }

@@ -200,7 +200,6 @@ public class CodeGenerator {
             ItemStack toWrite = invModel.getItemStackAt(slot % 9, slot / 9);
             if (toWrite.getMaterial() != Material.AIR) {
                 addItemstackToListener(toWrite, buffer, slot);
-                buffer.addEmptyLine();
             }
         }
 
@@ -216,10 +215,11 @@ public class CodeGenerator {
     }
 
     private void addItemstackToListener(ItemStack itemstack, CodeBuffer codeBuffer, int slot) {
-        if (itemstack.getAutoGenerateType() != AutoGenerateType.EMPTY) {
+        if (itemstack.getAutoGenerateType() != AutoGenerateType.NONE) {
             codeBuffer.addLine(String.format("case %d: // stack: %s -> %s", slot, itemstack.getName(), itemstack.getNotes()));
             codeBuffer.addLine(itemstack.getAutoGenerateType().getCodeAsString());
             codeBuffer.addLine("break;");
+            codeBuffer.addEmptyLine();
         }
     }
 

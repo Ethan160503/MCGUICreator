@@ -14,7 +14,6 @@ public class ItemStack implements Serializable {
     private String name = "";
     private String lore;
     private int amount = 1;
-    private boolean isEnchanted;
     private List<Enchantment> enchantments = new ArrayList<>();
     private String notes;
     private AutoGenerateType autoGenerateType = AutoGenerateType.NONE;
@@ -32,7 +31,6 @@ public class ItemStack implements Serializable {
         this.icon = is.getIcon();
         this.name = is.getName();
         this.notes = is.getNotes();
-        this.isEnchanted = is.isEnchanted();
         this.autoGenerateType = is.getAutoGenerateType();
     }
 
@@ -145,14 +143,6 @@ public class ItemStack implements Serializable {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public boolean isEnchanted() {
-        return isEnchanted;
-    }
-
-    public void setEnchanted(boolean enchanted) {
-        isEnchanted = enchanted;
     }
 
     public String getNotes() {

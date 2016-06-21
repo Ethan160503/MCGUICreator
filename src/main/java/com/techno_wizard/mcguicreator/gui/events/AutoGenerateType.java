@@ -53,20 +53,21 @@ public enum AutoGenerateType {
 
     private static List<String> generateGiveItem() {
         ArrayList<String> code = new ArrayList<>();
-        code.add("((Player)e.getWhoClicked()).getInventory().addItem(/*INSERT ITEMSTACK HERE*/);");
+        code.add("((Player)e.getWhoClicked()).getInventory().addItem(/* TODO insert itemstack*/);");
         return code;
     }
 
     private static List<String> generateSendMessage() {
         ArrayList<String> code = new ArrayList<>();
-        code.add("e.getWhoClicked().sendMessage(\"Testing\");");
+        code.add("e.getWhoClicked().sendMessage(/* TODO insert message */);");
         return code;
     }
 
     private static List<String> generateOpenOtherInventory() {
         ArrayList<String> code = new ArrayList<>();
+        //todo this is an illegal line. Check the bukkit docs.
         code.add("e.getWhoClicked().closeInventory();");
-        code.add("e.getWhoClicked().openInventory(/*INSERT INVENTORY HERE*/)");
+        code.add("e.getWhoClicked().openInventory(/* TODO insert inventory*/)");
         return code;
     }
 

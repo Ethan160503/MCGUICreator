@@ -4,11 +4,14 @@ import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.help.*;
+import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -38,6 +41,7 @@ public class EditorManager {
     private String lorePlain = "";
 
     private TextEditorManager textEditorManager;
+
 
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
@@ -139,7 +143,6 @@ public class EditorManager {
         loreEditor.setText(stack.getLore());
         materialComboBox.setSelectedItem(stack.getMaterial());
         stackItemCountSpinner.setValue(stack.getAmount());
-        enableEnchantCheckBox.setSelected(stack.isEnchanted());
         notesBox.setText(stack.getNotes());
         closeInvOnClick.setSelected(stack.getCloseInvOnClick());
         ((DefaultListModel) enchantmentList.getModel()).clear();
@@ -172,7 +175,6 @@ public class EditorManager {
         removes them
          */
         oldItemstack.setLore(loreEditor.getText().replaceAll("\\<[^>]*>", ""));
-        oldItemstack.setEnchanted(enableEnchantCheckBox.isSelected());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
@@ -211,7 +213,7 @@ public class EditorManager {
             inventoryNamePlain = inventoryNameEditor.getText();
             inventoryNameEditor.setContentType("text/html");
             inventoryNameEditor.setEditable(false);
-            // convert
+            inventoryNameEditor.setText(ChatColor.getFormattedColorText(inventoryNamePlain));
 
             lorePlain = loreEditor.getText();
             loreEditor.setContentType("text/html");
@@ -229,25 +231,6 @@ public class EditorManager {
         showFormattedTxtInv.setSelected(textIsFormatted);
         showFormattedTxtLore.setSelected(textIsFormatted);
     }
-    //TODO: Remove since there are no longer any buttons that add chatcolors.
-    /*public void setButtonListener(ChatColor color, JButton button) {
-        button.addActionListener(e -> onColorButtonPress(color));
-    }
-
-    /**
-     * @param chatColor
-     *
-    public void onColorButtonPress(ChatColor chatColor) {
-        boolean textWasFormatted = textIsFormatted;
-        // change to original to add color code
-        if (textIsFormatted) setTextIsFormatted(false);
-
-        this.getTextEditorManager().editSelectedEditor(chatColor.getColorCode());
-
-        // restore old view
-        if (textWasFormatted)
-            setTextIsFormatted(true);
-    }*/
 
     public JEditorPane getInventoryNameEditor() {
         return inventoryNameEditor;
