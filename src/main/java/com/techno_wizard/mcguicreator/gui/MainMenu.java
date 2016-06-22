@@ -21,7 +21,6 @@ public class MainMenu extends JFrame {
     private JEditorPane stackNameEditor;
     private JSpinner stackItemCountSpinner;
     private JTextField stackNotes;
-    private JCheckBox enableEnchantmentNotVisibleCheckBox;
     private JComboBox stackType;
 
     private InventoryManager invManager;
@@ -57,7 +56,7 @@ public class MainMenu extends JFrame {
 
         editorManager = new EditorManager(this, stackNameEditor, showFormattedTextCheckBoxDetails,
                 showFormattedTextCheckBoxLore, showFormattedTextCheckBoxInv, stackItemCountSpinner,
-                stackType, enableEnchantmentNotVisibleCheckBox, stackNotes, editorPane1, editorTabbedPane,
+                stackType, stackNotes, editorPane1, editorTabbedPane,
                 inventoryNameEditor, eventGenerateType, inventorySizeSpinner,
                 enchantmentList, closeInvOnClickRButton);
 

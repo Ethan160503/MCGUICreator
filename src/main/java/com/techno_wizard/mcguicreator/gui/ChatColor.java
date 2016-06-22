@@ -1,5 +1,6 @@
 package com.techno_wizard.mcguicreator.gui;
 
+import javax.swing.text.html.HTML;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +46,11 @@ public enum ChatColor {
         this.HEX = hex;
         this.name = name;
         if (htmlOpen != null) {
-            HTML_OPEN_TAG = htmlOpen;
+            if (name.equals("Reset")) {
+                HTML_OPEN_TAG = "</i></b></u></s>" + htmlOpen;
+            } else {
+                HTML_OPEN_TAG = htmlOpen;
+            }
             HTML_CLOSE_TAG = new StringBuilder(htmlOpen).insert(1, "/").toString();
         } else {
             HTML_CLOSE_TAG = null;
@@ -112,11 +117,12 @@ public enum ChatColor {
         String output = new String(coded);
         Matcher matcher = colorCode.matcher(coded);
         while (matcher.find()) {
-            String sub = coded.substring(matcher.start(), matcher.start() + matcher.end());
+            String sub = coded.substring(matcher.start(), matcher.end());
 
             for (ChatColor color: ChatColor.values()) {
                 if (color.getChar() == sub.charAt(1)) {
                     output = output.replace(sub, color.getHTMLOpenTag());
+                    break;
                 }
             }
         }

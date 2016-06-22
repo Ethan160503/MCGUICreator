@@ -7,6 +7,7 @@ import com.techno_wizard.mcguicreator.help.*;
 import org.junit.Test;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class EditorManager {
 
     public EditorManager(MainMenu mainMenu, JEditorPane stackNameEditor, JCheckBox showFormattedTxtDetails,
                          JCheckBox showFormattedTxtLore, JCheckBox showFormattedTxtInv, JSpinner stackItemCountSpinner, JComboBox materialBox,
-                         JCheckBox enableEnchantCheckBox, JTextField notesBox, JEditorPane loreEditor,
+                         JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
                          JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,
                          JList enchantmentList, JRadioButton closeInvOnClick) {
@@ -56,7 +57,6 @@ public class EditorManager {
         this.showFormattedTxtLore = showFormattedTxtLore;
         this.stackItemCountSpinner = stackItemCountSpinner;
         this.materialComboBox = materialBox;
-        this.enableEnchantCheckBox = enableEnchantCheckBox;
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
         this.showFormattedTxtInv = showFormattedTxtInv;
@@ -174,7 +174,7 @@ public class EditorManager {
         /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
         removes them
          */
-        oldItemstack.setLore(loreEditor.getText().replaceAll("\\<[^>]*>", ""));
+        oldItemstack.setLore(loreEditor.getText().replaceAll("<[^>]*>", ""));
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
@@ -194,6 +194,7 @@ public class EditorManager {
      * @param textIsFormatted whether or not the text should be formatted
      */
     public void setTextIsFormatted(boolean textIsFormatted) {
+        //todo saving when text is formatted will result in incorrect data saving.
         if ((this.textIsFormatted && textIsFormatted) || (!this.textIsFormatted && !textIsFormatted)) return;
 
         if (!textIsFormatted) {
@@ -209,6 +210,11 @@ public class EditorManager {
             stackNameEditor.setEditable(true);
             stackNameEditor.setContentType("text/plain");
             stackNameEditor.setText(stackNamePlain);
+
+            // set box color
+            inventoryNameEditor.setBackground(Color.WHITE);
+            loreEditor.setBackground(Color.WHITE);
+            stackNameEditor.setBackground(Color.WHITE);
         } else {
             inventoryNamePlain = inventoryNameEditor.getText();
             inventoryNameEditor.setContentType("text/html");
@@ -218,12 +224,18 @@ public class EditorManager {
             lorePlain = loreEditor.getText();
             loreEditor.setContentType("text/html");
             loreEditor.setEditable(false);
-            // convert
+            loreEditor.setText(ChatColor.getFormattedColorText(lorePlain));
 
             stackNamePlain = stackNameEditor.getText();
             stackNameEditor.setContentType("text/html");
             stackNameEditor.setEditable(false);
-            //convert
+            stackNameEditor.setText(ChatColor.getFormattedColorText(stackNamePlain));
+
+            // set color for readability with white
+            inventoryNameEditor.setBackground(Color.DARK_GRAY);
+            loreEditor.setBackground(Color.DARK_GRAY);
+            stackNameEditor.setBackground(Color.DARK_GRAY);
+
         }
 
         this.textIsFormatted = textIsFormatted;
