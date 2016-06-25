@@ -2,6 +2,7 @@ package com.techno_wizard.mcguicreator;
 
 import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.codecreator.CodeGenerator;
+import com.techno_wizard.mcguicreator.data_retention.StoredInventory;
 import com.techno_wizard.mcguicreator.gui.ChatColor;
 import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
@@ -115,7 +116,13 @@ public class MCGUICreator {
                         out.createNewFile();
                     FileOutputStream fos = new FileOutputStream(out);
                     ObjectOutputStream ous = new ObjectOutputStream(fos);
-                    ous.writeObject(mainMenu.getInvManager().getInventoryTableModel());
+
+                    // create storage class
+                    StoredInventory toStore = new StoredInventory();
+                    toStore.setInventoryModel(mainMenu.getInvManager().getInventoryTableModel());
+
+                    // write
+                    ous.writeObject(toStore);
                     ous.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -142,8 +149,10 @@ public class MCGUICreator {
                     if (open.exists()) {
                         FileInputStream fis = new FileInputStream(open);
                         ObjectInputStream ois = new ObjectInputStream(fis);
-                        InventoryTableModel itm = (InventoryTableModel) ois.readObject();
-                        mainMenu.getInvManager().transferData(itm);
+
+                        StoredInventory storedInventory = (StoredInventory) ois.readObject();
+                        storedInventory.loadData(mainMenu.getInvManager().getInventoryTableModel());
+                        mainMenu.getInvManager().transferData(mainMenu.getInvManager().getInventoryTableModel());
                         ois.close();
                     }
                 } catch (Exception ex) {

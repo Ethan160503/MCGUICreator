@@ -9,6 +9,8 @@ import java.util.*;
  * Created by Ethan on 4/3/2016.
  */
 public class ItemStack implements Serializable {
+    private Long serialVersionUID = 1L;
+
     private ImageIcon icon;
     private Material material;
     private String name = "";

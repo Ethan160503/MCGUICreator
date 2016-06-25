@@ -1,5 +1,6 @@
 package com.techno_wizard.mcguicreator.management;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
@@ -115,7 +116,7 @@ public class InventoryManager {
 
                 //Load the new slot
                 mainMenu.getEditorManager().loadStack(getActiveItemStack());
-
+                System.out.println("degub pause");
             }
         };
 
@@ -154,9 +155,12 @@ public class InventoryManager {
     }
 
     public void transferData(InventoryTableModel itm) {
+        mainMenu.getInventoryTable().setEditingColumn(0);
+        mainMenu.getInventoryTable().setEditingRow(0);
         this.getInventoryTableModel().setInventoryName(itm.getInventoryName());
         this.getInventoryTableModel().setItemStacks(itm.getItemstacks());
         mainMenu.getEditorManager().updateInventorySize(itm.getRowCount());
         this.getInventoryTableModel().fireTableDataChanged();
+        mainMenu.getEditorManager().reloadData(itm, itm.getItemStackAt(0, 0));
     }
 }

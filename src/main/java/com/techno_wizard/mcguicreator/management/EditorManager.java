@@ -4,6 +4,7 @@ import com.techno_wizard.mcguicreator.gui.*;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 import com.techno_wizard.mcguicreator.gui.inventory.*;
 import com.techno_wizard.mcguicreator.help.*;
+import org.bukkit.entity.Item;
 import org.junit.Test;
 
 import javax.swing.*;
@@ -25,7 +26,6 @@ public class EditorManager {
     private JCheckBox showFormattedTxtLore;
     private JSpinner stackItemCountSpinner;
     private JComboBox materialComboBox;
-    private JCheckBox enableEnchantCheckBox;
     private JTextField notesBox;
     private JEditorPane loreEditor;
     private JCheckBox showFormattedTxtInv;
@@ -158,7 +158,6 @@ public class EditorManager {
     }
 
     public void saveCurrentItemStack() {
-        setTextIsFormatted(false);
         this.saveItemStack(mainMenu.getInvManager().getActiveItemStack());
     }
 
@@ -169,12 +168,10 @@ public class EditorManager {
             return;
 
         //todo revert to unformatted version first
+        setTextIsFormatted(false);
         oldItemstack.setName(stackNameEditor.getText());
         oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());
-        /*todo this is really only a temp fix. We'd need to go back to the unformatted text, and this simply
-        removes them
-         */
-        oldItemstack.setLore(loreEditor.getText().replaceAll("<[^>]*>", ""));
+        oldItemstack.setLore(loreEditor.getText());
         oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
         oldItemstack.setNotes(notesBox.getText());
         oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
@@ -259,7 +256,6 @@ public class EditorManager {
     public JTextField getNotes() {
         return notesBox;
     }
-
     public TextEditorManager getTextEditorManager() {
         return textEditorManager;
     }
@@ -268,5 +264,27 @@ public class EditorManager {
         mainMenu.getInvManager().getInventoryTableModel().setInventorySize(size);
         mainMenu.getInventoryTable().setRowHeight(75);
         mainMenu.getInventoryTable().setModel(mainMenu.getInvManager().getInventoryTableModel());
+    }
+
+    public void reloadData(InventoryTableModel model, ItemStack selected) {
+        setTextIsFormatted(false);
+        inventoryNameEditor.setText(model.getInventoryName());
+        stackNameEditor.setText(selected.getName());
+        notesBox.setText(selected.getNotes());
+
+        // to prevent casting issues
+        DefaultListModel enchModel = new DefaultListModel();
+        enchModel.setSize(selected.getEnchantments().size());
+        for (int i = 0; i < selected.getEnchantments().size(); i++) {
+            enchModel.set(i, selected.getEnchantments().get(i));
+        }
+
+        enchantmentList.setModel(enchModel);
+        stackItemCountSpinner.setValue(selected.getAmount());
+        loreEditor.setText(selected.getLore());
+        eventGeneratorBox.setSelectedItem(selected.getAutoGenerateType());
+        inventorySizeSpinner.setValue(model.getRowCount());
+        closeInvOnClick.setSelected(selected.getCloseInvOnClick());
+        materialComboBox.setSelectedItem(selected.getMaterial());
     }
 }
