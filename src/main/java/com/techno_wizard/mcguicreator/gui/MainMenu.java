@@ -147,6 +147,7 @@ public class MainMenu extends JFrame {
 
         inventoryTable = new JTable(model);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        inventoryTable.setShowGrid(true);
 
         //set the table model
         inventoryTableModel = new InventoryTableModel();
