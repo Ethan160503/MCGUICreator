@@ -1,13 +1,18 @@
 package com.techno_wizard.mcguicreator.management;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.techno_wizard.mcguicreator.gui.*;
+import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
+import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -116,7 +121,6 @@ public class InventoryManager {
 
                 //Load the new slot
                 mainMenu.getEditorManager().loadStack(getActiveItemStack());
-                System.out.println("degub pause");
             }
         };
 

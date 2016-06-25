@@ -30,6 +30,7 @@ Created by Zombie_Striker and Tecno_Wizard
  **/
 
 
+@SuppressWarnings("ALL")
 public class CustomInventoryFactory implements Listener{
     Inventory custominventory;
 

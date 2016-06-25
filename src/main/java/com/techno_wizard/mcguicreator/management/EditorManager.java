@@ -1,19 +1,23 @@
 package com.techno_wizard.mcguicreator.management;
 
-import com.techno_wizard.mcguicreator.gui.*;
+import com.techno_wizard.mcguicreator.gui.ChatColor;
+import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
+import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.*;
-import com.techno_wizard.mcguicreator.help.*;
-import org.bukkit.entity.Item;
-import org.junit.Test;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.help.WarningPopUp;
+import com.techno_wizard.mcguicreator.help.WarningResult;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Ethan on 4/6/2016.
@@ -32,7 +36,7 @@ public class EditorManager {
     private JEditorPane inventoryNameEditor;
     private JComboBox eventGeneratorBox;
     private JSpinner inventorySizeSpinner;
-    private JRadioButton closeInvOnClick;
+    private JCheckBox closeInvOnClick;
 
     private JList enchantmentList;
 
@@ -49,7 +53,7 @@ public class EditorManager {
                          JTextField notesBox, JEditorPane loreEditor,
                          JTabbedPane editorTabbedPane, JEditorPane inventoryNameEditor,
                          JComboBox eventGeneratorBox, JSpinner inventorySizeSpinner,
-                         JList enchantmentList, JRadioButton closeInvOnClick) {
+                         JList enchantmentList, JCheckBox closeInvOnClick) {
         this.inventoryNameEditor = inventoryNameEditor;
         this.mainMenu = mainMenu;
         this.stackNameEditor = stackNameEditor;
@@ -60,7 +64,6 @@ public class EditorManager {
         this.notesBox = notesBox;
         this.loreEditor = loreEditor;
         this.showFormattedTxtInv = showFormattedTxtInv;
-        JTabbedPane editorTabbedPane1 = editorTabbedPane;
         this.eventGeneratorBox = eventGeneratorBox;
         this.inventorySizeSpinner = inventorySizeSpinner;
         this.closeInvOnClick = closeInvOnClick;
@@ -77,12 +80,12 @@ public class EditorManager {
         //TODO: Find a better way to stop useres from creating new lines
         this.inventoryNameEditor.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
-                inventoryNameEditor.setText(inventoryNameEditor.getText().replace("\n"," "));
+                inventoryNameEditor.setText(inventoryNameEditor.getText().replace("\n", " "));
             }
         });
         this.stackNameEditor.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
-                stackNameEditor.setText(stackNameEditor.getText().replace("\n"," "));
+            public void keyTyped(KeyEvent e) {
+                stackNameEditor.setText(stackNameEditor.getText().replace("\n", " "));
             }
         });
 
@@ -154,6 +157,7 @@ public class EditorManager {
             }
         }
         for (Enchantment e : stack.getEnchantments())
+            //noinspection unchecked
             ((DefaultListModel) enchantmentList.getModel()).addElement(e.getDisplay());
     }
 
@@ -162,27 +166,26 @@ public class EditorManager {
     }
 
     public void saveItemStack(ItemStack is) {
-        ItemStack oldItemstack = is;
         //Make sure the itemstack exists;
-        if (oldItemstack == null)
+        if (is == null)
             return;
 
         //todo revert to unformatted version first
         setTextIsFormatted(false);
-        oldItemstack.setName(stackNameEditor.getText());
-        oldItemstack.setMaterial((Material) materialComboBox.getSelectedItem());
-        oldItemstack.setLore(loreEditor.getText());
-        oldItemstack.setAmount((Integer) stackItemCountSpinner.getValue());
-        oldItemstack.setNotes(notesBox.getText());
-        oldItemstack.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
-        oldItemstack.setCloseInvOnClick(closeInvOnClick.isSelected());
+        is.setName(stackNameEditor.getText());
+        is.setMaterial((Material) materialComboBox.getSelectedItem());
+        is.setLore(loreEditor.getText());
+        is.setAmount((Integer) stackItemCountSpinner.getValue());
+        is.setNotes(notesBox.getText());
+        is.setAutoGenerateType(AutoGenerateType.getTypeByName((String) (eventGeneratorBox.getSelectedItem())));
+        is.setCloseInvOnClick(closeInvOnClick.isSelected());
         List<Enchantment> enchs = new ArrayList<>();
         for (int i = 0; i < ((DefaultListModel) enchantmentList.getModel()).size(); i++) {
             String s = (String) enchantmentList.getModel().getElementAt(i);
             Enchantment ench = new Enchantment(Enchantment.EnchantmentType.getEnchantmentByName(s.split(" : ")[0]), ItemUtil.getIntegers(s.split(" : ")[1]));
             enchs.add(ench);
         }
-        oldItemstack.setEnchantments(enchs);
+        is.setEnchantments(enchs);
     }
 
     /**
@@ -256,6 +259,7 @@ public class EditorManager {
     public JTextField getNotes() {
         return notesBox;
     }
+
     public TextEditorManager getTextEditorManager() {
         return textEditorManager;
     }
@@ -266,6 +270,7 @@ public class EditorManager {
         mainMenu.getInventoryTable().setModel(mainMenu.getInvManager().getInventoryTableModel());
     }
 
+    @SuppressWarnings("unchecked")
     public void reloadData(InventoryTableModel model, ItemStack selected) {
         setTextIsFormatted(false);
         inventoryNameEditor.setText(model.getInventoryName());
@@ -276,6 +281,7 @@ public class EditorManager {
         DefaultListModel enchModel = new DefaultListModel();
         enchModel.clear();
         for (int i = 0; i < selected.getEnchantments().size(); i++) {
+            //noinspection unchecked
             enchModel.addElement(selected.getEnchantments().get(i).getDisplay());
         }
 

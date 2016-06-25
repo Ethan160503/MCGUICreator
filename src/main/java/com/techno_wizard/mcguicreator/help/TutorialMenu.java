@@ -1,13 +1,11 @@
 package com.techno_wizard.mcguicreator.help;
 
 
-import com.sun.java.swing.plaf.windows.DesktopProperty;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.InputStreamReader;
 import java.io.Reader;
 

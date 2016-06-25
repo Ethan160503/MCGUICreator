@@ -1,12 +1,12 @@
 package com.techno_wizard.mcguicreator.gui.inventory;
 
 
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Zombie_Striker on 4/4/2016.
@@ -119,8 +119,7 @@ public class ItemUtil {
         if (number2 > 1 || number1 > 0)
             g.drawImage(getCharacter(number2, 3), 57, 57, 16, 16, null);
         g.dispose();
-        ImageIcon i = new ImageIcon(bi);
-        return i;
+        return new ImageIcon(bi);
     }
 
     public static ImageIcon addEnchantments(ImageIcon icon) {
@@ -134,7 +133,6 @@ public class ItemUtil {
                     if (bi.getAlphaRaster().getPixel(x, y, new float[10])[0] > 0)
                         g.drawImage(glow, x, y, null);
                 }
-                System.out.println("");
             }
         } catch (Exception e) {
             e.printStackTrace();

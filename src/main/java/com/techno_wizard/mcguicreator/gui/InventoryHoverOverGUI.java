@@ -1,6 +1,8 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,6 @@ public class InventoryHoverOverGUI {
     private int yP;
 
     private boolean shouldDraw = true;
-    private Thread thread;
 
     private Font font;
 
@@ -126,7 +127,8 @@ public class InventoryHoverOverGUI {
             }
         };
 
-        thread = new Thread(r);
+        Thread thread = new Thread(r);
+        thread.setDaemon(true);
         thread.start();
     }
 
@@ -162,7 +164,8 @@ public class InventoryHoverOverGUI {
                 ChatColor color = ChatColor.getChatColor(text[i].charAt(0));
                 if (!color.isAFormat())
                     g.setColor(hex2Rgb(color.getHex()));
-            } if (text[i].length() >= 2) {
+            }
+            if (text[i].length() >= 2) {
                 g.drawString(text[i].substring(1), xP + 4 + offset, yP - 2 + yoffset);
                 for (int charAt = 1; charAt < text[i].length(); charAt++)
                     offset += ItemUtil.getCharSize(text[i].charAt(charAt));

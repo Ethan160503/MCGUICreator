@@ -1,12 +1,16 @@
 package com.techno_wizard.mcguicreator.gui;
 
 import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
-import com.techno_wizard.mcguicreator.gui.inventory.*;
-import com.techno_wizard.mcguicreator.management.*;
+import com.techno_wizard.mcguicreator.gui.inventory.Enchantment;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.mcguicreator.management.EditorManager;
+import com.techno_wizard.mcguicreator.management.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Ethan on 4/1/2016.
@@ -40,7 +44,7 @@ public class MainMenu extends JFrame {
     private JScrollPane enchantmentScrollPane;
 
     private JComboBox eventGenerateType;
-    private JRadioButton closeInvOnClickRButton;
+    private JCheckBox closeInvOnClickRButton;
 
     private InventoryTableModel inventoryTableModel;
 
@@ -73,7 +77,8 @@ public class MainMenu extends JFrame {
     /**
      * inits materials, enchantments, and autogenerate types
      */
-    public void initInventoryObject(){
+    @SuppressWarnings("unchecked")
+    public void initInventoryObject() {
         //Create the list to store all the enchantments
         enchantmentList.setModel(new DefaultListModel());
         this.enchantmentType.addItem("");
@@ -161,7 +166,9 @@ public class MainMenu extends JFrame {
         return invManager;
     }
 
-    public EditorManager getEditorManager() {return editorManager;}
+    public EditorManager getEditorManager() {
+        return editorManager;
+    }
 
     public JTable getInventoryTable() {
         return this.inventoryTable;

@@ -4,7 +4,10 @@ import com.techno_wizard.mcguicreator.gui.events.AutoGenerateType;
 
 import javax.swing.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Ethan on 4/3/2016.
  */
@@ -135,8 +138,7 @@ public class ItemStack implements Serializable {
     public List<String> getLoreAsList() {
         if (lore == null)
             return new ArrayList<String>();
-        List<String> loreList = Arrays.asList(lore.split("\n"));
-        return loreList;
+        return Arrays.asList(lore.split("\n"));
     }
 
     public int getAmount() {

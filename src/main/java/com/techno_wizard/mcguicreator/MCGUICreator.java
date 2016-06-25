@@ -111,6 +111,7 @@ public class MCGUICreator {
                 try {
                     File out = new File(chooser.getSelectedFile() + fileType);
                     if (!out.exists())
+                        //noinspection ResultOfMethodCallIgnored
                         out.createNewFile();
                     FileOutputStream fos = new FileOutputStream(out);
                     ObjectOutputStream ous = new ObjectOutputStream(fos);
@@ -125,11 +126,9 @@ public class MCGUICreator {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(mainMenu, "There was an error reading the file.\n" +
-                            "This may be a save file for an outdated MCGUICreator version or a corrupt file.",
+                                    "This may be a save file for an outdated MCGUICreator version or a corrupt file.",
                             "Oops...", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                System.out.println("Save option not approved!");
             }
         });
 
@@ -161,7 +160,6 @@ public class MCGUICreator {
                 }
                 mainMenu.remove(chooser);
             } else {
-                System.out.println("Option not approved!");
                 mainMenu.remove(chooser);
             }
         });

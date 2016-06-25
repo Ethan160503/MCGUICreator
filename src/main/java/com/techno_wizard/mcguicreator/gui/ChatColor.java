@@ -1,6 +1,5 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import javax.swing.text.html.HTML;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,7 +118,7 @@ public enum ChatColor {
         while (matcher.find()) {
             String sub = coded.substring(matcher.start(), matcher.end());
 
-            for (ChatColor color: ChatColor.values()) {
+            for (ChatColor color : ChatColor.values()) {
                 if (color.getChar() == sub.charAt(1)) {
                     output = output.replace(sub, color.getHTMLOpenTag());
                     break;
@@ -132,6 +131,7 @@ public enum ChatColor {
     /**
      * Returns whether or not the ChatColor is a format, not a color.
      * For example, RED is a color, but BOLD is a format.
+     *
      * @return
      */
     public boolean isAFormat() {

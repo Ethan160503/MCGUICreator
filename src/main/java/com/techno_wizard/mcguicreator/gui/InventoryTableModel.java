@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.gui;
 
-import com.techno_wizard.mcguicreator.gui.inventory.*;
+import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
+import com.techno_wizard.mcguicreator.gui.inventory.Material;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;

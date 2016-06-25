@@ -136,7 +136,7 @@
                       <model/>
                     </properties>
                   </component>
-                  <component id="af333" class="javax.swing.JRadioButton" binding="closeInvOnClickRButton">
+                  <component id="8f1c6" class="javax.swing.JCheckBox" binding="closeInvOnClickRButton">
                     <constraints>
                       <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

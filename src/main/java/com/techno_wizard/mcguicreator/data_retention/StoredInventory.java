@@ -17,7 +17,7 @@ public class StoredInventory implements Serializable {
 
     public void setInventoryModel(InventoryTableModel model) {
         stacks = model.getItemstacks();
-        name  = model.getInventoryName();
+        name = model.getInventoryName();
     }
 
     public InventoryTableModel loadData(InventoryTableModel model) {

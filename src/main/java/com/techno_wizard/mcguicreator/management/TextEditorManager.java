@@ -1,6 +1,7 @@
 package com.techno_wizard.mcguicreator.management;
 
-import java.awt.event.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import static com.techno_wizard.mcguicreator.management.TextEditorManager.ColorEditor.*;
 
