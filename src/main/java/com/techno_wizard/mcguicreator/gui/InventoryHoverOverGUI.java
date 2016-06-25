@@ -154,9 +154,11 @@ public class InventoryHoverOverGUI {
             if (i == 0) {
                 g.setColor(hex2Rgb(ChatColor.RESET.getHex()));
                 text[i] = "X" + text[i];
-            } else
-                g.setColor(hex2Rgb(ChatColor.getChatColor(text[i].charAt(0)).getHex()));
-            if (text[i].length() >= 2) {
+            } else {
+                ChatColor color = ChatColor.getChatColor(text[i].charAt(0));
+                if (!color.isAFormat())
+                    g.setColor(hex2Rgb(color.getHex()));
+            } if (text[i].length() >= 2) {
                 g.drawString(text[i].substring(1), xP + 4 + offset, yP - 2 + yoffset);
                 for (int charAt = 1; charAt < text[i].length(); charAt++)
                     offset += ItemUtil.getCharSize(text[i].charAt(charAt));

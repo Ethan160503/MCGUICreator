@@ -128,4 +128,13 @@ public enum ChatColor {
         }
         return output;
     }
+
+    /**
+     * Returns whether or not the ChatColor is a format, not a color.
+     * For example, RED is a color, but BOLD is a format.
+     * @return
+     */
+    public boolean isAFormat() {
+        return HEX == null;
+    }
 }
