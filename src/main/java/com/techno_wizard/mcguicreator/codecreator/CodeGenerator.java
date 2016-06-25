@@ -160,6 +160,7 @@ public class CodeGenerator {
      */
     public String writeRepresentingJava(InventoryTableModel invModel) {
         CodeBuffer buffer = new CodeBuffer();
+        String invName = invModel.getInventoryName().replace(" ", "").toLowerCase();
 
         buffer.addLine(((String) extraStringMap.get("imports")));
         // print the initial notes
@@ -171,7 +172,7 @@ public class CodeGenerator {
                 .replace("$count$", invModel.getRowCount() * 9 + "")
                 .replace("$classname$", invModel.getInventoryName().replace(" ", ""))
                 .replace("$name$", invModel.getInventoryName())
-                .replace("$inv$", invModel.getInventoryName())
+                .replace("$inv$", invName)
                 .replace("$size$", (mainMenu.getInvManager().getInventoryTableModel().getRowCount() * 9) + "")
         );
 
@@ -183,17 +184,18 @@ public class CodeGenerator {
         // add space before creating stacks
         buffer.addEmptyLine();
 
+        // create itemstacks
         for (int slot = 0; slot < invModel.getRowCount() * 9; slot++) {
             ItemStack toWrite = invModel.getItemStackAt(slot % 9, slot / 9);
             if (toWrite.getMaterial() != Material.AIR) {
-                addItemstackToInv(toWrite, buffer, slot);
+                addItemstackToInv(toWrite, buffer, slot, invName);
                 buffer.addEmptyLine();
             }
         }
         buffer.addLine("}");//Closing bracket for the intiInv method
 
         buffer.addLine(((String) extraStringMap.get("listener top"))
-                .replace("$inv$", "inventoryInstance")
+                .replace("$inv$", invName)
         );
         buffer.addLine("switch(e.getSlot()){");
         for (int slot = 0; slot < invModel.getRowCount() * 9; slot++) {
@@ -208,6 +210,8 @@ public class CodeGenerator {
             buffer.addLine("}");
 
         buffer.addLine((String) extraStringMap.get("clone method"));
+        buffer.addEmptyLine();
+        buffer.addLine((String) itemStackStringMap.get("meta formatter"));
 
         buffer.addLine("}"); // add class closing bracket
 
@@ -223,7 +227,7 @@ public class CodeGenerator {
         }
     }
 
-    private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot) {
+    private void addItemstackToInv(ItemStack itemStack, CodeBuffer buffer, int slot, String invName) {
         // set itemstack var
         buffer.addLine(((String) itemStackStringMap.get("create stack")).replace("$stack$", "stack" + slot));
         // does the item require durability to create?
@@ -267,7 +271,7 @@ public class CodeGenerator {
         buffer.addLine(((String) inventoryStringMap.get("add stack to slot"))
                 .replace("$stack$", "stack" + slot)
                 .replace("$slot$", slot + "")
-                .replace("$inv$", "inventoryInstance")
+                .replace("$inv$", invName)
         );
 
         buffer.addLine("//end stack");

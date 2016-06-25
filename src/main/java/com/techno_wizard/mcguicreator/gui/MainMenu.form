@@ -86,7 +86,8 @@
                       <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Show Formatted Text (WWSIWYG)"/>
+                      <selected value="true"/>
+                      <text value="Show Formatted Text (WYSIWYG)"/>
                     </properties>
                   </component>
                   <component id="8bca0" class="javax.swing.JComboBox" binding="stackType">
@@ -191,8 +192,8 @@
                     </constraints>
                     <properties>
                       <inheritsPopupMenu value="false"/>
-                      <label value="Show Formatted Text (WWSIWYG)"/>
-                      <text value="Show Formatted Text (WWSIWYG)"/>
+                      <label value="Show Formatted Text (WYSIWYG)"/>
+                      <text value="Show Formatted Text (WYSIWYG)"/>
                     </properties>
                   </component>
                   <scrollpane id="3aa5">
@@ -357,8 +358,8 @@
                 </constraints>
                 <properties>
                   <inheritsPopupMenu value="false"/>
-                  <label value="Show Formatted Text (WWSIWYG)"/>
-                  <text value="Show Formatted Text (WWSIWYG)"/>
+                  <label value="Show Formatted Text (WYSIWYG)"/>
+                  <text value="Show Formatted Text (WYSIWYG)"/>
                 </properties>
               </component>
               <component id="dd417" class="javax.swing.JSpinner" binding="inventorySizeSpinner" custom-create="true">

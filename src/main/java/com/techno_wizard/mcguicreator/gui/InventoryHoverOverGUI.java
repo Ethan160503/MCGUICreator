@@ -116,7 +116,11 @@ public class InventoryHoverOverGUI {
                         g.setColor(new Color(102, 0, 204));
                         g.drawRect(xP + 1, yP + 1, width - 2, 16 + (yOffset * 16) - 2);
                         g.dispose();
-                        panel.update(g);
+                        try {
+                            panel.update(g);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

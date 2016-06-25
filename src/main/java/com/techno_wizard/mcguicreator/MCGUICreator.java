@@ -1,10 +1,8 @@
 package com.techno_wizard.mcguicreator;
 
-import com.techno_wizard.mcguicreator.codecreator.CodeCreator;
 import com.techno_wizard.mcguicreator.codecreator.CodeGenerator;
 import com.techno_wizard.mcguicreator.data_retention.StoredInventory;
 import com.techno_wizard.mcguicreator.gui.ChatColor;
-import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
 import com.techno_wizard.mcguicreator.gui.MainMenu;
 import com.techno_wizard.mcguicreator.gui.codecreator.CodeExporter;
 import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
@@ -157,6 +155,9 @@ public class MCGUICreator {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(mainMenu, "File could not be opened. Either it is for an outdated version of\n" +
+                            "MCGUICreator or it is corrupt.\n" +
+                            "We try to avoid making updates that break save files, but sometimes it is necessary to add features.");
                 }
                 mainMenu.remove(chooser);
             } else {
@@ -209,11 +210,9 @@ public class MCGUICreator {
                         new CodeExporter(output);
                     } else {
                         ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                        StringBuilder code = new StringBuilder();
-                        for (String s : CodeCreator.writecode(mainMenu))
-                            code.append(s + "\n");
+                        String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
                         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                        clipboard.setContents(new StringSelection(code.toString()), null);
+                        clipboard.setContents(new StringSelection(output), null);
                     }
                 }
 
@@ -222,17 +221,14 @@ public class MCGUICreator {
             });
         } else {
             if (shouldExport) {
-                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                StringBuilder code = new StringBuilder();
+                mainMenu.getEditorManager().saveCurrentItemStack();
                 String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
                 new CodeExporter(output);
             } else {
-                ItemStack is = mainMenu.getInvManager().getActiveItemStack();
-                StringBuilder code = new StringBuilder();
-                for (String s : CodeCreator.writecode(mainMenu))
-                    code.append(s + "\n");
+                mainMenu.getEditorManager().saveCurrentItemStack();
+                String output = CodeGenerator.getInstance().writeRepresentingJava(mainMenu.getInvManager().getInventoryTableModel());
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(new StringSelection(code.toString()), null);
+                clipboard.setContents(new StringSelection(output), null);
             }
         }
         names.clear();

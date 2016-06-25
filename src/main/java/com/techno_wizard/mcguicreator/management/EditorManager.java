@@ -216,17 +216,17 @@ public class EditorManager {
             inventoryNamePlain = inventoryNameEditor.getText();
             inventoryNameEditor.setContentType("text/html");
             inventoryNameEditor.setEditable(false);
-            inventoryNameEditor.setText(ChatColor.getFormattedColorText(inventoryNamePlain));
+            inventoryNameEditor.setText(ChatColor.WHITE.getHTMLOpenTag() + ChatColor.getFormattedColorText(inventoryNamePlain));
 
             lorePlain = loreEditor.getText();
             loreEditor.setContentType("text/html");
             loreEditor.setEditable(false);
-            loreEditor.setText(ChatColor.getFormattedColorText(lorePlain));
+            loreEditor.setText(ChatColor.WHITE.getHTMLOpenTag() + ChatColor.getFormattedColorText(lorePlain));
 
             stackNamePlain = stackNameEditor.getText();
             stackNameEditor.setContentType("text/html");
             stackNameEditor.setEditable(false);
-            stackNameEditor.setText(ChatColor.getFormattedColorText(stackNamePlain));
+            stackNameEditor.setText(ChatColor.WHITE.getHTMLOpenTag() + ChatColor.getFormattedColorText(stackNamePlain));
 
             // set color for readability with white
             inventoryNameEditor.setBackground(Color.DARK_GRAY);
@@ -274,9 +274,9 @@ public class EditorManager {
 
         // to prevent casting issues
         DefaultListModel enchModel = new DefaultListModel();
-        enchModel.setSize(selected.getEnchantments().size());
+        enchModel.clear();
         for (int i = 0; i < selected.getEnchantments().size(); i++) {
-            enchModel.set(i, selected.getEnchantments().get(i));
+            enchModel.addElement(selected.getEnchantments().get(i).getDisplay());
         }
 
         enchantmentList.setModel(enchModel);
