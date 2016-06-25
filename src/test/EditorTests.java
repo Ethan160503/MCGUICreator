@@ -1,7 +1,7 @@
-import com.techno_wizard.mcguicreator.gui.ChatColor;
-import com.techno_wizard.mcguicreator.gui.InventoryTableModel;
-import com.techno_wizard.mcguicreator.gui.inventory.ItemStack;
-import com.techno_wizard.mcguicreator.gui.inventory.Material;
+import com.techno_wizard.menuforge.gui.ChatColor;
+import com.techno_wizard.menuforge.gui.InventoryTableModel;
+import com.techno_wizard.menuforge.gui.inventory.ItemStack;
+import com.techno_wizard.menuforge.gui.inventory.Material;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
